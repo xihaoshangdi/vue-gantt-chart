@@ -1,29 +1,15 @@
-# gantt
+# Gantt
 
-## Project setup
-```
-yarn install
-```
+基于Vue的轻量级甘特图插件
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## 阶段
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [x] 初始化项目
+  - [x] Element
+  - [x] Day.js
+- [ ] 初始化UI
+  - [ ] HTML
+  - [ ] CSS
+  - [ ] JavaScript
+- [ ] 文档
+  - [ ] VuePress
