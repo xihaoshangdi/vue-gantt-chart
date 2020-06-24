@@ -7,6 +7,7 @@
 - [x] 初始化项目
   - [x] Element
   - [x] Day.js
+  - [x] D3.js
 - [ ] 初始化UI
   - [ ] HTML
   - [ ] CSS
