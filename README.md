@@ -8,6 +8,7 @@
   - [x] Element
   - [x] Day.js
   - [x] D3.js
+  - [x] standard
 - [ ] 初始化UI
   - [ ] HTML
   - [ ] CSS
