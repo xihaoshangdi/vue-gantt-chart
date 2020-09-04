@@ -1,34 +1,19 @@
 <template>
-  <div id="app">
-    <chart-container/>
-  </div>
+    <Layout>
+      <template v-slot:container-box>
+        <chart-container/>
+      </template>
+
+    </Layout>
 </template>
 <script>
 import ChartContainer from './components/chart-container'
+import Layout from './components/Layout'
 export default {
-  components: { ChartContainer }
+  components: { Layout, ChartContainer }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>
