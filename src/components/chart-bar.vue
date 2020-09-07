@@ -31,6 +31,6 @@ export default {
   .bar {
     width: 100px;
     height: 20px;
-    margin-left: 28px;
+    margin-left: 28px
   }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div :style="chartStyle" class="chart">
-    <time-line/>
     <div class="header">
       <div class="headline">
         <template v-for="(item,index) in day">
@@ -14,9 +13,10 @@
       </div>
     </div>
     <div
-      @dragstart="onDragStart"
-      @dragover="onDragOver"
-      @drop="ondrop">
+      @dragstart.stop="onDragStart"
+      @dragover.stop="onDragOver"
+      @drop.stop="ondrop">
+      <time-line/>
       <div :style="blockStyle" class="block">
         <chart-bar/>
       </div>
@@ -86,17 +86,18 @@ export default {
   methods: {
     onDragStart (event) {
       console.log('开始拖拽', event)
+      event.dataTransfer.effectAllowed = 'move'
       this.dragEvent = event.target
     },
     ondrop (event) {
       event.preventDefault()
       console.log('拖拽到:', event)
-      console.log(this.dragEvent)
       this.dragEvent.parentNode.removeChild(this.dragEvent)
       event.target.appendChild(this.dragEvent)
     },
     onDragOver (event) {
-      event.preventDefault()
+      // 结束位置是甘特条就允许结束拖拽
+      if (event.target.className === 'block') event.preventDefault()
     }
   }
 }

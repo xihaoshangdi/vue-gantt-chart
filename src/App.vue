@@ -1,9 +1,11 @@
 <template>
-    <Layout>
+    <Layout >
       <template v-slot:container-box>
         <chart-container/>
       </template>
-
+      <template v-slot:side-box>
+        //侧边栏
+      </template>
     </Layout>
 </template>
 <script>
