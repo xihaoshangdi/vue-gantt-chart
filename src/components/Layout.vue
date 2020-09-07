@@ -13,8 +13,8 @@ export default {
 <style scoped>
   .layout{
     width: 800px;
-    height: 60vh;
+    height: 400px;
     border: 1px solid red;
-    overflow-x: auto;
+    overflow: auto;
   }
 </style>

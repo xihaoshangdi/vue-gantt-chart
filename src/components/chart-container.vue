@@ -1,75 +1,115 @@
 <template>
-  <div>
-    <div class="time-date">
-      <template v-for="section in day">
-        <div :style="handleStyle('day')" :key="section">{{section}}</div>
-      </template>
+  <div :style="chartStyle" class="chart">
+    <time-line/>
+    <div class="header">
+      <div class="headline">
+        <template v-for="(item,index) in day">
+          <div :style="dateStyle" :key="index">{{item}}</div>
+        </template>
+      </div>
+      <div class="headline">
+        <template v-for="(item,index) in hour">
+          <div :style="hourStyle" :key="index">{{item}}</div>
+        </template>
+      </div>
     </div>
-    <div class="time-scale">
-      <template v-for="section in hour">
-        <div :style="handleStyle('hour')" :key="section">{{section}}</div>
-      </template>
-    </div>
-    <div class="block">
-      <div class="bar"></div>
+    <div
+      @dragstart="onDragStart"
+      @dragover="onDragOver"
+      @drop="ondrop">
+      <div :style="blockStyle" class="block">
+        <chart-bar/>
+      </div>
+      <div :style="blockStyle" class="block"></div>
     </div>
   </div>
 </template>
 
 <script>
+import { handleDaySet, handleHourSet } from '@/lib/unit'
+import TimeLine from '@/components/time-line'
+import ChartBar from '@/components/chart-bar'
 
 export default {
   name: 'chart-container',
+  components: { ChartBar, TimeLine },
   data () {
-    return {}
+    return {
+      // 半小时的基准宽度
+      baseSemi: 25,
+      // 中心甘特图长宽
+      chartWidth: 5000,
+      chartHeight: 400,
+      // 数据条甘特图宽
+      blockHeight: 40,
+      // 拖拽对象
+      dragEvent: null
+    }
   },
   computed: {
-    day () {
-      return Math.ceil(1000 / 50 / 12)
+    chartStyle () {
+      return {
+        width: this.chartWidth + 'px',
+        height: this.chartHeight + 'px'
+      }
+    },
+    blockStyle () {
+      return {
+        backgroundSize: `${this.baseSemi}px 100%`,
+        height: `${this.blockHeight}px`
+      }
+    },
+    dateStyle () {
+      return {
+        width: this.baseSemi * 2 * 24 > this.chartWidth ? this.chartWidth : this.baseSemi * 2 * 24 + 'px',
+        height: `${this.blockHeight}px`,
+        lineHeight: this.blockHeight + 'px'
+      }
+    },
+    hourStyle () {
+      return {
+        width: this.baseSemi * 2 + 'px',
+        height: `${this.blockHeight}px`,
+        lineHeight: this.blockHeight + 'px'
+      }
     },
     hour () {
-      const hours = Math.ceil(1000 / 50)
-      console.log([...Array.from({ length: hours }).keys()])
-      return hours
+      const hours = Math.ceil(this.chartWidth / (this.baseSemi * 2))
+      return handleHourSet(hours)
+    },
+    day () {
+      const day = Math.ceil(this.chartWidth / (this.baseSemi * 2 * 24))
+      const startTime = new Date()
+      return handleDaySet(startTime, day)
     }
   },
   methods: {
-    handleStyle (type) {
-      let StyleObj
-      switch (type) {
-        case 'hour':
-          StyleObj = { width: `${50}px` }
-          break
-        case 'day':
-          StyleObj = { width: `${50 * 12}px` }
-          break
-        case 'week':
-          StyleObj = { width: `${50 * 12 * 7}px` }
-          break
-        case 'month':
-          StyleObj = { width: `${50 * 12 * 7 * 4}px` }
-          break
-      }
-      return StyleObj
+    onDragStart (event) {
+      console.log('开始拖拽', event)
+      this.dragEvent = event.target
+    },
+    ondrop (event) {
+      event.preventDefault()
+      console.log('拖拽到:', event)
+      console.log(this.dragEvent)
+      this.dragEvent.parentNode.removeChild(this.dragEvent)
+      event.target.appendChild(this.dragEvent)
+    },
+    onDragOver (event) {
+      event.preventDefault()
     }
   }
-
 }
 </script>
 
 <style scoped lang="scss">
-  .block {
-    width: 1000px;
-    height: 40px;
-    background: url("../assets/background.png") 0 0;
+  .chart{
+    position:relative
   }
-
-  .time-date {
-    width: 1000px;
-    height: 40px;
+  .headline {
+    width: 100%;
     background-color: #7BB9FE;
     opacity: 0.7;
-
     display: flex;
     flex-direction: row;
     flex-flow: nowrap;
@@ -77,30 +117,13 @@ export default {
     text-align: center;
     margin-bottom: 1px;
   }
-
-  .time-scale {
-    width: 1000px;
-    height: 40px;
-    background-color: #7BB9FE;
-    opacity: 0.8;
-
-    display: flex;
-    flex-direction: row;
-    flex-flow: nowrap;
-
-    text-align: center;
-  }
-
   .block {
+    width: 100%;
+    background-image: url("../assets/background.png");
+
     display: flex;
     flex-direction: row;
     align-items: center;
   }
 
-  .bar {
-    width: 100px;
-    height: 24px;
-    background-color: red;
-    margin-left: 28.8px;
-  }
 </style>
