@@ -10,7 +10,13 @@
         <slot name="side-box" :item="item"></slot>
       </chart-side>
       <!--甘特图中心数据组件 -->
-      <chart-container v-slot="{item}">
+      <chart-container
+        :chart-width="chartWidth"
+        :chart-height="chartHeight"
+        :baseSemi="baseSemi"
+        :ganttTimeSection="ganttTimeSection"
+        :blockHeight="blockHeight"
+        v-slot="{item}">
         <slot name="container-box" :item="item"></slot>
       </chart-container>
     </div>

@@ -1,80 +1,57 @@
 <template>
   <div class="chart-box">
-    <div :style="chartStyle">
-      <div class="header">
-        <div class="headline">
-          <template v-for="(item,index) in day">
-            <div :style="dateStyle" :key="index">{{item}}</div>
-          </template>
-        </div>
-        <div class="headline">
-          <template v-for="(item,index) in hour">
-            <div :style="hourStyle" :key="index">{{item}}</div>
-          </template>
-        </div>
-      </div>
-      <div
-        @dragstart.stop="onDragStart"
-        @dragover.stop="onDragOver"
-        @drop.stop="ondrop">
-        <time-line/>
-        <template v-for="(block,index) in gantt_data" >
-          <div :style="blockStyle" class="block" :key="index">
-            <template v-for="(item,index) in block.childArrary" >
-              <div :key="index" class="bar" draggable="true">
-                <slot :item="item"></slot>
-              </div>
-            </template>
-          </div>
+    <div :style="chartStyle"
+         @dragstart.stop="onDragStart"
+         @dragover.stop="onDragOver"
+         @drop.stop="ondrop">
+      <div>
+        <template v-for="(item,index) in day">
+          <div :style="dateStyle" :key="index">{{item}}</div>
         </template>
       </div>
-  </div>
+      <div>
+        <template v-for="(item,index) in hour">
+          <div :style="hourStyle" :key="index">{{item}}</div>
+        </template>
+      </div>
+      <template v-for="(block,index) in gantt_data" >
+        <chart-block
+          :key="index"
+          :style="blockStyle"
+          :block="block"
+          v-slot="{item}">
+          <slot :item="item"></slot>
+        </chart-block>
+      </template>
+    </div>
   </div>
 </template>
 
 <script>
 import { handleDaySet, handleHourSet } from '@/lib/unit'
-import TimeLine from '@/components/BaseGanttComponents/time-line'
+import ChartBlock from '@/components/BaseGanttComponents/chart-block'
 export default {
   name: 'chart-container',
-  components: { TimeLine },
+  components: { ChartBlock },
+  props: ['chartWidth', 'chartHeight', 'baseSemi', 'blockHeight'],
   inject: ['gantt_data'],
-  data () {
-    return {
-      // 半小时的基准宽度
-      baseSemi: 25,
-      // 中心甘特图长宽
-      chartWidth: 5000,
-      chartHeight: 400,
-      // 数据条甘特图宽
-      blockHeight: 40,
-      // 拖拽对象
-      dragEvent: null
-    }
-  },
   computed: {
     chartStyle () {
-      return {
-        width: this.chartWidth + 'px',
-        height: this.chartHeight + 'px',
+      return { // 甘特图真实的渲染长度
+        width: `${this.chartWidth}px`,
+        height: `${this.chartHeight}px`,
         position: 'relative'
       }
     },
-    blockStyle () {
-      return {
-        backgroundSize: `${this.baseSemi}px 100%`,
-        height: `${this.blockHeight}px`
-      }
-    },
     dateStyle () {
-      return {
+      return { // 日期条的渲染长度
         width: this.baseSemi * 2 * 24 > this.chartWidth ? this.chartWidth : this.baseSemi * 2 * 24 + 'px',
         height: `${this.blockHeight}px`,
         lineHeight: this.blockHeight + 'px'
       }
     },
     hourStyle () {
-      return {
+      return { // 时间条的渲染长度
         width: this.baseSemi * 2 + 'px',
         height: `${this.blockHeight}px`,
         lineHeight: this.blockHeight + 'px'
@@ -88,6 +65,12 @@ export default {
       const day = Math.ceil(this.chartWidth / (this.baseSemi * 2 * 24))
       const startTime = new Date()
       return handleDaySet(startTime, day)
+    },
+    blockStyle () {
+      return {
+        backgroundSize: `${this.baseSemi}px 100%`,
+        height: `${this.blockHeight}px`
+      }
     }
   },
   methods: {
@@ -116,25 +99,19 @@ export default {
   .chart-box{
     overflow: auto;
     max-width:800px;
+    & > div:first-child > div:nth-child(-n+2){
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-flow: nowrap;
+      text-align: center;
+      &:first-child{
+        background-color: rgba(123,185,254,0.3);
+      }
+      &:nth-child(2){
+        background-color: rgba(123,185,254,0.4);
+      }
+    }
   }
-  .headline {
-    width: 100%;
-    background-color: #7BB9FE;
-    opacity: 0.7;
-    display: flex;
-    flex-direction: row;
-    flex-flow: nowrap;
 
-    text-align: center;
-  }
-  .block {
-    width: 100%;
-    background-image: url("../../assets/background.png");
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  .bar{
-    background-color: #7BB9FE;
-  }
 </style>

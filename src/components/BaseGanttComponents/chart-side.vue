@@ -52,7 +52,7 @@ export default {
           background-color: rgba(123, 185, 254, 1);
         }
         & >div:nth-child(2){
-          background-color: rgba(123, 185, 254, 0.3);
+          background-color: rgba(123, 185, 254, 0.6);
         }
       }
       &:nth-child(2){
@@ -60,7 +60,7 @@ export default {
           background-color: rgba(123, 185, 254, 1);
         }
         & >div:nth-child(2){
-          background-color: rgba(123, 185, 254, 0.2);
+          background-color: rgba(123, 185, 254, 0.3);
         }
       }
       &:nth-child(3){
@@ -76,7 +76,7 @@ export default {
           background-color: rgba(180, 209, 125, 1);
         }
         & >div:nth-child(2){
-          background-color: rgba(180, 209, 125, 0.2);
+          background-color: rgba(180, 209, 125, 0.3);
         }
       }
     }
