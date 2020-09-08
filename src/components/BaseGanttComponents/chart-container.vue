@@ -126,7 +126,6 @@ export default {
     flex-flow: nowrap;
 
     text-align: center;
-    margin-bottom: 1px;
   }
   .block {
     width: 100%;
