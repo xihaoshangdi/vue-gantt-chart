@@ -1,38 +1,44 @@
 <template>
-  <div :style="chartStyle" class="chart">
-    <div class="header">
-      <div class="headline">
-        <template v-for="(item,index) in day">
-          <div :style="dateStyle" :key="index">{{item}}</div>
+  <div class="chart-box">
+    <div :style="chartStyle">
+      <div class="header">
+        <div class="headline">
+          <template v-for="(item,index) in day">
+            <div :style="dateStyle" :key="index">{{item}}</div>
+          </template>
+        </div>
+        <div class="headline">
+          <template v-for="(item,index) in hour">
+            <div :style="hourStyle" :key="index">{{item}}</div>
+          </template>
+        </div>
+      </div>
+      <div
+        @dragstart.stop="onDragStart"
+        @dragover.stop="onDragOver"
+        @drop.stop="ondrop">
+        <time-line/>
+        <template v-for="(block,index) in gantt_data" >
+          <div :style="blockStyle" class="block" :key="index">
+            <template v-for="(item,index) in block.childArrary" >
+              <div :key="index" class="bar" draggable="true">
+                <slot :item="item"></slot>
+              </div>
+            </template>
+          </div>
         </template>
       </div>
-      <div class="headline">
-        <template v-for="(item,index) in hour">
-          <div :style="hourStyle" :key="index">{{item}}</div>
-        </template>
-      </div>
-    </div>
-    <div
-      @dragstart.stop="onDragStart"
-      @dragover.stop="onDragOver"
-      @drop.stop="ondrop">
-      <time-line/>
-      <div :style="blockStyle" class="block">
-        <chart-bar/>
-      </div>
-      <div :style="blockStyle" class="block"></div>
-    </div>
+  </div>
   </div>
 </template>
 
 <script>
 import { handleDaySet, handleHourSet } from '@/lib/unit'
-import TimeLine from '@/components/time-line'
-import ChartBar from '@/components/chart-bar'
-
+import TimeLine from '@/components/BaseGanttComponents/time-line'
 export default {
   name: 'chart-container',
-  components: { ChartBar, TimeLine },
+  components: { TimeLine },
+  inject: ['gantt_data'],
   data () {
     return {
       // 半小时的基准宽度
@@ -50,7 +56,8 @@ export default {
     chartStyle () {
       return {
         width: this.chartWidth + 'px',
-        height: this.chartHeight + 'px'
+        height: this.chartHeight + 'px',
+        position: 'relative'
       }
     },
     blockStyle () {
@@ -92,8 +99,10 @@ export default {
     ondrop (event) {
       event.preventDefault()
       console.log('拖拽到:', event)
-      this.dragEvent.parentNode.removeChild(this.dragEvent)
-      event.target.appendChild(this.dragEvent)
+      if (this.dragEvent) {
+        this.dragEvent.parentNode.removeChild(this.dragEvent)
+        event.target.appendChild(this.dragEvent)
+      }
     },
     onDragOver (event) {
       // 结束位置是甘特条就允许结束拖拽
@@ -104,8 +113,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .chart{
-    position:relative
+  .chart-box{
+    overflow: auto;
+    max-width:800px;
   }
   .headline {
     width: 100%;
@@ -120,11 +130,12 @@ export default {
   }
   .block {
     width: 100%;
-    background-image: url("../assets/background.png");
-
+    background-image: url("../../assets/background.png");
     display: flex;
     flex-direction: row;
     align-items: center;
   }
-
+  .bar{
+    background-color: #7BB9FE;
+  }
 </style>

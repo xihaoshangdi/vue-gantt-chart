@@ -30,7 +30,7 @@ export default {
 
     width: 51px;
     background-color: #FFFFFF;
-    box-shadow: 0px 0px 8px 0px rgba(174, 184, 196, 0.63);
+    box-shadow: 0 0 8px 0 rgba(174, 184, 196, 0.63);
     & > div{
       height: 30px;
       line-height: 30px;
