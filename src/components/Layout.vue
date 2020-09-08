@@ -1,25 +1,42 @@
 <template>
-  <div class="layout" @contextmenu.stop="rightClick">
+  <div class="layout" @click="leftClick" @contextmenu.stop="rightClick">
+    <chart-container>
+      <slot name="container-box"></slot>
+    </chart-container>
+    //
     <slot name="side-box"></slot>
-    <slot name="container-box"></slot>
-    <chart-menu/>
+    //
+    <chart-menu :menu-status="menuStatus" :menu-position="menuPos"/>
   </div>
 </template>
 
 <script>
 import ChartMenu from '@/components/chart-menu'
+import ChartContainer from '@/components/chart-container'
 export default {
   name: 'Layout',
-  components: { ChartMenu },
+  components: { ChartContainer, ChartMenu },
+  data () {
+    return {
+      menuStatus: false,
+      menuPos: {
+        left: 0,
+        top: 0
+      }
+    }
+  },
   methods: {
     rightClick (event) {
       event.preventDefault()
       // 右键位置为甘特图数据条就打开右键菜单
-      console.log(event.target.className === 'bar')
-      // menu.style.left = event.clientX + 'px'
-      // menu.style.top = event.clientY + 'px'
-      // // 改变自定义菜单的高宽，让它显示出来
-      // menu.style.height = '125px'
+      if (event.target.className === 'bar') {
+        this.menuStatus = true
+        this.menuPos.left = event.clientX + 'px'
+        this.menuPos.top = event.clientY + 'px'
+      }
+    },
+    leftClick () {
+      this.menuStatus = false
     }
   }
 }

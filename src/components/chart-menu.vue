@@ -1,35 +1,44 @@
 <template>
-  <div id="menu">
-    <div class="menu">功能1</div>
-    <div class="menu">功能2</div>
-    <div class="menu">功能3</div>
-    <div class="menu">功能4</div>
-    <div class="menu">功能5</div>
+  <div
+    class="chart-menu"
+    v-show="menuStatus"
+    :style="menuPosition"
+  >
+    <div>功能</div>
+    <div>功能</div>
+    <div>功能</div>
+    <div>功能</div>
+    <div>功能</div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'chart-menu',
-  data () {
-    return {
-
-    }
-  }
+  props: ['menuStatus', 'menuPosition']
 }
 </script>
 
-<style scoped>
-  #menu{
-    height: 125px;
-    overflow: hidden;      /*隐藏溢出的元素*/
-    box-shadow: 0 1px 1px #888,1px 0 1px #ccc;
-    position: absolute;      /*自定义菜单相对与body元素进行定位*/
-  }
-  .menu{
-    width: 130px;
-    height: 25px;
-    line-height: 25px;
-    padding: 0 10px;
+<style scoped lang="scss">
+  .chart-menu{
+    position: absolute;
+
+    text-align: center;
+    font-size: 14px;
+    font-family: PingFang SC;
+    color: #50668B;
+
+    width: 51px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 8px 0px rgba(174, 184, 196, 0.63);
+    & > div{
+      height: 30px;
+      line-height: 30px;
+      cursor: pointer;
+    }
+    & > div:hover{
+      color: #278DFF;
+      background-color: rgba(0,0,0,0.05);
+    }
   }
 </style>
