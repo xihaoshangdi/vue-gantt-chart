@@ -1,9 +1,6 @@
 <template>
   <div class="chart-box">
-    <div :style="chartStyle"
-         @dragstart.stop="onDragStart"
-         @dragover.stop="onDragOver"
-         @drop.stop="ondrop">
+    <div :style="chartStyle" @dragstart.stop="onDragStart" @dragover.stop="onDragOver" @drop.stop="ondrop">
       <div>
         <template v-for="(item,index) in day">
           <div :style="dateStyle" :key="index">{{item}}</div>
@@ -14,10 +11,13 @@
           <div :style="hourStyle" :key="index">{{item}}</div>
         </template>
       </div>
-      <template v-for="(block,index) in gantt_data" >
+      <time-line/>
+      <template v-for="(block,index) in gantt_data">
         <chart-block
           :key="index"
           :style="blockStyle"
+          :baseSemi="baseSemi"
+          :ganttTimeSectionDayJS="ganttTimeSectionDayJS"
           :block="block"
           v-slot="{item}">
           <slot :item="item"></slot>
@@ -30,12 +30,21 @@
 <script>
 import { handleDaySet, handleHourSet } from '@/lib/unit'
 import ChartBlock from '@/components/BaseGanttComponents/chart-block'
+import dayjs from 'dayjs'
+import TimeLine from '@/components/BaseGanttComponents/time-line'
 export default {
   name: 'chart-container',
-  components: { ChartBlock },
-  props: ['chartWidth', 'chartHeight', 'baseSemi', 'blockHeight'],
+  components: { TimeLine, ChartBlock },
+  props: ['chartHeight', 'baseSemi', 'blockHeight', 'ganttTimeSection'],
   inject: ['gantt_data'],
   computed: {
+    ganttTimeSectionDayJS () {
+      return { start: dayjs(this.ganttTimeSection.start), end: dayjs(this.ganttTimeSection.end) }
+    },
+    chartWidth () {
+      const semis = this.ganttTimeSectionDayJS.end.diff(this.ganttTimeSectionDayJS.start, 'hour')
+      return this.baseSemi * semis * 2
+    },
     chartStyle () {
       return { // 甘特图真实的渲染长度
         width: `${this.chartWidth}px`,
@@ -45,7 +54,7 @@ export default {
     },
     dateStyle () {
       return { // 日期条的渲染长度
-        width: this.baseSemi * 2 * 24 > this.chartWidth ? this.chartWidth : this.baseSemi * 2 * 24 + 'px',
+        width: this.baseSemi * 2 * 24 + 'px',
         height: `${this.blockHeight}px`,
         lineHeight: this.blockHeight + 'px'
       }
@@ -58,13 +67,11 @@ export default {
       }
     },
     hour () {
-      const hours = Math.ceil(this.chartWidth / (this.baseSemi * 2))
+      const hours = this.ganttTimeSectionDayJS.end.diff(this.ganttTimeSectionDayJS.start, 'hour')
       return handleHourSet(hours)
     },
     day () {
-      const day = Math.ceil(this.chartWidth / (this.baseSemi * 2 * 24))
-      const startTime = new Date()
-      return handleDaySet(startTime, day)
+      return handleDaySet(this.ganttTimeSectionDayJS)
     },
     blockStyle () {
       return {

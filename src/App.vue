@@ -1,5 +1,5 @@
 <template>
-  <GanttChart :gantt_data="GanttData">
+  <GanttChart  :gantt_data="GanttData" :gantt-current-time="GanttCurrentTime" :gantt-time-section="GanttTime">
     <template v-slot:side-box="{item}">
       <Xxx :da="item" @xxx="clickbtn"/>
     </template>
@@ -18,6 +18,10 @@ export default {
   components: { Yyy, Xxx, GanttChart },
   data () {
     return {
+      GanttTime: {
+        start: '2020/08/25 00:00:00',
+        end: '2020/08/28 22:00:00'
+      },
       GanttData: [
         {
           id: 0,
@@ -140,8 +144,19 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      GanttCurrentTime: { currentTime: 0 },
+      // 定时器
+      marker: null
     }
+  },
+  mounted () {
+    this.marker = setInterval(() => {
+      this.GanttCurrentTime.currentTime += Math.floor(Math.random(0, 1) * 10)
+    }, 1000)
+  },
+  beforeDestroy () {
+    clearInterval(this.marker)
   },
   methods: {
     clickbtn (e) {

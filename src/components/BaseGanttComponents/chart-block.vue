@@ -1,7 +1,7 @@
 <template>
   <div class="block">
-    <template v-for="(item,index) in block" >
-      <div :key="index" class="bar" draggable="true">
+    <template v-for="(item,index) in block.childArrary" >
+      <div :key="index" class="bar" :style="occupy(item)" draggable="true">
         <slot :item="item"></slot>
       </div>
     </template>
@@ -10,9 +10,17 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 export default {
   name: 'chart-block',
-  props: ['block']
+  props: ['block', 'baseSemi', 'ganttTimeSectionDayJS'],
+  methods: {
+    occupy (bar) {
+      const during = dayjs(bar.end).diff(dayjs(bar.start), 'minute')
+      const spendHour = dayjs(dayjs(bar.start)).diff(this.ganttTimeSectionDayJS.start, 'hour')
+      return { width: this.baseSemi / 30 * during + 'px', left: spendHour * this.baseSemi * 2 + 'px' }
+    }
+  }
 
 }
 </script>
@@ -26,6 +34,9 @@ export default {
     align-items: center;
   }
   .bar{
+    position: absolute;
     background-color: #7BB9FE;
+    height: 26px;
+    overflow: hidden;
   }
 </style>

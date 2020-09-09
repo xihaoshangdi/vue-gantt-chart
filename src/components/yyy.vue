@@ -1,6 +1,6 @@
 <template>
-  <div>
-    {{da}}
+  <div class="asada">
+    {{da.startAirport}}
   </div>
 </template>
 

@@ -4,14 +4,13 @@
       <!--图例组件：可选配置      -->
       <chart-legend/>
     </div>
-    <div class="gantt-area">
+    <div class="gantt-area" @contextmenu="rightClick">
       <!--甘特图Side数据组件      -->
       <chart-side v-slot="{item}">
         <slot name="side-box" :item="item"></slot>
       </chart-side>
       <!--甘特图中心数据组件 -->
       <chart-container
-        :chart-width="chartWidth"
         :chart-height="chartHeight"
         :baseSemi="baseSemi"
         :ganttTimeSection="ganttTimeSection"
@@ -36,10 +35,6 @@ export default {
       type: Number,
       default: 25
     },
-    chartWidth: { // 中心甘特图宽度
-      type: Number,
-      default: 5000
-    },
     chartHeight: { // 中心甘特图高度
       type: Number,
       default: 400
@@ -51,21 +46,36 @@ export default {
     ganttTimeSection: { // 甘特图时间区间
       type: Object,
       default: () => {
-        return { start: dayjs(new Date()), end: dayjs(new Date()).add(2, 'day') }
+        return { start: dayjs(new Date()), end: dayjs(new Date()).add(3, 'day') }
       }
     },
     // 甘特图数据
     gantt_data: { // 甘特图数据
       type: Array,
       required: true
+    },
+    // 甘特图时间轴时间
+    ganttCurrentTime: {
+      type: Object,
+      default: () => {
+        return { currentTime: 0 }
+      }
     }
   },
   provide () {
     return {
-      gantt_data: this.gantt_data
+      gantt_data: this.gantt_data,
+      ganttCurrentTime: this.ganttCurrentTime
     }
   },
-  components: { ChartSide, ChartLegend, ChartContainer }
+  components: { ChartSide, ChartLegend, ChartContainer },
+  methods: {
+    rightClick (event) {
+      event.preventDefault()
+      console.log('rightClik-event', `${event.target.className || 'null'}---${event.clientX}---${event.clientY}`)
+      this.$emit('right-click', { className: event.target.className, x: event.clientX, y: event.clientY })
+    }
+  }
 
 }
 </script>

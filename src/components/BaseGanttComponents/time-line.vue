@@ -1,52 +1,61 @@
 <template>
     <div class="timeline" :style="linePos">
-      <span>{{hour.toString().padStart(2,'0')}}:</span>
-      <span>{{minute.toString().padStart(2,'0')}}:</span>
-      <span>{{(seconds-minute*60).toString().padStart(2,'0')}}</span>
+      <div>
+        <span>{{hour.toString().padStart(2,'0')}}:</span>
+        <span>{{minute.toString().padStart(2,'0')}}:</span>
+        <span>{{second.toString().padStart(2,'0')}}</span>
+      </div>
     </div>
 </template>
 
 <script>
 export default {
   name: 'timeLine',
+  inject: ['ganttCurrentTime'],
   data () {
     return {
-      // 定时器
-      marker: null,
       // 位置
       linePos: { left: 0 },
       // 秒
       seconds: 0
     }
   },
-  mounted () {
-    let count = 0
-    this.marker = setInterval(() => {
-      count += 25 / 30 / 60 // 25px代表30分钟
-      this.linePos.left = count + 'px'
-      this.seconds++
-    }, 1000)
-  },
+
   computed: {
+    currentTime () {
+      return this.ganttCurrentTime.currentTime
+    },
     hour () {
-      return Math.floor(this.minute / 60)
+      return Math.floor(this.currentTime / 3600)
     },
     minute () {
-      return Math.floor(this.seconds / 60)
+      return Math.floor((this.currentTime / 60) % 60)
+    },
+    second () {
+      return this.currentTime % 60
     }
-  },
-  beforeDestroy () {
-    clearInterval(this.marker)
   }
+
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .timeline{
     position: absolute;
     height: 100%;
     width: 2px;
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.4);
     z-index: 10;
+    & > div{
+      margin-left: 2px;
+      user-select: none;
+      font-size: 0.7rem;
+      color: #FFFFFF;
+      & > span{
+        background-color:rgba(255, 0, 0, 0.4);
+        padding-right: 1px;
+        padding-left: 1px;
+      }
+    }
   }
 </style>

@@ -1,4 +1,6 @@
 import dayjs from 'dayjs'
+const isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
+dayjs.extend(isSameOrBefore)
 /**
  * @description 得到一个小时集合
  * @param {Number} count
@@ -20,11 +22,13 @@ export const handleHourSet = (count) => {
   return data
 }
 
-export const handleDaySet = (startDate, count) => {
-  const data = []
-  for (let i = 1; i < count; i++) {
-    const date = dayjs(startDate).add(i, 'day').format('YYYY-M-D')
-    data.push(date)
+export const handleDaySet = ({ start, end }) => {
+  const dataList = []
+  let startTime = start.startOf('day')
+  const endTime = end.startOf('day')
+  while (startTime.isSameOrBefore(endTime, 'day')) {
+    dataList.push(startTime.format('YYYY-M-D'))
+    startTime = startTime.add(1, 'day')
   }
-  return data
+  return dataList
 }
