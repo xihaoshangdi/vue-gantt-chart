@@ -18,7 +18,7 @@ export default {
     occupy (bar) {
       const during = dayjs(bar.end).diff(dayjs(bar.start), 'minute')
       const spendHour = dayjs(dayjs(bar.start)).diff(this.ganttTimeSectionDayJS.start, 'hour')
-      return { width: this.baseSemi / 30 * during + 'px', left: spendHour * this.baseSemi * 2 + 'px' }
+      return { width: this.baseSemi / 60 * during + 'px', left: spendHour * this.baseSemi + 'px' }
     }
   }
 

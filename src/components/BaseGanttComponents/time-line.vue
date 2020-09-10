@@ -28,7 +28,7 @@ export default {
       return this.currentTime % 60
     },
     linePos () {
-      return { left: this.baseSemi / 30 * this.currentTime / 60 + 'px' }
+      return { left: this.baseSemi / 60 * this.currentTime / 60 + 'px' }
     }
   }
 

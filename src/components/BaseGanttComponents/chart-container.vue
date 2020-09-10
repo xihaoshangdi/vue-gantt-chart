@@ -12,6 +12,8 @@
         </template>
       </div>
       <time-line :baseSemi="baseSemi"/>
+      <!--灰色遮罩-->
+      <div class="cki" :style="xxx"></div>
       <div class="container">
         <template v-for="(block,index) in gantt_data">
           <chart-block
@@ -38,7 +40,7 @@ export default {
   name: 'chart-container',
   components: { TimeLine, ChartBlock },
   props: ['chartHeight', 'baseSemi', 'blockHeight', 'ganttTimeSection'],
-  inject: ['gantt_data'],
+  inject: ['gantt_data', 'ganttCurrentTime'],
   computed: {
     ganttTimeSectionDayJS () {
       return { start: dayjs(this.ganttTimeSection.start), end: dayjs(this.ganttTimeSection.end) }
@@ -80,6 +82,9 @@ export default {
         backgroundSize: `${this.baseSemi}px 100%`,
         height: `${this.blockHeight}px`
       }
+    },
+    xxx () {
+      return { width: this.baseSemi / 60 * this.ganttCurrentTime.currentTime / 60 + 'px' }
     }
   },
   methods: {
@@ -128,6 +133,11 @@ export default {
   .container{
     height: 320px;
     overflow: auto;
+  }
+  .cki{
+    background-color: rgba(0,100,100,0.1);
+    height: 100%;
+    position: absolute;
   }
 
 </style>

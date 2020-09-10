@@ -608,7 +608,7 @@ export default {
   },
   mounted () {
     this.marker = setInterval(() => {
-      this.GanttCurrentTime.currentTime += Math.floor(Math.random(0, 1) * 10)
+      this.GanttCurrentTime.currentTime += Math.floor(Math.random(0, 1) * 1000)
     }, 1000)
   },
   beforeDestroy () {

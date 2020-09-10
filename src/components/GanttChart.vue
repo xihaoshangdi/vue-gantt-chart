@@ -33,7 +33,7 @@ export default {
   name: 'GanttChart',
   props: {
     // 甘特图配置
-    baseSemi: { // 半小时的基准宽度
+    baseSemi: { // 一小时的基准宽度
       type: Number,
       default: 50
     },
