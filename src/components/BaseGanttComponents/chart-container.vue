@@ -99,6 +99,7 @@ export default {
       if (this.dragEvent) {
         this.dragEvent.parentNode.removeChild(this.dragEvent)
         event.target.appendChild(this.dragEvent)
+        this.$emit('drop', 'xxx')
       }
     },
     onDragOver (event) {

@@ -1,5 +1,5 @@
 <template>
-  <GanttChart  :gantt_data="GanttData" :gantt-current-time="GanttCurrentTime" :gantt-time-section="GanttTime">
+  <GanttChart @drop="clickbtn"  :gantt_data="GanttData" :gantt-current-time="GanttCurrentTime" :gantt-time-section="GanttTime">
     <template v-slot:side-box="{item}">
       <Xxx :da="item" @xxx="clickbtn"/>
     </template>

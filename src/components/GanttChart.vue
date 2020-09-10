@@ -13,6 +13,7 @@
       </chart-side>
       <!--甘特图中心数据组件 -->
       <chart-container
+        v-on="$listeners"
         :chart-height="chartHeight"
         :baseSemi="baseSemi"
         :ganttTimeSection="ganttTimeSection"
