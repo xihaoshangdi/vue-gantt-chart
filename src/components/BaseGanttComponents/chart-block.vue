@@ -1,5 +1,5 @@
 <template>
-  <div class="block">
+  <div class="block" @click.stop="selectBlock">
     <template v-for="(item,index) in block.childArrary" >
       <div :key="index" class="bar" :style="occupy(item)" draggable="true">
         <slot :item="item"></slot>
@@ -13,12 +13,15 @@
 import dayjs from 'dayjs'
 export default {
   name: 'chart-block',
-  props: ['block', 'baseSemi', 'ganttTimeSectionDayJS'],
+  props: ['block', 'baseSemi', 'ganttTimeSectionDayJS', 'uniqueAttr'],
   methods: {
     occupy (bar) {
       const during = dayjs(bar.end).diff(dayjs(bar.start), 'minute')
       const spendHour = dayjs(dayjs(bar.start)).diff(this.ganttTimeSectionDayJS.start, 'hour')
       return { width: this.baseSemi / 60 * during + 'px', left: spendHour * this.baseSemi + 'px' }
+    },
+    selectBlock () {
+      this.$emit('select', this.uniqueAttr)
     }
   }
 

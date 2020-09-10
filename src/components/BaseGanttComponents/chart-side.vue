@@ -38,7 +38,7 @@ export default {
 
 <style scoped lang="scss">
   .gantt-side {
-    width: 200px;
+    min-width: 200px;
     height: 320px;
   }
   .header > div {

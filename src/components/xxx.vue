@@ -1,6 +1,9 @@
 <template>
   <div class="xxx">
-    {{da.currentAirort}}
+    <span>{{da.currentAirort}}</span>
+    <span>{{da.number}}</span>
+    <span>{{da.model}}</span>
+
   </div>
 </template>
 
@@ -22,5 +25,13 @@ export default {
 </script>
 
 <style scoped>
+  .xxx{
+    display: flex;
+    flex-direction: row;
 
+  }
+  .xxx > span{
+    padding-left: 5px;
+    margin-right: 5px;
+  }
 </style>

@@ -68,7 +68,8 @@ export default {
   provide () {
     return {
       gantt_data: this.gantt_data,
-      ganttCurrentTime: this.ganttCurrentTime
+      ganttCurrentTime: this.ganttCurrentTime,
+      ganttSide: this.ganttSide
     }
   },
   components: { ChartSide, ChartLegend, ChartContainer },

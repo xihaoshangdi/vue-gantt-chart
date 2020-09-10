@@ -13,10 +13,13 @@
       </div>
       <time-line :baseSemi="baseSemi"/>
       <!--灰色遮罩-->
-      <div class="cki" :style="xxx"></div>
-      <div class="container">
+      <div class="mask" :style="mask"></div>
+      <div class="container" >
         <template v-for="(block,index) in gantt_data">
           <chart-block
+            :class="{active: activeIndex === index}"
+            :uniqueAttr="index"
+            @select="selectBlock"
             :key="index"
             :style="blockStyle"
             :baseSemi="baseSemi"
@@ -41,6 +44,12 @@ export default {
   components: { TimeLine, ChartBlock },
   props: ['chartHeight', 'baseSemi', 'blockHeight', 'ganttTimeSection'],
   inject: ['gantt_data', 'ganttCurrentTime'],
+  data () {
+    return {
+      activeIndex: -1,
+      dragEvent: null
+    }
+  },
   computed: {
     ganttTimeSectionDayJS () {
       return { start: dayjs(this.ganttTimeSection.start), end: dayjs(this.ganttTimeSection.end) }
@@ -83,7 +92,7 @@ export default {
         height: `${this.blockHeight}px`
       }
     },
-    xxx () {
+    mask () {
       return { width: this.baseSemi / 60 * this.ganttCurrentTime.currentTime / 60 + 'px' }
     }
   },
@@ -102,9 +111,11 @@ export default {
         this.$emit('drop', 'xxx')
       }
     },
-    onDragOver (event) {
-      // 结束位置是甘特条就允许结束拖拽
+    onDragOver (event) { // 结束位置是甘特条就允许结束拖拽
       if (event.target.className === 'block') event.preventDefault()
+    },
+    selectBlock (index) { // 选中功能
+      this.activeIndex = index
     }
   }
 }
@@ -135,10 +146,13 @@ export default {
     height: 320px;
     overflow: auto;
   }
-  .cki{
+  .mask{
     background-color: rgba(0,100,100,0.1);
     height: 100%;
     position: absolute;
+  }
+  .active{
+    background-color: rgba(0,0,0,0.1);
   }
 
 </style>
