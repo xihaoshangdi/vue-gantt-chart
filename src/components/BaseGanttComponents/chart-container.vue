@@ -8,21 +8,23 @@
       </div>
       <div>
         <template v-for="(item,index) in hour">
-          <div :style="hourStyle" :key="index">{{item}}</div>
+          <div class="hour" :style="hourStyle" :key="index">{{item}}</div>
         </template>
       </div>
-      <time-line/>
-      <template v-for="(block,index) in gantt_data">
-        <chart-block
-          :key="index"
-          :style="blockStyle"
-          :baseSemi="baseSemi"
-          :ganttTimeSectionDayJS="ganttTimeSectionDayJS"
-          :block="block"
-          v-slot="{item}">
-          <slot :item="item"></slot>
-        </chart-block>
-      </template>
+      <time-line :baseSemi="baseSemi"/>
+      <div class="container">
+        <template v-for="(block,index) in gantt_data">
+          <chart-block
+            :key="index"
+            :style="blockStyle"
+            :baseSemi="baseSemi"
+            :ganttTimeSectionDayJS="ganttTimeSectionDayJS"
+            :block="block"
+            v-slot="{item}">
+            <slot :item="item"></slot>
+          </chart-block>
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -43,7 +45,7 @@ export default {
     },
     chartWidth () {
       const semis = this.ganttTimeSectionDayJS.end.diff(this.ganttTimeSectionDayJS.start, 'hour')
-      return this.baseSemi * semis * 2
+      return this.baseSemi * semis
     },
     chartStyle () {
       return { // 甘特图真实的渲染长度
@@ -54,14 +56,14 @@ export default {
     },
     dateStyle () {
       return { // 日期条的渲染长度
-        width: this.baseSemi * 2 * 24 + 'px',
+        width: this.baseSemi * 24 + 'px',
         height: `${this.blockHeight}px`,
         lineHeight: this.blockHeight + 'px'
       }
     },
     hourStyle () {
       return { // 时间条的渲染长度
-        width: this.baseSemi * 2 + 'px',
+        width: this.baseSemi + 'px',
         height: `${this.blockHeight}px`,
         lineHeight: this.blockHeight + 'px'
       }
@@ -104,8 +106,8 @@ export default {
 
 <style scoped lang="scss">
   .chart-box{
-    overflow: auto;
-    max-width:800px;
+    width: 1000px;
+    overflow-y: hidden;
     & > div:first-child > div:nth-child(-n+2){
       width: 100%;
       display: flex;
@@ -119,6 +121,13 @@ export default {
         background-color: rgba(123,185,254,0.4);
       }
     }
+  }
+  .hour{
+    background-image: url("../../assets/header.png");
+  }
+  .container{
+    height: 320px;
+    overflow: auto;
   }
 
 </style>

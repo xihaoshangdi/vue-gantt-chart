@@ -27,8 +27,9 @@ export default {
 
 <style scoped lang="scss">
   .block {
+    position: relative;
     width: 100%;
-    background-image: url("../../assets/background.png");
+    background-image: url("../../assets/yyy.png");
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -37,6 +38,5 @@ export default {
     position: absolute;
     background-color: #7BB9FE;
     height: 26px;
-    overflow: hidden;
   }
 </style>

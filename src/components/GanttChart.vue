@@ -4,7 +4,9 @@
       <!--图例组件：可选配置      -->
       <chart-legend/>
     </div>
-    <div class="gantt-area" @contextmenu="rightClick">
+    <div
+      class="gantt-area"
+      @contextmenu="rightClick">
       <!--甘特图Side数据组件      -->
       <chart-side v-slot="{item}">
         <slot name="side-box" :item="item"></slot>
@@ -33,7 +35,7 @@ export default {
     // 甘特图配置
     baseSemi: { // 半小时的基准宽度
       type: Number,
-      default: 25
+      default: 50
     },
     chartHeight: { // 中心甘特图高度
       type: Number,
@@ -69,6 +71,21 @@ export default {
     }
   },
   components: { ChartSide, ChartLegend, ChartContainer },
+  mounted () {
+    const side = document.querySelector('.side')
+    const container = document.querySelector('.container')
+    const area = document.querySelector('.gantt-area')
+    let flag = ''
+    area.addEventListener('mouseenter', (event) => {
+      const className = event.target.className
+      if (className.includes('container')) flag = 'container'
+      if (className.includes('side')) flag = 'side'
+    }, true)
+    area.addEventListener('scroll', (event) => {
+      if (flag === 'container') side.scrollTop = event.target.scrollTop
+      if (flag === 'side') container.scrollTop = event.target.scrollTop
+    }, true)
+  },
   methods: {
     rightClick (event) {
       event.preventDefault()
@@ -89,8 +106,6 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    width: 1000px;
-    height: 400px;
   }
 
 </style>

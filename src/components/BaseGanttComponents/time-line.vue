@@ -11,15 +11,8 @@
 <script>
 export default {
   name: 'timeLine',
+  props: ['baseSemi'],
   inject: ['ganttCurrentTime'],
-  data () {
-    return {
-      // 位置
-      linePos: { left: 0 },
-      // 秒
-      seconds: 0
-    }
-  },
 
   computed: {
     currentTime () {
@@ -33,6 +26,9 @@ export default {
     },
     second () {
       return this.currentTime % 60
+    },
+    linePos () {
+      return { left: this.baseSemi / 30 * this.currentTime / 60 + 'px' }
     }
   }
 
@@ -42,7 +38,7 @@ export default {
 <style lang="scss" scoped>
   .timeline{
     position: absolute;
-    height: 100%;
+    height: 320px;
     width: 2px;
     background-color: rgba(255, 0, 0, 0.4);
     z-index: 10;

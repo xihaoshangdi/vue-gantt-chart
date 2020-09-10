@@ -143,6 +143,462 @@ export default {
               end: '2020/08/25 15:00:00'
             }
           ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
+        },
+        {
+          id: 3,
+          currentAirort: '北京机场',
+          number: 'B-1323',
+          model: 'H125',
+          childArrary: [
+            {
+              childId: 1,
+              filghtNumber: '4343',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 7,
+              start: '2020/08/25 21:00:00',
+              end: '2020/08/25 22:00:00'
+            },
+            {
+              childId: 2,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 8,
+              start: '2020/08/25 09:00:00',
+              end: '2020/08/25 11:00:00'
+            },
+            {
+              childId: 3,
+              filghtNumber: '121',
+              startAirport: '天津机场',
+              endAirport: '北京机场',
+              workType: '农林喷洒',
+              state: 9,
+              start: '2020/08/25 13:00:00',
+              end: '2020/08/25 15:00:00'
+            }
+          ]
         }
       ],
       GanttCurrentTime: { currentTime: 0 },
