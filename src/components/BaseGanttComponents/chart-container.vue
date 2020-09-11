@@ -14,13 +14,12 @@
       <time-line :baseSemi="baseSemi"/>
       <!--灰色遮罩-->
       <div class="mask" :style="mask"></div>
-      <div class="container" >
+      <div class="container" @click="selectBlock">
         <template v-for="(block,index) in gantt_data">
           <chart-block
-            :class="{active: activeIndex === index}"
-            :uniqueAttr="index"
-            @select="selectBlock"
             :key="index"
+            :class="{active: activeIndex === block.id}"
+            :data-id="block.id"
             :style="blockStyle"
             :baseSemi="baseSemi"
             :ganttTimeSectionDayJS="ganttTimeSectionDayJS"
@@ -35,7 +34,7 @@
 </template>
 
 <script>
-import { handleDaySet, handleHourSet } from '@/lib/unit'
+import { handleDaySet, handleHourSet } from '@/lib/GanttUnit'
 import ChartBlock from '@/components/BaseGanttComponents/chart-block'
 import dayjs from 'dayjs'
 import TimeLine from '@/components/BaseGanttComponents/time-line'
@@ -98,24 +97,31 @@ export default {
   },
   methods: {
     onDragStart (event) {
-      console.log('开始拖拽', event)
       event.dataTransfer.effectAllowed = 'move'
-      this.dragEvent = event.target
+      this.dragEvent = event
     },
     ondrop (event) {
       event.preventDefault()
-      console.log('拖拽到:', event)
-      if (this.dragEvent) {
-        this.dragEvent.parentNode.removeChild(this.dragEvent)
-        event.target.appendChild(this.dragEvent)
+      const dragTarget = this.dragEvent.target
+      if (dragTarget) {
+        dragTarget.parentNode.removeChild(dragTarget)
+        event.target.appendChild(dragTarget)
+        console.log('拖拽对象:', dragTarget.dataset.id)
+        console.log('拖拽到对象的ID:', event.target.dataset.id)
         this.$emit('drop', 'xxx')
       }
     },
     onDragOver (event) { // 结束位置是甘特条就允许结束拖拽
-      if (event.target.className === 'block') event.preventDefault()
+      if (event.target.className.includes('block')) event.preventDefault()
     },
-    selectBlock (index) { // 选中功能
-      this.activeIndex = index
+    selectBlock (event) { // 选中功能
+      event.path.some(item => {
+        if (item.className === 'block') {
+          console.log('item.dataset.id', item.dataset.id)
+          this.activeIndex = item.dataset.id - 0
+          return true
+        }
+      })
     }
   }
 }

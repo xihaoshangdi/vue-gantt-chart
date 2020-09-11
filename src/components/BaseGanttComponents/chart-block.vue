@@ -1,7 +1,7 @@
 <template>
-  <div class="block" @click.stop="selectBlock">
-    <template v-for="(item,index) in block.childArrary" >
-      <div :key="index" class="bar" :style="occupy(item)" draggable="true">
+  <div class="block">
+    <template v-for="(item,index) in block.childArrary">
+      <div :key="index" :data-id="item.id" class="bar" :style="occupy(item)" draggable="true">
         <slot :item="item"></slot>
       </div>
     </template>
@@ -19,9 +19,6 @@ export default {
       const during = dayjs(bar.end).diff(dayjs(bar.start), 'minute')
       const spendHour = dayjs(dayjs(bar.start)).diff(this.ganttTimeSectionDayJS.start, 'hour')
       return { width: this.baseSemi / 60 * during + 'px', left: spendHour * this.baseSemi + 'px' }
-    },
-    selectBlock () {
-      this.$emit('select', this.uniqueAttr)
     }
   }
 
@@ -32,7 +29,7 @@ export default {
   .block {
     position: relative;
     width: 100%;
-    background-image: url("../../assets/yyy.png");
+    background-image: url("../../assets/background.png");
     display: flex;
     flex-direction: row;
     align-items: center;

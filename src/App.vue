@@ -41,7 +41,7 @@ export default {
           unassigned: true,
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               startAirport: '天津机场',
               endAirport: '北京机场',
               workType: '农林喷洒',
@@ -50,7 +50,7 @@ export default {
               end: '2020/08/25 23:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               startAirport: '天津机场',
               endAirport: '北京机场',
               workType: '农林喷洒',
@@ -67,7 +67,7 @@ export default {
           model: 'H125',
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -77,7 +77,7 @@ export default {
               end: '2020/08/25 23:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -95,7 +95,7 @@ export default {
           model: 'H125',
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -105,7 +105,7 @@ export default {
               end: '2020/08/25 23:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -123,7 +123,7 @@ export default {
           model: 'H125',
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -133,7 +133,7 @@ export default {
               end: '2020/08/25 22:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               filghtNumber: '121',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -143,7 +143,7 @@ export default {
               end: '2020/08/25 11:00:00'
             },
             {
-              childId: 3,
+              id: 3,
               filghtNumber: '121',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -162,7 +162,7 @@ export default {
           unassigned: true,
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               startAirport: '天津机场',
               endAirport: '北京机场',
               workType: '农林喷洒',
@@ -171,7 +171,7 @@ export default {
               end: '2020/08/25 23:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               startAirport: '天津机场',
               endAirport: '北京机场',
               workType: '农林喷洒',
@@ -188,7 +188,7 @@ export default {
           model: 'H125',
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -198,7 +198,7 @@ export default {
               end: '2020/08/25 23:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -216,7 +216,7 @@ export default {
           model: 'H125',
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -226,7 +226,7 @@ export default {
               end: '2020/08/25 23:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -244,7 +244,7 @@ export default {
           model: 'H125',
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -254,7 +254,7 @@ export default {
               end: '2020/08/25 22:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               filghtNumber: '121',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -264,7 +264,7 @@ export default {
               end: '2020/08/25 11:00:00'
             },
             {
-              childId: 3,
+              id: 3,
               filghtNumber: '121',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -283,7 +283,7 @@ export default {
           unassigned: true,
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               startAirport: '天津机场',
               endAirport: '北京机场',
               workType: '农林喷洒',
@@ -292,7 +292,7 @@ export default {
               end: '2020/08/25 23:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               startAirport: '天津机场',
               endAirport: '北京机场',
               workType: '农林喷洒',
@@ -309,7 +309,7 @@ export default {
           model: 'H125',
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -319,7 +319,7 @@ export default {
               end: '2020/08/25 23:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -337,7 +337,7 @@ export default {
           model: 'H125',
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -347,7 +347,7 @@ export default {
               end: '2020/08/25 23:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -365,7 +365,7 @@ export default {
           model: 'H125',
           childArrary: [
             {
-              childId: 1,
+              id: 1,
               filghtNumber: '4343',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -375,7 +375,7 @@ export default {
               end: '2020/08/25 22:00:00'
             },
             {
-              childId: 2,
+              id: 2,
               filghtNumber: '121',
               startAirport: '天津机场',
               endAirport: '北京机场',
@@ -385,7 +385,7 @@ export default {
               end: '2020/08/25 11:00:00'
             },
             {
-              childId: 3,
+              id: 3,
               filghtNumber: '121',
               startAirport: '天津机场',
               endAirport: '北京机场',
