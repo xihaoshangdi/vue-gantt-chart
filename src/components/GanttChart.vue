@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <div class="gantt-legend">
-      <!--图例组件：可选配置      -->
-      <chart-legend :gantt-legend="ganttLegend"/>
-    </div>
+  <div class="gantt-layout">
+    <!--图例组件：可选配置      -->
+    <chart-legend :gantt-legend="ganttLegend"/>
     <div class="gantt-area">
       <!--甘特图Side数据组件-->
       <chart-side
@@ -110,14 +108,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  *{
+  // 甘特图全局布局
+  .gantt-layout{
     margin: 0;
     padding: 0;
+    border: 1px solid saddlebrown;
+    overflow: hidden;
+    width: 100%;
+    & > *{
+      box-sizing: border-box;
+    }
   }
+
   .gantt-area{
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
   }
 
 </style>

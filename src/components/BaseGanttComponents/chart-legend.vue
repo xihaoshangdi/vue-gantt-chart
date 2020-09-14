@@ -1,13 +1,15 @@
 <template>
-  <div class="tips">
-    <div @mouseenter="onMouseEnter" class="tipsIcon">?</div>
-    <div v-if="infoStatus" class="card" @mouseleave="onMouseLeave">
-      <template v-for="(value,key) in ganttLegend">
-        <div :key="key" class="row">
-          <div class="cardColor" :style={background:value}></div>
-          <div>{{key}}</div>
-        </div>
-      </template>
+  <div class="legend-layout"  >
+    <div class="icon" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+      <span>?</span>
+      <div v-if="infoStatus" class="card" >
+        <template v-for="(value,key) in ganttLegend">
+          <div :key="key" class="bar">
+            <div class="cardColor" :style={background:value}></div>
+            <div>{{key}}</div>
+          </div>
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -33,42 +35,45 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .tips{
+  .legend-layout{
+    box-sizing: border-box;
+    margin-bottom: 5px;
     cursor: pointer;
-    margin: 10px;
     background: #F9F7F9;
     display: flex;
     justify-content: flex-end;
     position: relative;
-    .tipsIcon{
-      width:21px;
-      height:21px;
-      background:rgba(186,202,229,1);
-      border-radius:50%;
-      text-align: center;
-    }
-    .card{
-      position: absolute;
-      top: 30px;
-      right: 50px;
-      background-color: #ffffff;
-      border: 1px solid #f0f9eb;
-      padding: 20px;
-    }
-    .row {
-      display: flex;
-      height: 20px;
-      padding: 3px 0;
-      font-size: 14px;
-      color: #50668B;
-      align-items: center;
-      font-family: PingFang-SC;
-    }
-    .cardColor {
-      width: 30px;
-      height: 10px;
-      line-height: 10px;
-      margin-right: 20px;
-    }
   }
+  .icon{
+    width:21px;
+    height:21px;
+    background:#bacae5;
+    border-radius:50%;
+    text-align: center;
+    margin-right: 5px;
+  }
+  .card{
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background-color: white;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1000;
+  }
+  .bar{
+    display: flex;
+    height: 20px;
+    padding: 3px 0;
+    font-size: 14px;
+    color: #50668B;
+    align-items: center;
+  }
+  .cardColor {
+    width: 30px;
+    height: 10px;
+    line-height: 10px;
+    margin-right: 20px;
+  }
+
 </style>
