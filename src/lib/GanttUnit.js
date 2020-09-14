@@ -21,7 +21,15 @@ export const handleHourSet = (count) => {
   }
   return data
 }
-
+/**
+ * @description 得到一个天数集合
+ * @param {Number} count
+ * @return  {Array}
+ * @author WuJiaPing
+ * @date 2020/9/4
+ * @example
+ *
+ */
 export const handleDaySet = ({ start, end }) => {
   const dataList = []
   let startTime = start.startOf('day')

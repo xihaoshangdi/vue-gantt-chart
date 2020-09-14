@@ -1,6 +1,7 @@
 <template>
   <div class="block"
        @dragover.stop="onDragOver"
+
        @drop.stop="onDrop">
     <template
       v-for="(item,index) in block.childArrary">
@@ -9,6 +10,7 @@
         :style="occupy(item)"
         class="bar"
         draggable="true"
+        @contextmenu.capture.stop="onMenu(item,$event)"
         @dragstart.stop="onDragStart(item,$event)">
         <slot :item="item"></slot>
       </div>
@@ -44,6 +46,13 @@ export default {
     },
     onDragOver (event) { // 结束位置是甘特条就允许结束拖拽
       if (event.target.className.includes('block')) event.preventDefault()
+    },
+    onMenu (bar, event) {
+      event.preventDefault()
+      this.$emit('menu', {
+        data: bar,
+        dom: event
+      })
     }
   }
 }

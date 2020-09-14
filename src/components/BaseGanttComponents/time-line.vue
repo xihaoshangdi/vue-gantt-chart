@@ -11,24 +11,21 @@
 <script>
 export default {
   name: 'timeLine',
-  props: ['baseSemi'],
-  inject: ['ganttCurrentTime'],
+  props: ['baseSemi', 'spendTime'],
 
   computed: {
-    currentTime () {
-      return this.ganttCurrentTime.currentTime
-    },
+
     hour () {
-      return Math.floor(this.currentTime / 3600)
+      return Math.floor(this.spendTime / 3600)
     },
     minute () {
-      return Math.floor((this.currentTime / 60) % 60)
+      return Math.floor((this.spendTime / 60) % 60)
     },
     second () {
-      return this.currentTime % 60
+      return this.spendTime % 60
     },
     linePos () {
-      return { left: this.baseSemi / 60 * this.currentTime / 60 + 'px' }
+      return { left: this.baseSemi / 60 * this.spendTime / 60 + 'px' }
     }
   }
 

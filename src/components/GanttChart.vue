@@ -2,13 +2,13 @@
   <div>
     <div class="gantt-legend">
       <!--图例组件：可选配置      -->
-      <chart-legend/>
+      <chart-legend :gantt-legend="ganttLegend"/>
     </div>
-    <div
-      class="gantt-area"
-      @contextmenu="rightClick">
-      <!--甘特图Side数据组件      -->
-      <chart-side v-slot="{item}">
+    <div class="gantt-area">
+      <!--甘特图Side数据组件-->
+      <chart-side
+        v-on="$listeners"
+        v-slot="{item}">
         <slot name="side-box" :item="item"></slot>
       </chart-side>
       <!--甘特图中心数据组件 -->
@@ -17,6 +17,7 @@
         :chart-height="chartHeight"
         :baseSemi="baseSemi"
         :blockHeight="blockHeight"
+        :spendTime="spendTime"
         v-slot="{item}">
         <slot name="container-box" :item="item"></slot>
       </chart-container>
@@ -28,7 +29,9 @@
 import ChartLegend from '@/components/BaseGanttComponents/chart-legend'
 import ChartContainer from '@/components/BaseGanttComponents/chart-container'
 import ChartSide from '@/components/BaseGanttComponents/chart-side'
+import isBetween from 'dayjs/plugin/isBetween'
 import dayjs from 'dayjs'
+dayjs.extend(isBetween)
 export default {
   name: 'GanttChart',
   props: {
@@ -45,6 +48,12 @@ export default {
       type: Number,
       default: 40
     },
+    ganttLegend: { // 甘特图图例
+      type: Object,
+      default: () => {
+        return null
+      }
+    },
     ganttTimeSection: { // 甘特图时间区间
       type: Object,
       default: () => {
@@ -52,10 +61,8 @@ export default {
       }
     },
     ganttCurrentTime: { // 甘特图时间轴时间
-      type: Object,
-      default: () => {
-        return { currentTime: 0 }
-      }
+      type: Number,
+      default: 0
     },
     ganttData: { // 甘特图数据
       type: Array,
@@ -63,15 +70,24 @@ export default {
     }
   },
   computed: {
-    ganttTimeSectionDayJS () {
+    ganttTimeSectionDayJS () { // 传入的甘特图时间区间转化为DayJs
       return { start: dayjs(this.ganttTimeSection.start), end: dayjs(this.ganttTimeSection.end) }
+    },
+    spendTime () { // 计算当前时间与甘特图起始时间的差值
+      let time
+      if (dayjs(this.ganttCurrentTime).isBetween(this.ganttTimeSectionDayJS.start, this.ganttTimeSectionDayJS.end, null, '[')) {
+        time = dayjs(dayjs(this.ganttCurrentTime)).diff(this.ganttTimeSectionDayJS.start, 'second') // 差值时间
+      } else {
+        console.error('错误的时间')
+        time = 0
+      }
+      return time
     }
   },
   provide () {
     return {
       ganttData: this.ganttData,
-      ganttTimeSectionDayJS: this.ganttTimeSectionDayJS,
-      ganttCurrentTime: this.ganttCurrentTime
+      ganttTimeSectionDayJS: this.ganttTimeSectionDayJS
     }
   },
   components: { ChartSide, ChartLegend, ChartContainer },
@@ -89,15 +105,7 @@ export default {
       if (flag === 'container') side.scrollTop = event.target.scrollTop
       if (flag === 'side') container.scrollTop = event.target.scrollTop
     }, true)
-  },
-  methods: {
-    rightClick (event) {
-      event.preventDefault()
-      console.log('rightClik-event', `${event.target.className || 'null'}---${event.clientX}---${event.clientY}`)
-      this.$emit('right-click', { className: event.target.className, x: event.clientX, y: event.clientY })
-    }
   }
-
 }
 </script>
 

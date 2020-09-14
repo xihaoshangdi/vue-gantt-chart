@@ -11,7 +11,9 @@
     <div class="side">
       <template v-for="(item,index) in gantt_side">
         <template >
-          <div :key="index">
+          <div
+            :key="index"
+            @contextmenu.capture.stop="onMenu(item,$event)">
             <div></div>
             <slot :item="item"></slot>
           </div>
@@ -31,6 +33,15 @@ export default {
     },
     gantt_side () {
       return this.ganttData
+    }
+  },
+  methods: {
+    onMenu (bar, event) {
+      event.preventDefault()
+      this.$emit('show-menu', {
+        data: bar,
+        dom: event
+      })
     }
   }
 }

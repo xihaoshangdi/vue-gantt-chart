@@ -11,7 +11,7 @@
           <div class="hour" :style="hourStyle" :key="index">{{item}}</div>
         </template>
       </div>
-      <time-line :baseSemi="baseSemi"/>
+      <time-line :baseSemi="baseSemi" :spendTime="spendTime" />
       <!--灰色遮罩-->
       <div class="mask" :style="mask"></div>
       <div class="container">
@@ -25,6 +25,7 @@
             @click.native="selectBlock(index)"
             @drag="onDrag"
             @drop="onDrop"
+            @menu="showMenu"
             v-slot="{item}">
             <slot :item="item"></slot>
           </chart-block>
@@ -41,14 +42,14 @@ import TimeLine from '@/components/BaseGanttComponents/time-line'
 export default {
   name: 'chart-container',
   components: { TimeLine, ChartBlock },
-  props: ['chartHeight', 'baseSemi', 'blockHeight'],
-  inject: ['ganttData', 'ganttCurrentTime', 'ganttTimeSectionDayJS'],
+  props: ['chartHeight', 'baseSemi', 'blockHeight', 'spendTime'],
+  inject: ['ganttData', 'ganttTimeSectionDayJS'],
   data () {
     return {
       activeIndex: -1,
       dragEvent: {
-        drag: null,
-        drop: null
+        dragStart: null,
+        dragEnd: null
       }
     }
   },
@@ -92,18 +93,22 @@ export default {
       }
     },
     mask () {
-      return { width: this.baseSemi / 60 * this.ganttCurrentTime.currentTime / 60 + 'px' }
+      return { width: this.baseSemi / 60 * this.spendTime / 60 + 'px' }
     }
   },
   methods: {
     onDrag (event) { // 传递拖拽的dom节点和数据
       console.log('Drag', event)
-      this.dragEvent.drag = event
+      this.dragEvent.dragStart = event
     },
     onDrop (event) { // 传递拖拽到的dom和数据
       console.log('Drop', event)
-      this.dragEvent.drop = event
+      this.dragEvent.dragEnd = event
       this.$emit('drag-drop', this.dragEvent)
+    },
+    showMenu (event) {
+      console.log('Menu', event)
+      this.$emit('show-menu', event)
     },
     selectBlock (index) { // 选中功能
       this.activeIndex = index

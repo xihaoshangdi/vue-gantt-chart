@@ -1,7 +1,9 @@
 <template>
   <GanttChart
     @drag-drop="clickbtn"
+    @show-menu="showMenu"
     :gantt-data="GanttData"
+    :gantt-legend="GanttLegend"
     :gantt-current-time="GanttCurrentTime"
     :gantt-time-section="GanttTime">
     <template v-slot:side-box="{item}">
@@ -397,14 +399,26 @@ export default {
           ]
         }
       ],
-      GanttCurrentTime: { currentTime: 0 },
+      GanttCurrentTime: new Date('2020/08/25 00:00:00').getTime(),
+      GanttLegend: {
+        正在飞行: '#B4D17D',
+        延误30分钟: '#FFE0E1',
+        延误1小时: '#FDC6C7',
+        延误2小时: '#FEADAF',
+        延误4小时: '#FF8789',
+        延误8小时: '#ED7274',
+        延误: '#F28E2B',
+        备降: '#A0CBE8',
+        计划航班: '#7BB9FE',
+        正常着陆: '#F2F2F2'
+      },
       // 定时器
       marker: null
     }
   },
   mounted () {
     this.marker = setInterval(() => {
-      this.GanttCurrentTime.currentTime += Math.floor(Math.random(0, 1) * 10)
+      this.GanttCurrentTime += 10000
     }, 1000)
   },
   beforeDestroy () {
@@ -412,6 +426,9 @@ export default {
   },
   methods: {
     clickbtn (event) {
+      console.log(event)
+    },
+    showMenu (event) {
       console.log(event)
     }
   }
