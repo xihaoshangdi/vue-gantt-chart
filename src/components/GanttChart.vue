@@ -16,7 +16,6 @@
         v-on="$listeners"
         :chart-height="chartHeight"
         :baseSemi="baseSemi"
-        :ganttTimeSection="ganttTimeSection"
         :blockHeight="blockHeight"
         v-slot="{item}">
         <slot name="container-box" :item="item"></slot>
@@ -52,28 +51,31 @@ export default {
         return { start: dayjs(new Date()), end: dayjs(new Date()).add(3, 'day') }
       }
     },
-    // 甘特图数据
-    gantt_data: { // 甘特图数据
-      type: Array,
-      required: true
-    },
-    // 甘特图时间轴时间
-    ganttCurrentTime: {
+    ganttCurrentTime: { // 甘特图时间轴时间
       type: Object,
       default: () => {
         return { currentTime: 0 }
       }
+    },
+    ganttData: { // 甘特图数据
+      type: Array,
+      required: true
+    }
+  },
+  computed: {
+    ganttTimeSectionDayJS () {
+      return { start: dayjs(this.ganttTimeSection.start), end: dayjs(this.ganttTimeSection.end) }
     }
   },
   provide () {
     return {
-      gantt_data: this.gantt_data,
-      ganttCurrentTime: this.ganttCurrentTime,
-      ganttSide: this.ganttSide
+      ganttData: this.ganttData,
+      ganttTimeSectionDayJS: this.ganttTimeSectionDayJS,
+      ganttCurrentTime: this.ganttCurrentTime
     }
   },
   components: { ChartSide, ChartLegend, ChartContainer },
-  mounted () {
+  mounted () { // 滚动同步
     const side = document.querySelector('.side')
     const container = document.querySelector('.container')
     const area = document.querySelector('.gantt-area')

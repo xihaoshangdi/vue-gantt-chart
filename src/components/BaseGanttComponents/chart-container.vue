@@ -1,6 +1,6 @@
 <template>
   <div class="chart-box">
-    <div :style="chartStyle" @dragstart.stop="onDragStart" @dragover.stop="onDragOver" @drop.stop="ondrop">
+    <div :style="chartStyle" >
       <div>
         <template v-for="(item,index) in day">
           <div :style="dateStyle" :key="index">{{item}}</div>
@@ -14,16 +14,17 @@
       <time-line :baseSemi="baseSemi"/>
       <!--灰色遮罩-->
       <div class="mask" :style="mask"></div>
-      <div class="container" @click="selectBlock">
-        <template v-for="(block,index) in gantt_data">
+      <div class="container">
+        <template v-for="(block,index) in ganttData">
           <chart-block
             :key="index"
-            :class="{active: activeIndex === block.id}"
-            :data-id="block.id"
+            :class="{active: activeIndex === index}"
             :style="blockStyle"
             :baseSemi="baseSemi"
-            :ganttTimeSectionDayJS="ganttTimeSectionDayJS"
             :block="block"
+            @click.native="selectBlock(index)"
+            @drag="onDrag"
+            @drop="onDrop"
             v-slot="{item}">
             <slot :item="item"></slot>
           </chart-block>
@@ -36,23 +37,22 @@
 <script>
 import { handleDaySet, handleHourSet } from '@/lib/GanttUnit'
 import ChartBlock from '@/components/BaseGanttComponents/chart-block'
-import dayjs from 'dayjs'
 import TimeLine from '@/components/BaseGanttComponents/time-line'
 export default {
   name: 'chart-container',
   components: { TimeLine, ChartBlock },
-  props: ['chartHeight', 'baseSemi', 'blockHeight', 'ganttTimeSection'],
-  inject: ['gantt_data', 'ganttCurrentTime'],
+  props: ['chartHeight', 'baseSemi', 'blockHeight'],
+  inject: ['ganttData', 'ganttCurrentTime', 'ganttTimeSectionDayJS'],
   data () {
     return {
       activeIndex: -1,
-      dragEvent: null
+      dragEvent: {
+        drag: null,
+        drop: null
+      }
     }
   },
   computed: {
-    ganttTimeSectionDayJS () {
-      return { start: dayjs(this.ganttTimeSection.start), end: dayjs(this.ganttTimeSection.end) }
-    },
     chartWidth () {
       const semis = this.ganttTimeSectionDayJS.end.diff(this.ganttTimeSectionDayJS.start, 'hour')
       return this.baseSemi * semis
@@ -96,32 +96,17 @@ export default {
     }
   },
   methods: {
-    onDragStart (event) {
-      event.dataTransfer.effectAllowed = 'move'
-      this.dragEvent = event
+    onDrag (event) { // 传递拖拽的dom节点和数据
+      console.log('Drag', event)
+      this.dragEvent.drag = event
     },
-    ondrop (event) {
-      event.preventDefault()
-      const dragTarget = this.dragEvent.target
-      if (dragTarget) {
-        dragTarget.parentNode.removeChild(dragTarget)
-        event.target.appendChild(dragTarget)
-        console.log('拖拽对象:', dragTarget.dataset.id)
-        console.log('拖拽到对象的ID:', event.target.dataset.id)
-        this.$emit('drop', 'xxx')
-      }
+    onDrop (event) { // 传递拖拽到的dom和数据
+      console.log('Drop', event)
+      this.dragEvent.drop = event
+      this.$emit('drag-drop', this.dragEvent)
     },
-    onDragOver (event) { // 结束位置是甘特条就允许结束拖拽
-      if (event.target.className.includes('block')) event.preventDefault()
-    },
-    selectBlock (event) { // 选中功能
-      event.path.some(item => {
-        if (item.className === 'block') {
-          console.log('item.dataset.id', item.dataset.id)
-          this.activeIndex = item.dataset.id - 0
-          return true
-        }
-      })
+    selectBlock (index) { // 选中功能
+      this.activeIndex = index
     }
   }
 }

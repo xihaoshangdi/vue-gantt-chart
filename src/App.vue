@@ -1,11 +1,11 @@
 <template>
   <GanttChart
-    @drop="clickbtn"
-    :gantt_data="GanttData"
+    @drag-drop="clickbtn"
+    :gantt-data="GanttData"
     :gantt-current-time="GanttCurrentTime"
     :gantt-time-section="GanttTime">
     <template v-slot:side-box="{item}">
-      <Xxx :da="item" @xxx="clickbtn"/>
+      <Xxx :da="item"/>
     </template>
     <template v-slot:container-box="{item}">
       <Yyy :da="item"/>
@@ -411,8 +411,8 @@ export default {
     clearInterval(this.marker)
   },
   methods: {
-    clickbtn (e) {
-      console.log(e)
+    clickbtn (event) {
+      console.log(event)
     }
   }
 }

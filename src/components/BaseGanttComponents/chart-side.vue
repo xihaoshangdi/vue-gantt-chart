@@ -24,13 +24,13 @@
 <script>
 export default {
   name: 'chart-side',
-  inject: ['gantt_data'],
+  inject: ['ganttData'],
   computed: {
     headerSide () {
       return ['当前航班', '时间刻度']
     },
     gantt_side () {
-      return this.gantt_data
+      return this.ganttData
     }
   }
 }
