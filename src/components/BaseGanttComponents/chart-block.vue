@@ -2,8 +2,7 @@
   <div class="block"
        @dragover.stop="onDragOver"
        @drop.stop="onDrop">
-    <template
-      v-for="(item,index) in block.childArrary">
+    <template v-for="(item,index) in block.childArrary">
       <div
         :key="index"
         :style="occupy(item)"
@@ -59,11 +58,13 @@ export default {
 
 <style scoped lang="scss">
   .block {
+    height: 100%;
     background-image: url("../../assets/background.png");
     display: flex;
     flex-direction: row;
     align-items: center;
     overflow: hidden;
+    position: relative;
   }
   .bar{
     position: absolute;

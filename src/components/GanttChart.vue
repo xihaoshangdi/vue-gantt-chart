@@ -161,6 +161,8 @@ export default {
     width: 1000px;
     & > *{
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
   }
   .gantt-area{

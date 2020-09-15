@@ -5,6 +5,7 @@
       <time-line :baseSemi="baseSemi" :spendTime="spendTime" />
       <!--灰色遮罩-->
       <div class="mask" :style="mask"></div>
+      <div class="block-box">
         <template v-for="(block,index) in ganttData">
           <chart-block
             :key="index"
@@ -20,6 +21,7 @@
             <slot :item="item"></slot>
           </chart-block>
         </template>
+      </div>
       </div>
   </div>
 </template>
@@ -74,11 +76,38 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .container{
-    position: relative;
-    height: 400px;
-    overflow: auto;
+.container{
+  height: 400px;
+  overflow: overlay;
+  /* 滚动条 */
+  &::-webkit-scrollbar-thumb:horizontal { /*水平滚动条的样式*/
+    width: 4px;
+    background-color: #CCCCCC;
+    -webkit-border-radius: 6px;
   }
+  &::-webkit-scrollbar-track-piece {
+    background-color: #fff; /*滚动条的背景颜色*/
+    -webkit-border-radius: 0; /*滚动条的圆角宽度*/
+  }
+  &::-webkit-scrollbar {
+    width: 10px; /*滚动条的宽度*/
+    height: 8px; /*滚动条的高度*/
+  }
+  &::-webkit-scrollbar-thumb:vertical { /*垂直滚动条的样式*/
+    height: 50px;
+    background-color: #999;
+    -webkit-border-radius: 4px;
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+    border: 2px solid #fff;
+  }
+  &::-webkit-scrollbar-thumb:hover { /*滚动条的hover样式*/
+    height: 50px;
+    background-color: #9f9f9f;
+    -webkit-border-radius: 4px;
+  }
+
+}
   .mask{
     background-color: rgba(0,100,100,0.1);
     height: 100%;

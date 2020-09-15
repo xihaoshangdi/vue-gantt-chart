@@ -403,7 +403,6 @@ export default {
           ]
         }
       ],
-
       GanttCurrentTime: new Date('2020/08/25 00:00:00').getTime(),
       GanttLegend: {
         正在飞行: '#B4D17D',
