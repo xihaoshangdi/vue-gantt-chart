@@ -35,11 +35,12 @@ export default {
 <style lang="scss" scoped>
   .timeline{
     position: absolute;
-    height: 320px;
+    height: 100%;
     width: 2px;
     background-color: rgba(255, 0, 0, 0.4);
     z-index: 10;
     & > div{
+      position: fixed;
       margin-left: 2px;
       user-select: none;
       font-size: 0.7rem;

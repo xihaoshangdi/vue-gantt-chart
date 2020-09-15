@@ -1,7 +1,6 @@
 <template>
   <div class="block"
        @dragover.stop="onDragOver"
-
        @drop.stop="onDrop">
     <template
       v-for="(item,index) in block.childArrary">
@@ -24,11 +23,11 @@ import dayjs from 'dayjs'
 export default {
   name: 'chart-block',
   props: ['block', 'baseSemi'],
-  inject: ['ganttTimeSectionDayJS'],
+  inject: ['timeSectionDayJs'],
   methods: {
     occupy (bar) {
       const during = dayjs(bar.end).diff(dayjs(bar.start), 'minute')
-      const spendHour = dayjs(dayjs(bar.start)).diff(this.ganttTimeSectionDayJS.start, 'hour')
+      const spendHour = dayjs(dayjs(bar.start)).diff(this.timeSectionDayJs.start, 'hour')
       return { width: this.baseSemi / 60 * during + 'px', left: spendHour * this.baseSemi + 'px' }
     },
     onDragStart (bar, event) {
@@ -60,12 +59,11 @@ export default {
 
 <style scoped lang="scss">
   .block {
-    position: relative;
-    width: 100%;
     background-image: url("../../assets/background.png");
     display: flex;
     flex-direction: row;
     align-items: center;
+    overflow: hidden;
   }
   .bar{
     position: absolute;

@@ -1,38 +1,25 @@
 <template>
-  <div class="gantt-side" >
-    <div class="header">
-      <template v-for="item in headerSide">
-        <div :key="item">
-          <div></div>
-          <div>{{item}}</div>
-        </div>
-      </template>
-    </div>
-    <div class="side">
+  <div class="side" :style="{height: chartHeight+'px'}">
       <template v-for="(item,index) in gantt_side">
-        <template >
-          <div
-            :key="index"
-            @contextmenu.capture.stop="onMenu(item,$event)">
+          <div :key="index" :style="sideHeight" @contextmenu.capture.stop="onMenu(item,$event)">
             <div></div>
             <slot :item="item"></slot>
           </div>
-        </template>
       </template>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'chart-side',
+  props: ['blockHeight', 'chartHeight'],
   inject: ['ganttData'],
   computed: {
-    headerSide () {
-      return ['当前航班', '时间刻度']
-    },
     gantt_side () {
       return this.ganttData
+    },
+    sideHeight () {
+      return { height: this.blockHeight + 'px' }
     }
   },
   methods: {
@@ -48,63 +35,28 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .gantt-side {
+  .side{
     min-width: 200px;
-    height: 320px;
-  }
-  .header > div {
-    display: flex;
-    flex-direction: row;
-    & > div:first-child{
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    & >div {
+      display: flex;
+      flex-direction: row;
+    }
+    & > div > div:first-child{
       height: 40px;
       width: 10px;
       display: inline-block;
       border-radius: 7px 0 0 7px;
     }
-    & > div:nth-child(2){
+    & >div > div:nth-child(2){
       width: 100%;
       text-align: center;
       line-height: 40px;
     }
-    &:first-child{
-      & >div:first-child{
-        background-color: rgba(123, 185, 254, 1);
-      }
-      & >div:nth-child(2){
-        background-color: rgba(123, 185, 254, 0.6);
-      }
-    }
-    &:nth-child(2){
-      & >div:first-child{
-        background-color: rgba(123, 185, 254, 1);
-      }
-      & >div:nth-child(2){
-        background-color: rgba(123, 185, 254, 0.3);
-      }
-    }
-  }
-
-  .side{
-    height: 320px;
-    overflow: auto;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    & >div{
-      display: flex;
-      flex-direction: row;
-      & > div:first-child{
-        height: 40px;
-        width: 10px;
-        display: inline-block;
-        border-radius: 7px 0 0 7px;
-      }
-      & > div:nth-child(2){
-        width: 100%;
-        text-align: center;
-        line-height: 40px;
-      }
-      &:first-child{
+    & > div:first-child{
         & >div:first-child{
           background-color: rgba(241, 206, 99, 1);
         }
@@ -112,7 +64,7 @@ export default {
           background-color: rgba(241, 206, 99, 0.2);
         }
       }
-      &:nth-child(n+2){
+    & > div:nth-child(n+2){
         & >div:first-child{
           background-color: rgba(180, 209, 125, 1);
         }
@@ -121,6 +73,4 @@ export default {
         }
       }
     }
-  }
-
 </style>

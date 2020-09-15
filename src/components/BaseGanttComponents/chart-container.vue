@@ -1,20 +1,10 @@
 <template>
-  <div class="chart-box">
-    <div :style="chartStyle" >
-      <div>
-        <template v-for="(item,index) in day">
-          <div :style="dateStyle" :key="index">{{item}}</div>
-        </template>
-      </div>
-      <div>
-        <template v-for="(item,index) in hour">
-          <div class="hour" :style="hourStyle" :key="index">{{item}}</div>
-        </template>
-      </div>
+  <div class="container">
+    <div :style="chartStyle">
+      <!--时间轴-->
       <time-line :baseSemi="baseSemi" :spendTime="spendTime" />
       <!--灰色遮罩-->
       <div class="mask" :style="mask"></div>
-      <div class="container">
         <template v-for="(block,index) in ganttData">
           <chart-block
             :key="index"
@@ -31,19 +21,17 @@
           </chart-block>
         </template>
       </div>
-    </div>
   </div>
 </template>
 
 <script>
-import { handleDaySet, handleHourSet } from '@/lib/GanttUnit'
 import ChartBlock from '@/components/BaseGanttComponents/chart-block'
 import TimeLine from '@/components/BaseGanttComponents/time-line'
 export default {
   name: 'chart-container',
   components: { TimeLine, ChartBlock },
-  props: ['chartHeight', 'baseSemi', 'blockHeight', 'spendTime'],
-  inject: ['ganttData', 'ganttTimeSectionDayJS'],
+  props: ['chartStyle', 'baseSemi', 'blockHeight', 'spendTime'],
+  inject: ['ganttData'],
   data () {
     return {
       activeIndex: -1,
@@ -54,38 +42,6 @@ export default {
     }
   },
   computed: {
-    chartWidth () {
-      const semis = this.ganttTimeSectionDayJS.end.diff(this.ganttTimeSectionDayJS.start, 'hour')
-      return this.baseSemi * semis
-    },
-    chartStyle () {
-      return { // 甘特图真实的渲染长度
-        width: `${this.chartWidth}px`,
-        height: `${this.chartHeight}px`,
-        position: 'relative'
-      }
-    },
-    dateStyle () {
-      return { // 日期条的渲染长度
-        width: this.baseSemi * 24 + 'px',
-        height: `${this.blockHeight}px`,
-        lineHeight: this.blockHeight + 'px'
-      }
-    },
-    hourStyle () {
-      return { // 时间条的渲染长度
-        width: this.baseSemi + 'px',
-        height: `${this.blockHeight}px`,
-        lineHeight: this.blockHeight + 'px'
-      }
-    },
-    hour () {
-      const hours = this.ganttTimeSectionDayJS.end.diff(this.ganttTimeSectionDayJS.start, 'hour')
-      return handleHourSet(hours)
-    },
-    day () {
-      return handleDaySet(this.ganttTimeSectionDayJS)
-    },
     blockStyle () {
       return {
         backgroundSize: `${this.baseSemi}px 100%`,
@@ -118,28 +74,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .chart-box{
-    width: 1000px;
-    overflow-y: hidden;
-    & > div:first-child > div:nth-child(-n+2){
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      flex-flow: nowrap;
-      text-align: center;
-      &:first-child{
-        background-color: rgba(123,185,254,0.3);
-      }
-      &:nth-child(2){
-        background-color: rgba(123,185,254,0.4);
-      }
-    }
-  }
-  .hour{
-    background-image: url("../../assets/header.png");
-  }
   .container{
-    height: 320px;
+    position: relative;
+    height: 400px;
     overflow: auto;
   }
   .mask{

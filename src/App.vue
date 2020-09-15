@@ -1,11 +1,13 @@
 <template>
   <GanttChart
+    :show-header="showHeader"
     @drag-drop="clickbtn"
     @show-menu="showMenu"
     :gantt-data="GanttData"
     :gantt-legend="GanttLegend"
     :gantt-current-time="GanttCurrentTime"
-    :gantt-time-section="GanttTime">
+    :time-section="GanttTime"
+  >
     <template v-slot:side-box="{item}">
       <Xxx :da="item"/>
     </template>
@@ -24,6 +26,8 @@ export default {
   components: { Yyy, Xxx, GanttChart },
   data () {
     return {
+      showHeader: true,
+      headerData: ['a', 'b'],
       GanttTime: {
         start: '2020/08/25 00:00:00',
         end: '2020/08/28 22:00:00'
@@ -399,6 +403,7 @@ export default {
           ]
         }
       ],
+
       GanttCurrentTime: new Date('2020/08/25 00:00:00').getTime(),
       GanttLegend: {
         正在飞行: '#B4D17D',
