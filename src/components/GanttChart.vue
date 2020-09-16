@@ -135,7 +135,6 @@ export default {
     const container = document.querySelector('.gantt-area > .container')
     const area = document.querySelector('.gantt-area')
     let flag = ''
-    console.log(side.scrollHeight, container.scrollHeight)
     area.addEventListener('mouseenter', (event) => {
       const className = event.target.className
       if (className.includes('container')) flag = 'container'

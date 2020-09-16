@@ -1,11 +1,10 @@
 <template>
-  <div class="container">
-    <div :style="chartStyle">
+    <div class="container" >
       <!--时间轴-->
       <time-line :baseSemi="baseSemi" :spendTime="spendTime" />
       <!--灰色遮罩-->
       <div class="mask" :style="mask"></div>
-      <div class="block-box">
+      <div :style="chartStyle">
         <template v-for="(block,index) in ganttData">
           <chart-block
             :key="index"
@@ -22,8 +21,7 @@
           </chart-block>
         </template>
       </div>
-      </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -77,6 +75,7 @@ export default {
 
 <style scoped lang="scss">
 .container{
+  position: relative;
   height: 400px;
   overflow: overlay;
   /* 滚动条 */

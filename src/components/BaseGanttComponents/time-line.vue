@@ -1,4 +1,5 @@
 <template>
+  <div class="line-box">
     <div class="timeline" :style="linePos">
       <div>
         <span>{{hour.toString().padStart(2,'0')}}:</span>
@@ -6,6 +7,7 @@
         <span>{{second.toString().padStart(2,'0')}}</span>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -33,14 +35,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .line-box{
+    position: sticky;
+    top: 0;
+  }
   .timeline{
     position: absolute;
-    height: 100%;
+    height: 400px;
     width: 2px;
     background-color: rgba(255, 0, 0, 0.4);
     z-index: 10;
     & > div{
-      position: fixed;
       margin-left: 2px;
       user-select: none;
       font-size: 0.7rem;
