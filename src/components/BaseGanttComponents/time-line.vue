@@ -1,6 +1,6 @@
 <template>
   <div class="line-box">
-    <div class="timeline" :style="linePos">
+    <div class="timeline" :style="{height:lineHeight,left:linePos}">
       <div>
         <span>{{hour.toString().padStart(2,'0')}}:</span>
         <span>{{minute.toString().padStart(2,'0')}}:</span>
@@ -14,9 +14,15 @@
 export default {
   name: 'timeLine',
   props: ['baseSemi', 'spendTime'],
-
+  data () {
+    return {
+      lineHeight: 0
+    }
+  },
+  mounted () {
+    this.lineHeight = this.$parent.$el.clientHeight + 'px'
+  },
   computed: {
-
     hour () {
       return Math.floor(this.spendTime / 3600)
     },
@@ -27,7 +33,7 @@ export default {
       return this.spendTime % 60
     },
     linePos () {
-      return { left: this.baseSemi / 60 * this.spendTime / 60 + 'px' }
+      return this.baseSemi / 60 * this.spendTime / 60 + 'px'
     }
   }
 
@@ -41,9 +47,7 @@ export default {
     top: 0;
   }
   .timeline{
-    z-index: 800;
     position: absolute;
-    height: 400px;
     width: 2px;
     background-color: rgba(255, 0, 0, 0.4);
     & > div{

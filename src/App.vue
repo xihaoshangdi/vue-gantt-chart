@@ -47,7 +47,7 @@ export default {
   },
   mounted () {
     this.marker = setInterval(() => {
-      this.GanttCurrentTime += 1000
+      this.GanttCurrentTime += 100000
     }, 1000)
     console.log()
   },
