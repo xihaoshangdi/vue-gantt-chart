@@ -105,6 +105,7 @@ export default {
 
 }
   .mask{
+    z-index: 800;
     background-color: rgba(0,100,100,0.1);
     height: 100%;
     position: absolute;

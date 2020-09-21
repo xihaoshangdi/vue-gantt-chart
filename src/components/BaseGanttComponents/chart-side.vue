@@ -36,8 +36,9 @@ export default {
 
 <style scoped lang="scss">
   .side{
-    min-width: 200px;
     overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 200px;
     &::-webkit-scrollbar {
       display: none;
     }

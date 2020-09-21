@@ -1,26 +1,15 @@
 <template>
   <div class="xxx">
-    <span>{{da.currentAirort}}</span>
+    <span>{{da.currentAirport}}</span>
     <span>{{da.number}}</span>
     <span>{{da.model}}</span>
-
   </div>
 </template>
 
 <script>
 export default {
   name: 'xxx',
-  props: ['da'],
-  data () {
-    return {
-      // 菜单数据
-      menuStatus: false,
-      menuPos: {
-        left: 0,
-        top: 0
-      }
-    }
-  }
+  props: ['da']
 }
 </script>
 
@@ -28,10 +17,13 @@ export default {
   .xxx{
     display: flex;
     flex-direction: row;
-
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    text-align: center;
+    font-size: 10px;
   }
   .xxx > span{
-    padding-left: 5px;
-    margin-right: 5px;
+    margin: 2px;
   }
 </style>

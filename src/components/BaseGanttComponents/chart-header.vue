@@ -98,9 +98,9 @@ export default {
   }
   .container{
     overflow: auto;
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    /*&::-webkit-scrollbar {*/
+    /*  display: none;*/
+    /*}*/
     &> div > div:nth-child(-n+2){
       width: 100%;
       display: flex;

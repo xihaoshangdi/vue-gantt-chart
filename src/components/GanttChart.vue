@@ -157,8 +157,8 @@ export default {
     }, true)
     area.addEventListener('scroll', (event) => {
       if (flag === 'container') {
-        if (event.target.scrollLeft !== 0) header.scrollLeft = event.target.scrollLeft
         side.scrollTop = event.target.scrollTop
+        if (event.target.className === 'container') header.scrollLeft = event.target.scrollLeft
       }
       if (flag === 'side') container.scrollTop = event.target.scrollTop
     }, true)
@@ -183,8 +183,7 @@ export default {
   .gantt-layout{
     margin: 0;
     padding: 0;
-    border: 1px solid saddlebrown;
-    width: 1000px;
+    width: 1500px;
     & > *{
       box-sizing: border-box;
       margin: 0;

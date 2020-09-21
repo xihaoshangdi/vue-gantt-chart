@@ -36,15 +36,16 @@ export default {
 
 <style lang="scss" scoped>
   .line-box{
+    z-index: 800;
     position: sticky;
     top: 0;
   }
   .timeline{
+    z-index: 800;
     position: absolute;
     height: 400px;
     width: 2px;
     background-color: rgba(255, 0, 0, 0.4);
-    z-index: 10;
     & > div{
       margin-left: 2px;
       user-select: none;
