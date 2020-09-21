@@ -1,7 +1,13 @@
 <template>
-  <div class="gantt-layout">
-    <!--图例组件：可选配置      -->
+  <div class="gantt-layout" @click.stop="menuStatus=false">
+    <!--图例组件：可选配置 -->
     <chart-legend :gantt-legend="ganttLegend"/>
+    <!--Menu组件：可选配置 -->
+    <chart-menu
+      v-on="$listeners"
+      :menu-group="menuGroup"
+      :menu-status="menuStatus"
+      :info="info" />
     <!--头部组件：可选配置-->
     <chart-header
       v-show="showHeader"
@@ -26,6 +32,7 @@
       <chart-container
         v-on="$listeners"
         v-slot="{item}"
+        @show-menu="showChartMenu"
         :base-semi="baseSemi"
         :block-height="blockHeight"
         :chart-style="chartStyle"
@@ -43,6 +50,7 @@ import ChartContainer from '@/components/BaseGanttComponents/chart-container'
 import ChartSide from '@/components/BaseGanttComponents/chart-side'
 import isBetween from 'dayjs/plugin/isBetween'
 import dayjs from 'dayjs'
+import ChartMenu from '@/components/BaseGanttComponents/chart-menu'
 dayjs.extend(isBetween)
 export default {
   name: 'GanttChart',
@@ -67,6 +75,20 @@ export default {
         return { start: dayjs(new Date()), end: dayjs(new Date()).add(3, 'day') }
       }
     },
+    // 甘特图图例
+    ganttLegend: { // 甘特图图例
+      type: Object,
+      default: () => {
+        return null
+      }
+    },
+    // 甘特图菜单配置
+    menuGroup: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
     // 甘特图配置
     baseSemi: { // 一小时的基准宽度
       type: Number,
@@ -79,12 +101,6 @@ export default {
     blockHeight: { // 数据条甘特图高度
       type: Number,
       default: 40
-    },
-    ganttLegend: { // 甘特图图例
-      type: Object,
-      default: () => {
-        return null
-      }
     },
     ganttCurrentTime: { // 甘特图时间轴时间
       type: Number,
@@ -127,8 +143,7 @@ export default {
       return time
     }
   },
-
-  components: { ChartHeader, ChartSide, ChartLegend, ChartContainer },
+  components: { ChartMenu, ChartHeader, ChartSide, ChartLegend, ChartContainer },
   mounted () { // 滚动同步
     const header = document.querySelector('.header > .container')
     const side = document.querySelector('.gantt-area > .side')
@@ -142,11 +157,23 @@ export default {
     }, true)
     area.addEventListener('scroll', (event) => {
       if (flag === 'container') {
+        if (event.target.scrollLeft !== 0) header.scrollLeft = event.target.scrollLeft
         side.scrollTop = event.target.scrollTop
-        header.scrollLeft = event.target.scrollLeft
       }
       if (flag === 'side') container.scrollTop = event.target.scrollTop
     }, true)
+  },
+  data () {
+    return {
+      menuStatus: false,
+      info: null
+    }
+  },
+  methods: {
+    showChartMenu (info) { // 展示甘特图菜单
+      this.menuStatus = true
+      this.info = info
+    }
   }
 }
 </script>

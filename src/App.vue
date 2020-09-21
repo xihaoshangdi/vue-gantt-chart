@@ -1,8 +1,9 @@
 <template>
   <GanttChart
     :show-header="showHeader"
-    @drag-drop="clickbtn"
-    @show-menu="showMenu"
+    :menu-group="menuGroup"
+    @handle-menu="handleMenu"
+    @drag-drop="handleDrag"
     :gantt-data="GanttData"
     :gantt-legend="GanttLegend"
     :gantt-current-time="GanttCurrentTime"
@@ -416,6 +417,7 @@ export default {
         计划航班: '#7BB9FE',
         正常着陆: '#F2F2F2'
       },
+      menuGroup: ['修改', '查看', '备降', '返航', '取消', '调机', '置位', '置地', '结束'],
       // 定时器
       marker: null
     }
@@ -429,11 +431,11 @@ export default {
     clearInterval(this.marker)
   },
   methods: {
-    clickbtn (event) {
-      console.log(event)
+    handleDrag (event) {
+      console.log('event', event)
     },
-    showMenu (event) {
-      console.log(event)
+    handleMenu (event) {
+      console.log('event', event)
     }
   }
 }

@@ -54,16 +54,13 @@ export default {
   },
   methods: {
     onDrag (event) { // 传递拖拽的dom节点和数据
-      console.log('Drag', event)
       this.dragEvent.dragStart = event
     },
     onDrop (event) { // 传递拖拽到的dom和数据
-      console.log('Drop', event)
       this.dragEvent.dragEnd = event
       this.$emit('drag-drop', this.dragEvent)
     },
     showMenu (event) {
-      console.log('Menu', event)
       this.$emit('show-menu', event)
     },
     selectBlock (index) { // 选中功能
