@@ -31,7 +31,7 @@ export default {
         start: dayjs(new Date()).format('YYYY/MM/DD HH:mm:ss'),
         end: dayjs(new Date()).add(3, 'day').format('YYYY/MM/DD HH:mm:ss')
       },
-      GanttData: mockData(100),
+      GanttData: mockData(5),
       GanttCurrentTime: new Date().getTime(),
       GanttLegend: {
         正在飞行: '#B4D17D',

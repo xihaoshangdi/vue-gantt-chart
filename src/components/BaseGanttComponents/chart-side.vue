@@ -1,5 +1,5 @@
 <template>
-  <div class="side" :style="{height: chartHeight+'px'}">
+  <div class="side" :style="{maxHeight: chartHeight+'px'}">
       <template v-for="(item,index) in gantt_side">
           <div :key="index" :style="sideHeight" @contextmenu.capture.stop="onMenu(item,$event)">
             <div></div>

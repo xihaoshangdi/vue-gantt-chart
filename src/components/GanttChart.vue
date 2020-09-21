@@ -129,6 +129,7 @@ export default {
     chartStyle () {
       return { // 甘特图真实的渲染长度
         width: `${this.chartWidth}px`,
+        maxHeight: `${this.chartHeight}px`,
         position: 'relative'
       }
     },

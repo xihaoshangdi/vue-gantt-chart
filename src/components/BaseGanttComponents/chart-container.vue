@@ -73,7 +73,6 @@ export default {
 <style scoped lang="scss">
 .container{
   position: relative;
-  height: 400px;
   overflow: overlay;
   /* 滚动条 */
   &::-webkit-scrollbar-thumb:horizontal { /*水平滚动条的样式*/
