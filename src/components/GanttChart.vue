@@ -184,7 +184,7 @@ export default {
   .gantt-layout{
     margin: 0;
     padding: 0;
-    width: 1500px;
+    width: 1000px;
     & > *{
       box-sizing: border-box;
       margin: 0;

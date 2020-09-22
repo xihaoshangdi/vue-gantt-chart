@@ -3,7 +3,7 @@
       <!--时间轴-->
       <time-line :baseSemi="baseSemi" :spendTime="spendTime" />
       <!--灰色遮罩-->
-      <div class="mask" :style="mask"></div>
+      <time-mask :mask="mask"/>
       <div :style="chartStyle">
         <template v-for="(block,index) in ganttData">
           <chart-block
@@ -27,9 +27,10 @@
 <script>
 import ChartBlock from '@/components/BaseGanttComponents/chart-block'
 import TimeLine from '@/components/BaseGanttComponents/time-line'
+import TimeMask from '@/components/BaseGanttComponents/time-mask'
 export default {
   name: 'chart-container',
-  components: { TimeLine, ChartBlock },
+  components: { TimeMask, TimeLine, ChartBlock },
   props: ['chartStyle', 'baseSemi', 'blockHeight', 'spendTime'],
   inject: ['ganttData'],
   data () {
@@ -49,7 +50,7 @@ export default {
       }
     },
     mask () {
-      return { width: this.baseSemi / 60 * this.spendTime / 60 + 'px' }
+      return this.baseSemi / 60 * this.spendTime / 60 + 'px'
     }
   },
   methods: {
@@ -101,14 +102,7 @@ export default {
     background-color: #9f9f9f;
     -webkit-border-radius: 4px;
   }
-
 }
-  .mask{
-    z-index: 800;
-    background-color: rgba(0,100,100,0.1);
-    height: 100%;
-    position: absolute;
-  }
   .active{
     background-color: rgba(0,0,0,0.1);
   }
