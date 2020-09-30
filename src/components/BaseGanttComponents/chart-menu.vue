@@ -1,14 +1,14 @@
 <template>
   <div v-show="menuStatus" class="card" :style="position">
     <template v-for="item in menuGroup">
-      <div :key="item" @click="handleEvent(item)">{{item}}</div>
+      <div :key="item" @click="handleEvent(item)">{{ item }}</div>
     </template>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'chart-menu',
+  name: 'ChartMenu',
   props: {
     menuStatus: {
       type: Boolean,

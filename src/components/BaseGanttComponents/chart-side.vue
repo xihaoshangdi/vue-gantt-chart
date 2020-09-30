@@ -1,19 +1,19 @@
 <template>
   <div class="side" :style="{maxHeight: chartHeight+'px'}">
-      <template v-for="(item,index) in gantt_side">
-          <div :key="index" :style="sideHeight" @contextmenu.capture.stop="onMenu(item,$event)">
-            <div></div>
-            <slot :item="item"></slot>
-          </div>
-      </template>
+    <template v-for="(item,index) in gantt_side">
+      <div :key="index" :style="sideHeight" @contextmenu.capture.stop="onMenu(item,$event)">
+        <div />
+        <slot :item="item" />
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'chart-side',
-  props: ['blockHeight', 'chartHeight'],
+  name: 'ChartSide',
   inject: ['ganttData'],
+  props: ['blockHeight', 'chartHeight'],
   computed: {
     gantt_side () {
       return this.ganttData

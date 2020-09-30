@@ -1,27 +1,28 @@
 <template>
-    <div class="container" >
-      <!--时间轴-->
-      <time-line :baseSemi="baseSemi" :spendTime="spendTime" />
-      <!--灰色遮罩-->
-      <time-mask :mask="mask"/>
-      <div :style="chartStyle">
-        <template v-for="(block,index) in ganttData">
-          <chart-block
-            :key="index"
-            :class="{active: activeIndex === index}"
-            :style="blockStyle"
-            :baseSemi="baseSemi"
-            :block="block"
-            @click.native="selectBlock(index)"
-            @drag="onDrag"
-            @drop="onDrop"
-            @menu="showMenu"
-            v-slot="{item}">
-            <slot :item="item"></slot>
-          </chart-block>
-        </template>
-      </div>
+  <div class="container">
+    <!--时间轴-->
+    <time-line :base-semi="baseSemi" :spend-time="spendTime" />
+    <!--灰色遮罩-->
+    <time-mask :mask="mask" />
+    <div :style="chartStyle">
+      <template v-for="(block,index) in ganttData">
+        <chart-block
+          :key="index"
+          v-slot="{item}"
+          :class="{active: activeIndex === index}"
+          :style="blockStyle"
+          :base-semi="baseSemi"
+          :block="block"
+          @click.native="selectBlock(index)"
+          @drag="onDrag"
+          @drop="onDrop"
+          @menu="showMenu"
+        >
+          <slot :item="item" />
+        </chart-block>
+      </template>
     </div>
+  </div>
 </template>
 
 <script>
@@ -29,10 +30,10 @@ import ChartBlock from '@/components/BaseGanttComponents/chart-block'
 import TimeLine from '@/components/BaseGanttComponents/time-line'
 import TimeMask from '@/components/BaseGanttComponents/time-mask'
 export default {
-  name: 'chart-container',
+  name: 'ChartContainer',
   components: { TimeMask, TimeLine, ChartBlock },
-  props: ['chartStyle', 'baseSemi', 'blockHeight', 'spendTime'],
   inject: ['ganttData'],
+  props: ['chartStyle', 'baseSemi', 'blockHeight', 'spendTime'],
   data () {
     return {
       activeIndex: -1,

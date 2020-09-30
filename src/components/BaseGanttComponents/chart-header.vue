@@ -1,36 +1,36 @@
 <template>
-    <div class="header">
-        <div class="side">
-          <template v-for="(item,index) in headerData">
-            <div :class="`side-`+index" :key="item">
-              <div></div>
-              <div>{{item}}</div>
-            </div>
+  <div class="header">
+    <div class="side">
+      <template v-for="(item,index) in headerData">
+        <div :key="item" :class="`side-`+index">
+          <div />
+          <div>{{ item }}</div>
+        </div>
+      </template>
+    </div>
+    <div class="container">
+      <div :style="{width:chartWidth+'px'}">
+        <div>
+          <template v-for="(item,index) in day">
+            <div :key="index" :style="dateStyle">{{ item }}</div>
           </template>
         </div>
-        <div class="container" >
-          <div :style="{width:chartWidth+'px'}">
-            <div>
-              <template v-for="(item,index) in day">
-                <div :style="dateStyle" :key="index">{{item}}</div>
-              </template>
-            </div>
-            <div>
-              <template v-for="(item,index) in hour">
-                <div class="hour" :style="hourStyle" :key="index">{{item}}</div>
-              </template>
-            </div>
-          </div>
+        <div>
+          <template v-for="(item,index) in hour">
+            <div :key="index" class="hour" :style="hourStyle">{{ item }}</div>
+          </template>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
 import { handleDaySet, handleHourSet } from '@/lib/GanttUnit'
 export default {
-  name: 'chart-header',
-  props: ['headerData', 'showHeader', 'baseSemi', 'blockHeight', 'chartWidth'],
+  name: 'ChartHeader',
   inject: ['timeSectionDayJs'],
+  props: ['headerData', 'showHeader', 'baseSemi', 'blockHeight', 'chartWidth'],
   computed: {
     dateStyle () {
       return { // 日期条的渲染长度

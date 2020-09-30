@@ -1,12 +1,12 @@
 <template>
-  <div class="legend-layout"  >
+  <div class="legend-layout">
     <div class="icon" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
       <span>?</span>
-      <div v-if="infoStatus" class="card" >
+      <div v-if="infoStatus" class="card">
         <template v-for="(value,key) in ganttLegend">
           <div :key="key" class="bar">
-            <div class="cardColor" :style={background:value}></div>
-            <div>{{key}}</div>
+            <div class="cardColor" :style="{background:value}" />
+            <div>{{ key }}</div>
           </div>
         </template>
       </div>
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'chart-legend',
+  name: 'ChartLegend',
   props: ['gantt-legend'],
   data () {
     return {

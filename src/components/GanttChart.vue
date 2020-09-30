@@ -1,13 +1,14 @@
 <template>
   <div class="gantt-layout" @click.stop="menuStatus=false">
     <!--图例组件：可选配置 -->
-    <chart-legend :gantt-legend="ganttLegend"/>
+    <chart-legend :gantt-legend="ganttLegend" />
     <!--Menu组件：可选配置 -->
     <chart-menu
-      v-on="$listeners"
       :menu-group="menuGroup"
       :menu-status="menuStatus"
-      :info="info" />
+      :info="info"
+      v-on="$listeners"
+    />
     <!--头部组件：可选配置-->
     <chart-header
       v-show="showHeader"
@@ -21,23 +22,24 @@
     <div class="gantt-area">
       <!--甘特图Side数据组件-->
       <chart-side
-        v-on="$listeners"
         v-slot="{item}"
         :block-height="blockHeight"
         :chart-height="chartHeight"
+        v-on="$listeners"
       >
-        <slot name="side-box" :item="item"></slot>
+        <slot name="side-box" :item="item" />
       </chart-side>
       <!--甘特图中心数据组件 -->
       <chart-container
-        v-on="$listeners"
         v-slot="{item}"
-        @show-menu="showChartMenu"
         :base-semi="baseSemi"
         :block-height="blockHeight"
         :chart-style="chartStyle"
-        :spend-time="spendTime">
-        <slot name="container-box" :item="item"></slot>
+        :spend-time="spendTime"
+        v-on="$listeners"
+        @show-menu="showChartMenu"
+      >
+        <slot name="container-box" :item="item" />
       </chart-container>
     </div>
   </div>
@@ -54,6 +56,14 @@ import ChartMenu from '@/components/BaseGanttComponents/chart-menu'
 dayjs.extend(isBetween)
 export default {
   name: 'GanttChart',
+  components: { ChartMenu, ChartHeader, ChartSide, ChartLegend, ChartContainer },
+  provide () {
+    return {
+      headerData: this.headerData,
+      timeSectionDayJs: this.timeSectionDayJs,
+      ganttData: this.ganttData
+    }
+  },
   props: {
     // 甘特图表头配置
     showHeader: { // 甘特图表头显示
@@ -111,11 +121,10 @@ export default {
       required: true
     }
   },
-  provide () {
+  data () {
     return {
-      headerData: this.headerData,
-      timeSectionDayJs: this.timeSectionDayJs,
-      ganttData: this.ganttData
+      menuStatus: false,
+      info: null
     }
   },
   computed: {
@@ -144,7 +153,6 @@ export default {
       return time
     }
   },
-  components: { ChartMenu, ChartHeader, ChartSide, ChartLegend, ChartContainer },
   mounted () { // 滚动同步
     const header = document.querySelector('.header > .container')
     const side = document.querySelector('.gantt-area > .side')
@@ -163,12 +171,6 @@ export default {
       }
       if (flag === 'side') container.scrollTop = event.target.scrollTop
     }, true)
-  },
-  data () {
-    return {
-      menuStatus: false,
-      info: null
-    }
   },
   methods: {
     showChartMenu (info) { // 展示甘特图菜单

@@ -1,18 +1,18 @@
 <template>
   <GanttChart
     :menu-group="menuGroup"
-    @handle-menu="handleMenu"
-    @drag-drop="handleDrag"
     :gantt-data="GanttData"
     :gantt-legend="GanttLegend"
     :gantt-current-time="GanttCurrentTime"
     :time-section="GanttTime"
+    @handle-menu="handleMenu"
+    @drag-drop="handleDrag"
   >
-    <template v-slot:side-box="{item}">
-      <Xxx :da="item"/>
+    <template #side-box="{item}">
+      <Xxx :da="item" />
     </template>
-    <template v-slot:container-box="{item}">
-      <Yyy :da="item"/>
+    <template #container-box="{item}">
+      <Yyy :da="item" />
     </template>
   </GanttChart>
 </template>
