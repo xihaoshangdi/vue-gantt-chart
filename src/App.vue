@@ -1,20 +1,23 @@
 <template>
-  <GanttChart
-    :menu-group="menuGroup"
-    :gantt-data="GanttData"
-    :gantt-legend="GanttLegend"
-    :gantt-current-time="GanttCurrentTime"
-    :time-section="GanttTime"
-    @handle-menu="handleMenu"
-    @drag-drop="handleDrag"
-  >
-    <template #side-box="{item}">
-      <Xxx :da="item" />
-    </template>
-    <template #container-box="{item}">
-      <Yyy :da="item" />
-    </template>
-  </GanttChart>
+  <div>
+    <router-view />
+    <GanttChart
+      :menu-group="menuGroup"
+      :gantt-data="GanttData"
+      :gantt-legend="GanttLegend"
+      :gantt-current-time="GanttCurrentTime"
+      :time-section="GanttTime"
+      @handle-menu="handleMenu"
+      @drag-drop="handleDrag"
+    >
+      <template #side-box="{item}">
+        <Xxx :da="item" />
+      </template>
+      <template #container-box="{item}">
+        <Yyy :da="item" />
+      </template>
+    </GanttChart>
+  </div>
 </template>
 <script>
 
