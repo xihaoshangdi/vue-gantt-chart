@@ -1,14 +1,14 @@
 <template>
   <div class="xxx">
-    <span>{{da.currentAirport}}</span>
-    <span>{{da.number}}</span>
-    <span>{{da.model}}</span>
+    <span>{{ da.currentAirport }}</span>
+    <span>{{ da.number }}</span>
+    <span>{{ da.model }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'xxx',
+  name: 'Xxx',
   props: ['da']
 }
 </script>
