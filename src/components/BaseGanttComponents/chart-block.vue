@@ -1,9 +1,7 @@
 <template>
-  <div
-    class="block"
-    @dragover.stop="onDragOver"
-    @drop.stop="onDrop"
-  >
+  <div class="block"
+       @dragover.stop="onDragOver"
+       @drop.stop="onDrop">
     <template v-for="(item,index) in block.childArrary">
       <div
         :key="index"
@@ -11,9 +9,8 @@
         class="bar"
         draggable="true"
         @contextmenu.capture.stop="onMenu(item,$event)"
-        @dragstart.stop="onDragStart(item,$event)"
-      >
-        <slot :item="item" />
+        @dragstart.stop="onDragStart(item,$event)">
+        <slot :item="item"></slot>
       </div>
     </template>
   </div>
@@ -23,9 +20,9 @@
 <script>
 import dayjs from 'dayjs'
 export default {
-  name: 'ChartBlock',
-  inject: ['timeSectionDayJs'],
+  name: 'chart-block',
   props: ['block', 'baseSemi'],
+  inject: ['timeSectionDayJs'],
   methods: {
     occupy (bar) {
       const during = dayjs(bar.end).diff(dayjs(bar.start), 'minute')

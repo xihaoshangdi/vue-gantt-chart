@@ -1,22 +1,10 @@
 <template>
-  <div class="gantt-layout" @click.stop="menuStatus=false">
-    <!--图例组件：可选配置 -->
-    <chart-legend :gantt-legend="ganttLegend" />
-    <!--Menu组件：可选配置 -->
-    <chart-menu
-      :menu-group="menuGroup"
-      :menu-status="menuStatus"
-      :info="info"
-      v-on="$listeners"
-    />
+  <div class="gantt-layout">
     <!--头部组件：可选配置-->
     <chart-header
       v-show="showHeader"
       :header-data="headerData"
-      :block-height="blockHeight"
-      :base-semi="baseSemi"
-      :show-header="showHeader"
-      :chart-width="chartWidth"
+      :time-section-day-js="timeSectionDayJs"
     />
     <!--甘特图区域组件：必选-->
     <div class="gantt-area">
@@ -56,7 +44,7 @@ import ChartMenu from '@/components/BaseGanttComponents/chart-menu'
 dayjs.extend(isBetween)
 export default {
   name: 'GanttChart',
-  components: { ChartMenu, ChartHeader, ChartSide, ChartLegend, ChartContainer },
+  components: { ChartHeader, ChartSide, ChartContainer },
   provide () {
     return {
       headerData: this.headerData,

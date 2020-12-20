@@ -1,25 +1,24 @@
 <template>
   <div class="header">
-    <div class="side">
-      <template v-for="(item,index) in headerData">
-        <div :key="item" :class="`side-`+index">
-          <div />
+    <div class="header__side">
+      <template v-for="item in headerData" class="header__side__left">
+        <div :key="item">
           <div>{{ item }}</div>
         </div>
       </template>
     </div>
-    <div class="container">
-      <div :style="{width:chartWidth+'px'}">
-        <div>
-          <template v-for="(item,index) in day">
-            <div :key="index" :style="dateStyle">{{ item }}</div>
-          </template>
-        </div>
-        <div>
-          <template v-for="(item,index) in hour">
-            <div :key="index" class="hour" :style="hourStyle">{{ item }}</div>
-          </template>
-        </div>
+    <div class="header__container">
+      <div class="header__container__day" :style="timeWidth">
+        <template v-for="(item, index) in day">
+          <div :key="index">{{ item }}</div>
+        </template>
+      </div>
+      <div class="header__container__hours" :style="timeWidth">
+        <template v-for="(item, index) in hour">
+          <div :key="index" class="header__container__hour">
+            {{ item }}
+          </div>
+        </template>
       </div>
     </div>
   </div>
@@ -29,94 +28,92 @@
 import { handleDaySet, handleHourSet } from '@/lib/GanttUnit'
 export default {
   name: 'ChartHeader',
-  inject: ['timeSectionDayJs'],
-  props: ['headerData', 'showHeader', 'baseSemi', 'blockHeight', 'chartWidth'],
-  computed: {
-    dateStyle () {
-      return { // 日期条的渲染长度
-        width: this.baseSemi * 24 + 'px',
-        height: `${this.blockHeight}px`,
-        lineHeight: this.blockHeight + 'px'
-      }
+  props: {
+    headerData: {
+      type: Array
     },
-    hourStyle () {
-      return { // 时间条的渲染长度
-        width: this.baseSemi + 'px',
-        height: `${this.blockHeight}px`,
-        lineHeight: this.blockHeight + 'px'
+    baseHour: {
+      type: Number,
+      default: 50
+    },
+    timeSectionDayJs: {
+      type: Object
+    }
+  },
+  computed: {
+    timeWidth () {
+      return {
+        width: this.baseHour * this.hour.length + 'px',
+        // 日期条、时间条的渲染长度
+        // width: this.baseSemi * 24 + "px",
+        // height: "40px",
+        lineHeight: '40px'
       }
     },
     hour () {
-      const hours = this.timeSectionDayJs.end.diff(this.timeSectionDayJs.start, 'hour')
+      const hours = this.day.length * 24
       return handleHourSet(hours)
     },
     day () {
-      return handleDaySet(this.timeSectionDayJs)
+      const { start, end } = this.timeSectionDayJs
+      return handleDaySet(start, end)
     }
+  },
+  mounted () {
+    console.log('timeSectionDayJs', this.timeSectionDayJs)
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .header{
-    display: flex;
-    flex-direction: row;
-  }
-  .side{
-    min-width: 200px;
-    & > div{
-      display: flex;
-      flex-direction: row;
-    }
-    & > div > div:first-child{
-      height: 40px;
+$header-background-color: rgba(123, 185, 254, 0.3);
+$header-side-background-color: rgba(123, 185, 254);
+$header-border-color: rgb(186, 202, 229);
+
+.header {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  .header__side > div {
+    display: grid;
+    line-height: 40px;
+    grid-template-columns: 10px 1fr;
+    &::before {
       width: 10px;
-      display: inline-block;
+      top: 8px;
       border-radius: 7px 0 0 7px;
+      content: "";
+      background-color: $header-side-background-color;
+      display: block;
     }
-    & > div > div:nth-child(2){
+    & > div {
       width: 100%;
       text-align: center;
-      line-height: 40px;
+      background-color: $header-background-color;
+      border-bottom: 1px solid $header-border-color;
+      border-right: 1px solid $header-border-color;
     }
   }
-  .side-0{
-    & >div:first-child{
-      background-color: rgba(123, 185, 254, 1);
+  .header__container {
+    background-color: $header-background-color;
+    .header__container__day > div {
+      border-bottom: 1px solid $header-border-color;
+      border-left: 1px solid $header-border-color;
     }
-    & >div:nth-child(2){
-      background-color: rgba(123, 185, 254, 0.6);
+    .header__container__hour {
+      background-image: url("../../assets/header.png");
     }
-  }
-  .side-1{
-    & >div:first-child{
-      background-color: rgba(123, 185, 254, 1);
+    & > div {
+      display: flex;
+      & > div {
+        text-align: center;
+        flex: 1;
+        vertical-align: middle;
+      }
     }
-    & >div:nth-child(2){
-      background-color: rgba(123, 185, 254, 0.3);
-    }
-  }
-  .container{
     overflow: auto;
     &::-webkit-scrollbar {
       display: none;
     }
-    &> div > div:nth-child(-n+2){
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      flex-flow: nowrap;
-      text-align: center;
-      &:first-child{
-        background-color: rgba(123,185,254,0.3);
-      }
-      &:nth-child(2){
-        background-color: rgba(123,185,254,0.4);
-      }
-    }
   }
-
-  .hour{
-    background-image: url("../../assets/header.png");
-  }
+}
 </style>
