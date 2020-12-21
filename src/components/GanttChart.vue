@@ -1,19 +1,20 @@
 <template>
-  <div class="gantt-layout">
+  <div class="gantt__layout">
     <!--头部组件：可选配置-->
     <chart-header
       v-show="showHeader"
       :header-data="headerData"
+      :base-hour="baseHour"
+      :base-block="baseBlock"
       :time-section-day-js="timeSectionDayJs"
     />
     <!--甘特图区域组件：必选-->
-    <div class="gantt-area">
+    <div class="gantt__area">
       <!--甘特图Side数据组件-->
       <chart-side
         v-slot="{item}"
-        :block-height="blockHeight"
-        :chart-height="chartHeight"
-        v-on="$listeners"
+        :base-block="baseBlock"
+        :gantt-data="ganttData"
       >
         <slot name="side-box" :item="item" />
       </chart-side>
@@ -35,12 +36,10 @@
 
 <script>
 import ChartHeader from '@/components/BaseGanttComponents/chart-header'
-import ChartLegend from '@/components/BaseGanttComponents/chart-legend'
 import ChartContainer from '@/components/BaseGanttComponents/chart-container'
 import ChartSide from '@/components/BaseGanttComponents/chart-side'
 import isBetween from 'dayjs/plugin/isBetween'
 import dayjs from 'dayjs'
-import ChartMenu from '@/components/BaseGanttComponents/chart-menu'
 dayjs.extend(isBetween)
 export default {
   name: 'GanttChart',
@@ -54,37 +53,25 @@ export default {
   },
   props: {
     // 甘特图表头配置
-    showHeader: { // 甘特图表头显示
+
+    // 甘特图表头显示
+    showHeader: {
       type: Boolean,
       default: true
     },
-    headerData: { // 甘特图表头自定义
+    // 甘特图表头自定义
+    headerData: {
       type: Array,
       validator: function (value) {
         return value.length === 2
       },
-      default: () => {
-        return ['当前航班', '时间刻度']
-      }
+      default: () => ['日期', '时间']
     },
-    timeSection: { // 甘特图时间区间
+    // 甘特图时间区间
+    timeSection: {
       type: Object,
       default: () => {
         return { start: dayjs(new Date()), end: dayjs(new Date()).add(3, 'day') }
-      }
-    },
-    // 甘特图图例
-    ganttLegend: { // 甘特图图例
-      type: Object,
-      default: () => {
-        return null
-      }
-    },
-    // 甘特图菜单配置
-    menuGroup: {
-      type: Array,
-      default: () => {
-        return []
       }
     },
     // 甘特图配置
@@ -111,6 +98,10 @@ export default {
   },
   data () {
     return {
+      //
+      baseHour: 50,
+      baseBlock: 40,
+      //
       menuStatus: false,
       info: null
     }
@@ -142,23 +133,23 @@ export default {
     }
   },
   mounted () { // 滚动同步
-    const header = document.querySelector('.header > .container')
-    const side = document.querySelector('.gantt-area > .side')
-    const container = document.querySelector('.gantt-area > .container')
-    const area = document.querySelector('.gantt-area')
-    let flag = ''
-    area.addEventListener('mouseenter', (event) => {
-      const className = event.target.className
-      if (className.includes('container')) flag = 'container'
-      if (className.includes('side')) flag = 'side'
-    }, true)
-    area.addEventListener('scroll', (event) => {
-      if (flag === 'container') {
-        side.scrollTop = event.target.scrollTop
-        if (event.target.className === 'container') header.scrollLeft = event.target.scrollLeft
-      }
-      if (flag === 'side') container.scrollTop = event.target.scrollTop
-    }, true)
+    // const header = document.querySelector('.header > .container')
+    // const side = document.querySelector('.gantt-area > .side')
+    // const container = document.querySelector('.gantt-area > .container')
+    // const area = document.querySelector('.gantt-area')
+    // let flag = ''
+    // area.addEventListener('mouseenter', (event) => {
+    //   const className = event.target.className
+    //   if (className.includes('container')) flag = 'container'
+    //   if (className.includes('side')) flag = 'side'
+    // }, true)
+    // area.addEventListener('scroll', (event) => {
+    //   if (flag === 'container') {
+    //     side.scrollTop = event.target.scrollTop
+    //     if (event.target.className === 'container') header.scrollLeft = event.target.scrollLeft
+    //   }
+    //   if (flag === 'side') container.scrollTop = event.target.scrollTop
+    // }, true)
   },
   methods: {
     showChartMenu (info) { // 展示甘特图菜单
@@ -171,18 +162,16 @@ export default {
 
 <style lang="scss" scoped>
   // 甘特图全局布局
-  .gantt-layout{
+  .gantt__layout{
     margin: 0;
     padding: 0;
     width: 1000px;
-    & > *{
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    height: 600px;
   }
-  .gantt-area{
-    display: flex;
-    flex-direction: row;
+
+  .gantt__area{
+    height: 520px;//TODO
+    display: grid;
+    grid-template-columns: 200px 1fr;
   }
 </style>

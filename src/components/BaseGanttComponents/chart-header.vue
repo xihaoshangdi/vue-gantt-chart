@@ -1,19 +1,19 @@
 <template>
   <div class="header">
     <div class="header__side">
-      <template v-for="item in headerData" class="header__side__left">
-        <div :key="item">
+      <template v-for="item in headerData">
+        <div :key="item" :style="headerSideHeight">
           <div>{{ item }}</div>
         </div>
       </template>
     </div>
     <div class="header__container">
-      <div class="header__container__day" :style="timeWidth">
+      <div class="header__container__day" :style="headerContainerWidth">
         <template v-for="(item, index) in day">
           <div :key="index">{{ item }}</div>
         </template>
       </div>
-      <div class="header__container__hours" :style="timeWidth">
+      <div class="header__container__hours" :style="headerContainerWidth">
         <template v-for="(item, index) in hour">
           <div :key="index" class="header__container__hour">
             {{ item }}
@@ -30,24 +30,33 @@ export default {
   name: 'ChartHeader',
   props: {
     headerData: {
-      type: Array
+      type: Array,
+      require: true,
+      default: () => ['日期', '时间']
     },
     baseHour: {
       type: Number,
       default: 50
     },
+    baseBlock: {
+      type: Number,
+      default: 40
+    },
     timeSectionDayJs: {
-      type: Object
+      type: Object,
+      default: () => {}
     }
   },
   computed: {
-    timeWidth () {
+    headerSideHeight () {
       return {
-        width: this.baseHour * this.hour.length + 'px',
-        // 日期条、时间条的渲染长度
-        // width: this.baseSemi * 24 + "px",
-        // height: "40px",
-        lineHeight: '40px'
+        lineHeight: `${this.baseBlock}px`
+      }
+    },
+    headerContainerWidth () {
+      return {
+        width: `${this.baseHour * this.hour.length}px`,
+        lineHeight: `${this.baseBlock}px`
       }
     },
     hour () {
@@ -58,9 +67,6 @@ export default {
       const { start, end } = this.timeSectionDayJs
       return handleDaySet(start, end)
     }
-  },
-  mounted () {
-    console.log('timeSectionDayJs', this.timeSectionDayJs)
   }
 }
 </script>
@@ -75,7 +81,6 @@ $header-border-color: rgb(186, 202, 229);
   grid-template-columns: 200px 1fr;
   .header__side > div {
     display: grid;
-    line-height: 40px;
     grid-template-columns: 10px 1fr;
     &::before {
       width: 10px;
