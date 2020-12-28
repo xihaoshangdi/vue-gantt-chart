@@ -116,6 +116,7 @@ $header-border-color: rgb(186, 202, 229);
       }
     }
     overflow: auto;
+    // 滚动条
     &::-webkit-scrollbar {
       display: none;
     }

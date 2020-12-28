@@ -21,12 +21,10 @@
       <!--甘特图中心数据组件 -->
       <chart-container
         v-slot="{item}"
-        :base-semi="baseSemi"
-        :block-height="blockHeight"
-        :chart-style="chartStyle"
+        :base-hour="baseHour"
         :spend-time="spendTime"
-        v-on="$listeners"
-        @show-menu="showChartMenu"
+        :gantt-data="ganttData"
+        :time-section-day-js="timeSectionDayJs"
       >
         <slot name="container-box" :item="item" />
       </chart-container>
@@ -44,23 +42,13 @@ dayjs.extend(isBetween)
 export default {
   name: 'GanttChart',
   components: { ChartHeader, ChartSide, ChartContainer },
-  provide () {
-    return {
-      headerData: this.headerData,
-      timeSectionDayJs: this.timeSectionDayJs,
-      ganttData: this.ganttData
-    }
-  },
   props: {
     // 甘特图表头配置
-
-    // 甘特图表头显示
-    showHeader: {
+    showHeader: { // 甘特图表头显示
       type: Boolean,
       default: true
     },
-    // 甘特图表头自定义
-    headerData: {
+    headerData: { // 甘特图表头自定义
       type: Array,
       validator: function (value) {
         return value.length === 2
@@ -74,18 +62,9 @@ export default {
         return { start: dayjs(new Date()), end: dayjs(new Date()).add(3, 'day') }
       }
     },
-    // 甘特图配置
-    baseSemi: { // 一小时的基准宽度
-      type: Number,
-      default: 50
-    },
     chartHeight: { // 中心甘特图高度
       type: Number,
       default: 400
-    },
-    blockHeight: { // 数据条甘特图高度
-      type: Number,
-      default: 40
     },
     ganttCurrentTime: { // 甘特图时间轴时间
       type: Number,
@@ -110,17 +89,6 @@ export default {
     timeSectionDayJs () { // 传入的甘特图时间区间转化为DayJs
       return { start: dayjs(this.timeSection.start), end: dayjs(this.timeSection.end) }
     },
-    chartWidth () {
-      const semis = this.timeSectionDayJs.end.diff(this.timeSectionDayJs.start, 'hour')
-      return this.baseSemi * semis
-    },
-    chartStyle () {
-      return { // 甘特图真实的渲染长度
-        width: `${this.chartWidth}px`,
-        maxHeight: `${this.chartHeight}px`,
-        position: 'relative'
-      }
-    },
     spendTime () { // 计算当前时间与甘特图起始时间的差值
       let time
       if (dayjs(this.ganttCurrentTime).isBetween(this.timeSectionDayJs.start, this.timeSectionDayJs.end, null, '[')) {
@@ -133,23 +101,24 @@ export default {
     }
   },
   mounted () { // 滚动同步
-    // const header = document.querySelector('.header > .container')
-    // const side = document.querySelector('.gantt-area > .side')
-    // const container = document.querySelector('.gantt-area > .container')
-    // const area = document.querySelector('.gantt-area')
-    // let flag = ''
-    // area.addEventListener('mouseenter', (event) => {
-    //   const className = event.target.className
-    //   if (className.includes('container')) flag = 'container'
-    //   if (className.includes('side')) flag = 'side'
-    // }, true)
-    // area.addEventListener('scroll', (event) => {
-    //   if (flag === 'container') {
-    //     side.scrollTop = event.target.scrollTop
-    //     if (event.target.className === 'container') header.scrollLeft = event.target.scrollLeft
-    //   }
-    //   if (flag === 'side') container.scrollTop = event.target.scrollTop
-    // }, true)
+    const header = document.querySelector('.gantt__layout .header__container')
+    const side = document.querySelector('.gantt__layout .side')
+    const container = document.querySelector('.gantt__layout .container')
+    const area = document.querySelector('.gantt__layout')
+    // console.log(header, side, container, area)
+    let flag = ''
+    area.addEventListener('mouseenter', (event) => {
+      const className = event.target.className
+      if (className.includes('container')) flag = 'container'
+      if (className.includes('side')) flag = 'side'
+    }, true)
+    area.addEventListener('scroll', (event) => {
+      if (flag === 'container') {
+        side.scrollTop = event.target.scrollTop
+        if (event.target.className === 'container') header.scrollLeft = event.target.scrollLeft
+      }
+      if (flag === 'side') container.scrollTop = event.target.scrollTop
+    }, true)
   },
   methods: {
     showChartMenu (info) { // 展示甘特图菜单

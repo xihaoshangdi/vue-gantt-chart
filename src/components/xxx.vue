@@ -1,14 +1,14 @@
 <template>
   <div class="xxx">
-    <span>{{da.currentAirport}}</span>
-    <span>{{da.number}}</span>
-    <span>{{da.model}}</span>
+    <span>{{ da.currentAirport }}</span>
+    <span>{{ da.number }}</span>
+    <span>{{ da.model }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'xxx',
+  name: 'Xxx',
   props: ['da']
 }
 </script>
@@ -22,8 +22,5 @@ export default {
     overflow:hidden;
     text-align: center;
     font-size: 10px;
-  }
-  .xxx > span{
-    margin: 2px;
   }
 </style>

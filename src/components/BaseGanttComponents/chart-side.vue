@@ -31,8 +31,7 @@ export default {
 
 <style scoped lang="scss">
   .side{
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     //&::-webkit-scrollbar {
     //  display: none;
     //}

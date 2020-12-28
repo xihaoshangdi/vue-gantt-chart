@@ -1,22 +1,17 @@
 <template>
   <div class="container">
     <!--时间轴-->
-    <time-line :base-semi="baseSemi" :spend-time="spendTime" />
+    <time-line :base-hour="baseHour" :spend-time="spendTime" />
     <!--灰色遮罩-->
-    <time-mask :mask="mask" />
-    <div :style="chartStyle">
+    <!--    <time-mask :mask="mask" />-->
+    <div :style="blockStyle">
       <template v-for="(block,index) in ganttData">
         <chart-block
           :key="index"
           v-slot="{item}"
           :class="{active: activeIndex === index}"
-          :style="blockStyle"
-          :base-semi="baseSemi"
+          :time-section-day-js="timeSectionDayJs"
           :block="block"
-          @click.native="selectBlock(index)"
-          @drag="onDrag"
-          @drop="onDrop"
-          @menu="showMenu"
         >
           <slot :item="item" />
         </chart-block>
@@ -28,12 +23,28 @@
 <script>
 import ChartBlock from '@/components/BaseGanttComponents/chart-block'
 import TimeLine from '@/components/BaseGanttComponents/time-line'
-import TimeMask from '@/components/BaseGanttComponents/time-mask'
+import { handleDaySet } from '@/lib/GanttUnit'
 export default {
   name: 'ChartContainer',
-  components: { TimeMask, TimeLine, ChartBlock },
-  inject: ['ganttData'],
-  props: ['chartStyle', 'baseSemi', 'blockHeight', 'spendTime'],
+  components: { TimeLine, ChartBlock },
+  props: {
+    baseHour: {
+      type: Number,
+      default: 50
+    },
+    spendTime: {
+      type: Number,
+      default: 0
+    },
+    ganttData: {
+      type: Array,
+      default: () => []
+    },
+    timeSectionDayJs: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data () {
     return {
       activeIndex: -1,
@@ -45,30 +56,13 @@ export default {
   },
   computed: {
     blockStyle () {
+      const { start, end } = this.timeSectionDayJs
       return {
-        backgroundSize: `${this.baseSemi}px 100%`,
-        height: `${this.blockHeight}px`
+        width: `${this.baseHour * handleDaySet(start, end).length * 24}px`
       }
-    },
-    mask () {
-      return this.baseSemi / 60 * this.spendTime / 60 + 'px'
     }
   },
-  methods: {
-    onDrag (event) { // 传递拖拽的dom节点和数据
-      this.dragEvent.dragStart = event
-    },
-    onDrop (event) { // 传递拖拽到的dom和数据
-      this.dragEvent.dragEnd = event
-      this.$emit('drag-drop', this.dragEvent)
-    },
-    showMenu (event) {
-      this.$emit('show-menu', event)
-    },
-    selectBlock (index) { // 选中功能
-      this.activeIndex = index
-    }
-  }
+  methods: {}
 }
 </script>
 

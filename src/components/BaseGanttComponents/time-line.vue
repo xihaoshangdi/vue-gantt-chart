@@ -2,9 +2,9 @@
   <div class="line-box">
     <div class="timeline" :style="{height:lineHeight,left:linePos}">
       <div>
-        <span>{{hour.toString().padStart(2,'0')}}:</span>
-        <span>{{minute.toString().padStart(2,'0')}}:</span>
-        <span>{{second.toString().padStart(2,'0')}}</span>
+        <span>{{ hour.toString().padStart(2,'0') }}:</span>
+        <span>{{ minute.toString().padStart(2,'0') }}:</span>
+        <span>{{ second.toString().padStart(2,'0') }}</span>
       </div>
     </div>
   </div>
@@ -12,15 +12,21 @@
 
 <script>
 export default {
-  name: 'timeLine',
-  props: ['baseSemi', 'spendTime'],
+  name: 'TimeLine',
+  props: {
+    baseHour: {
+      type: Number,
+      default: 50
+    },
+    spendTime: {
+      type: Number,
+      default: 0
+    }
+  },
   data () {
     return {
       lineHeight: 0
     }
-  },
-  mounted () {
-    this.lineHeight = this.$parent.$el.clientHeight + 'px'
   },
   computed: {
     hour () {
@@ -33,8 +39,11 @@ export default {
       return this.spendTime % 60
     },
     linePos () {
-      return this.baseSemi / 60 * this.spendTime / 60 + 'px'
+      return this.baseHour * this.spendTime / 3600 + 'px'
     }
+  },
+  mounted () { // 高度为视窗高度
+    this.lineHeight = this.$parent.$el.clientHeight + 'px'
   }
 
 }
