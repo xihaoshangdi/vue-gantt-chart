@@ -3,7 +3,7 @@
     <!--时间轴-->
     <time-line :base-hour="baseHour" :spend-time="spendTime" />
     <!--灰色遮罩-->
-    <!--    <time-mask :mask="mask" />-->
+    <time-mask :spend-time="spendTime" />
     <div :style="blockStyle">
       <template v-for="(block,index) in ganttData">
         <chart-block
@@ -26,9 +26,10 @@
 import ChartBlock from '@/components/BaseGanttComponents/chart-block'
 import TimeLine from '@/components/BaseGanttComponents/time-line'
 import { handleDaySet } from '@/lib/GanttUnit'
+import TimeMask from '@/components/BaseGanttComponents/time-mask'
 export default {
   name: 'ChartContainer',
-  components: { TimeLine, ChartBlock },
+  components: { TimeMask, TimeLine, ChartBlock },
   props: {
     baseHour: {
       type: Number,
