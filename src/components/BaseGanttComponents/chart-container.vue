@@ -11,6 +11,7 @@
           v-slot="{item}"
           :style="blockSelected(index)"
           :time-section-day-js="timeSectionDayJs"
+          :spend-time="spendTime"
           :block="block"
           @click.native="handleHighlight(index)"
         >
