@@ -25,8 +25,8 @@
         :spend-time="spendTime"
         :gantt-data="ganttData"
         :time-section-day-js="timeSectionDayJs"
-        @dragstart.native="xxx"
-        @drop.native="yyy"
+        @dragstart.native="moveStart"
+        @drop.native="moveEnd"
       >
         <slot name="container-box" :item="item" />
       </chart-container>
@@ -52,9 +52,6 @@ export default {
     },
     headerData: { // 甘特图表头自定义
       type: Array,
-      validator: function (value) {
-        return value.length === 2
-      },
       default: () => ['日期', '时间']
     },
     // 甘特图时间区间
@@ -122,14 +119,15 @@ export default {
     }, true)
   },
   methods: {
-    xxx (event) {
+    moveStart (event) {
+      console.log('DragStart', event)
       this.drag = event
-      console.log(event)
     },
-    yyy (event) {
-      this.drag.target.parentNode.removeChild(this.drag.target)
-      event.target.appendChild(this.drag.target)
-      console.log(event)
+    moveEnd (event) {
+      console.log('DragEnd', event)
+      const dom = this.drag.target
+      dom.parentNode.removeChild(dom)
+      event.target.appendChild(dom)
     }
   }
 }
