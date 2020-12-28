@@ -1,5 +1,5 @@
 <template>
-  <div class="gantt__layout">
+  <div class="gantt__layout" @contextmenu.prevent>
     <!--头部组件：可选配置-->
     <chart-header
       v-show="showHeader"

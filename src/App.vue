@@ -3,6 +3,7 @@
     :gantt-data="GanttData"
     :gantt-current-time="GanttCurrentTime"
     :time-section="GanttTime"
+    @rightClick.native="handleDrag"
   >
     <template #side-box="{item}">
       <Xxx :da="item" />
@@ -41,7 +42,11 @@ export default {
   beforeDestroy () {
     clearInterval(this.marker)
   },
-  methods: {}
+  methods: {
+    handleDrag (event) {
+      console.log('event', event)
+    }
+  }
 }
 </script>
 

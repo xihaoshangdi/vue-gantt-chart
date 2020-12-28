@@ -9,9 +9,10 @@
         <chart-block
           :key="index"
           v-slot="{item}"
-          :class="{active: activeIndex === index}"
+          :style="blockSelected(index)"
           :time-section-day-js="timeSectionDayJs"
           :block="block"
+          @click.native="handleHighlight(index)"
         >
           <slot :item="item" />
         </chart-block>
@@ -62,7 +63,14 @@ export default {
       }
     }
   },
-  methods: {}
+  methods: {
+    handleHighlight (index) {
+      this.activeIndex = index
+    },
+    blockSelected (index) {
+      return index === this.activeIndex ? { backgroundColor: `rgba(0,0,0,0.1)` } : ''
+    }
+  }
 }
 </script>
 
@@ -99,7 +107,7 @@ export default {
   }
 }
   .active{
-    background-color: rgba(0,0,0,0.1);
+
   }
 
 </style>

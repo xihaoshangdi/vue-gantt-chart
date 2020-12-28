@@ -1,7 +1,7 @@
 <template>
   <div class="side">
     <template v-for="(item,index) in ganttData">
-      <div :key="index" :style="sideHeight">
+      <div :key="index" :style="sideHeight" @contextmenu.prevent="rightClick(item,$event)">
         <slot :item="item" />
       </div>
     </template>
@@ -25,6 +25,14 @@ export default {
     sideHeight () {
       return { lineHeight: `${this.baseBlock}px` }
     }
+  },
+  methods: {
+    rightClick (data, event) {
+      event.target.dispatchEvent(new CustomEvent('rightClick', {
+        bubbles: true,
+        detail: data
+      }))
+    }
   }
 }
 </script>
@@ -35,6 +43,7 @@ export default {
     //&::-webkit-scrollbar {
     //  display: none;
     //}
+    cursor: pointer;
     & > div{
       display: grid;
       grid-template-columns: 10px 1fr;

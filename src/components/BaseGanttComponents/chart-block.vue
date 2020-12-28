@@ -6,6 +6,7 @@
         :style="occupy(item)"
         class="bar"
         draggable="true"
+        @contextmenu.prevent="rightClick(item,$event)"
       >
         <slot :item="item" />
       </div>
@@ -40,6 +41,12 @@ export default {
     },
     dragOver (event) {
       if (event.target.className === 'block') event.preventDefault()
+    },
+    rightClick (data, event) {
+      event.target.dispatchEvent(new CustomEvent('rightClick', {
+        bubbles: true,
+        detail: data
+      }))
     }
   }
 }
