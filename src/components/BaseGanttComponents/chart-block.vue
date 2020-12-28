@@ -1,10 +1,11 @@
 <template>
-  <div class="block">
+  <div class="block" @dragover="dragOver">
     <template v-for="(item,index) in block.childArrary">
       <div
         :key="index"
         :style="occupy(item)"
         class="bar"
+        draggable="true"
       >
         <slot :item="item" />
       </div>
@@ -36,6 +37,9 @@ export default {
       const during = dayjs(bar.end).diff(dayjs(bar.start), 'minute')
       const spendHour = dayjs(dayjs(bar.start)).diff(this.timeSectionDayJs.start, 'hour')
       return { width: this.baseHour * during / 60 + 'px', left: spendHour * this.baseHour + 'px' }
+    },
+    dragOver (event) {
+      if (event.target.className === 'block') event.preventDefault()
     }
   }
 }

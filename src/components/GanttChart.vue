@@ -25,6 +25,8 @@
         :spend-time="spendTime"
         :gantt-data="ganttData"
         :time-section-day-js="timeSectionDayJs"
+        @dragstart.native="xxx"
+        @drop.native="yyy"
       >
         <slot name="container-box" :item="item" />
       </chart-container>
@@ -80,9 +82,8 @@ export default {
       //
       baseHour: 50,
       baseBlock: 40,
-      //
-      menuStatus: false,
-      info: null
+      // Drag
+      drag: null
     }
   },
   computed: {
@@ -121,9 +122,14 @@ export default {
     }, true)
   },
   methods: {
-    showChartMenu (info) { // 展示甘特图菜单
-      this.menuStatus = true
-      this.info = info
+    xxx (event) {
+      this.drag = event
+      console.log(event)
+    },
+    yyy (event) {
+      this.drag.target.parentNode.removeChild(this.drag.target)
+      event.target.appendChild(this.drag.target)
+      console.log(event)
     }
   }
 }
