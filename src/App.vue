@@ -35,9 +35,9 @@ export default {
     }
   },
   mounted () {
-    this.marker = setInterval(() => {
-      this.GanttCurrentTime += 100000
-    }, 1000)
+    // this.marker = setInterval(() => {
+    //   this.GanttCurrentTime += 100000
+    // }, 1000)
   },
   beforeDestroy () {
     clearInterval(this.marker)

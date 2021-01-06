@@ -12,6 +12,7 @@
     <div class="gantt__area">
       <!--甘特图Side数据组件-->
       <chart-side
+        ref="side"
         v-slot="{item}"
         :base-block="baseBlock"
         :gantt-data="ganttData"
@@ -20,13 +21,16 @@
       </chart-side>
       <!--甘特图中心数据组件 -->
       <chart-container
+        ref="container"
         v-slot="{item}"
         :base-hour="baseHour"
         :spend-time="spendTime"
         :gantt-data="ganttData"
         :time-section-day-js="timeSectionDayJs"
-        @dragstart.native="moveStart"
-        @drop.native="moveEnd"
+        @dragstart.native.capture="moveStart"
+        @drop.capture.native="moveEnd"
+        @openFloatView.native.capture="handleOpenFloatView('container',$event)"
+        @closeFloatView.native.capture="handleCloseFloatView"
       >
         <slot name="container-box" :item="item" />
       </chart-container>
@@ -80,7 +84,9 @@ export default {
       baseHour: 50,
       baseBlock: 40,
       // Drag
-      drag: null
+      drag: null,
+      // View
+      view: null
     }
   },
   computed: {
@@ -103,7 +109,6 @@ export default {
     const side = document.querySelector('.gantt__layout .side')
     const container = document.querySelector('.gantt__layout .container')
     const area = document.querySelector('.gantt__layout')
-    // console.log(header, side, container, area)
     let flag = ''
     area.addEventListener('mouseenter', (event) => {
       const className = event.target.className
@@ -128,6 +133,22 @@ export default {
       const dom = this.drag.target
       dom.parentNode.removeChild(dom)
       event.target.appendChild(dom)
+    },
+    handleOpenFloatView (type, event) {
+      const { info } = event.detail
+      console.log(info)
+      const layerRect = this.$refs[type].$el.getBoundingClientRect()
+      const targetRect = event.detail.coordinate
+      const htmlTemplate =
+        `
+          <div>${info.startAirport}</div>
+          <div>${info.workType}</div>
+          <div>${info.endAirport}</div>
+        `
+      this.view = this.$FloatView({ layerRect, targetRect, htmlTemplate })
+    },
+    handleCloseFloatView () {
+      this.view.hide()
     }
   }
 }

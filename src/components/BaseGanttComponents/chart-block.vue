@@ -6,6 +6,8 @@
         :style="occupy(item)"
         :draggable="checkDrag(item)"
         class="bar"
+        @mouseenter.capture="openFloatView(item,$event)"
+        @mouseleave.capture="closeFloatView"
         @contextmenu.prevent="rightClick(item,$event)"
       >
         <slot :item="item" />
@@ -57,6 +59,23 @@ export default {
         bubbles: true,
         detail: data
       }))
+    },
+    openFloatView (data, event) {
+      const el = event.target.getBoundingClientRect()
+      event.target.dispatchEvent(new CustomEvent('openFloatView', {
+        bubbles: true,
+        detail: {
+          info: data,
+          coordinate: el
+        }
+      }))
+    },
+    closeFloatView (event) {
+      console.log('????')
+      event.target.dispatchEvent(new CustomEvent('closeFloatView', {
+        bubbles: true,
+        detail: ''
+      }))
     }
   }
 }
@@ -70,7 +89,6 @@ export default {
     flex-direction: row;
     align-items: center;
     overflow: hidden;
-    position: relative;
   }
   .bar{
     position: absolute;
