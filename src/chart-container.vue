@@ -9,6 +9,7 @@
         <chart-block
           :key="index"
           v-slot="{item}"
+          :class="{sticky:index===0}"
           :style="blockSelected(index)"
           :time-section-day-js="timeSectionDayJs"
           :spend-time="spendTime"
@@ -70,16 +71,7 @@ export default {
       this.activeIndex = index
     },
     blockSelected (index) {
-      let style = {}
-      if (index === 0) {
-        style = {
-          position: 'sticky',
-          top: 0,
-          zIndex: 105,
-          backgroundColor: 'white'
-        }
-      }
-      return index === this.activeIndex ? { backgroundColor: `rgba(0,0,0,0.1)` } : style
+      return index === this.activeIndex ? { backgroundColor: `rgba(0,0,0,0.1)` } : ''
     }
   }
 }
@@ -116,6 +108,13 @@ export default {
     background-color: #9f9f9f;
     -webkit-border-radius: 4px;
   }
+}
+  .sticky{
+    position: sticky;
+    top: 0;
+    z-index: 105;
+    background-image: url("../../assets/background.png");
+    background-color:white;
 }
 
 </style>
