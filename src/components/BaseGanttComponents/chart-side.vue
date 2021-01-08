@@ -1,7 +1,12 @@
 <template>
   <div class="side">
     <template v-for="(item,index) in ganttData">
-      <div :key="index" :style="sideHeight" @contextmenu.prevent="rightClick(item,$event)">
+      <div
+        :key="index"
+        :class="{sticky:index===0}"
+        :style="sideHeight"
+        @contextmenu.prevent="rightClick(item,$event)"
+      >
         <slot :item="item" />
       </div>
     </template>
@@ -44,6 +49,7 @@ export default {
     //  display: none;
     //}
     cursor: pointer;
+    user-select: none;
     & > div{
       display: grid;
       grid-template-columns: 10px 1fr;
@@ -56,11 +62,16 @@ export default {
         display: block;
       }
       &:first-child > div{
-        background-color: rgba(241, 206, 99, 0.2);
+        background-color:#f3de9c;
       }
       &:nth-child(n+2) > div{
         background-color: rgba(180, 209, 125, 0.3);
       }
     }
+  }
+  .sticky{
+    position: sticky;
+    top: 0;
+    z-index: 105;
   }
 </style>

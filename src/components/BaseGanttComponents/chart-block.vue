@@ -71,7 +71,6 @@ export default {
       }))
     },
     closeFloatView (event) {
-      console.log('????')
       event.target.dispatchEvent(new CustomEvent('closeFloatView', {
         bubbles: true,
         detail: ''

@@ -9,6 +9,7 @@
         <chart-block
           :key="index"
           v-slot="{item}"
+          :class="{sticky:index===0}"
           :style="blockSelected(index)"
           :time-section-day-js="timeSectionDayJs"
           :spend-time="spendTime"
@@ -108,8 +109,12 @@ export default {
     -webkit-border-radius: 4px;
   }
 }
-  .active{
-
-  }
+  .sticky{
+    position: sticky;
+    top: 0;
+    z-index: 105;
+    background-image: url("../../assets/background.png");
+    background-color:white;
+}
 
 </style>

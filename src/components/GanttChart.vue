@@ -136,7 +136,6 @@ export default {
     },
     handleOpenFloatView (type, event) {
       const { info } = event.detail
-      console.log(info)
       const layerRect = this.$refs[type].$el.getBoundingClientRect()
       const targetRect = event.detail.coordinate
       const htmlTemplate =
