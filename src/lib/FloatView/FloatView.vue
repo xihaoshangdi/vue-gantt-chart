@@ -4,7 +4,7 @@
     class="floatView"
     :style="viewStyle"
   >
-    <div v-html="htmlTemplate" />
+    <div v-html="htmlTmpl" />
   </div>
 </template>
 
@@ -16,9 +16,8 @@ export default {
       //
       floatState: true,
       //
-      htmlTemplate: '',
+      htmlTmpl: '',
       layerRect: null,
-      targetRect: null,
       triggerEvent: null,
       viewStyle: {}
     }
@@ -36,22 +35,23 @@ export default {
         this.$destroy()
       }, { once: true })
       this.$nextTick(() => {
+        const targetRect = this.triggerEvent.getBoundingClientRect()
         const viewRect = this.$el.getBoundingClientRect()
         let viewLeft
-        if (this.targetRect.right + viewRect.width > this.layerRect.right) { // 左侧
-          viewLeft = this.targetRect.left - viewRect.width - 10
+        if (targetRect.right + viewRect.width > this.layerRect.right) { // 左侧
+          viewLeft = targetRect.left - viewRect.width - 10
         } else { // 右侧
-          viewLeft = this.targetRect.right + 10
+          viewLeft = targetRect.right + 10
         }
         let viewTop
-        const beyondHeight = (viewRect.height - this.targetRect.height) / 2
+        const beyondHeight = (viewRect.height - targetRect.height) / 2
 
-        if (this.layerRect.bottom - this.targetRect.bottom < beyondHeight) {
-          viewTop = this.targetRect.top - viewRect.height
-        } else if (this.targetRect.top - this.layerRect.top < beyondHeight) {
-          viewTop = this.targetRect.bottom
+        if (this.layerRect.bottom - targetRect.bottom < beyondHeight) {
+          viewTop = targetRect.top - viewRect.height
+        } else if (targetRect.top - this.layerRect.top < beyondHeight) {
+          viewTop = targetRect.bottom
         } else {
-          viewTop = this.targetRect.top - beyondHeight
+          viewTop = targetRect.top - beyondHeight
         }
         this.viewStyle = { left: `${viewLeft}px`, top: `${viewTop}px` }
       })

@@ -12,7 +12,7 @@
     <div class="gantt__area">
       <!--甘特图Side数据组件-->
       <chart-side
-        ref="side"
+        id="gantt-side"
         v-slot="{item}"
         :base-block="baseBlock"
         :gantt-data="ganttData"
@@ -21,7 +21,7 @@
       </chart-side>
       <!--甘特图中心数据组件 -->
       <chart-container
-        ref="container"
+        id="gantt-container"
         v-slot="{item}"
         :base-hour="baseHour"
         :spend-time="spendTime"
@@ -29,7 +29,6 @@
         :time-section-day-js="timeSectionDayJs"
         @dragstart.native.capture="moveStart"
         @drop.capture.native="moveEnd"
-        @handleFloatView.native.capture="handleFloatView('container',$event)"
       >
         <slot name="container-box" :item="item" />
       </chart-container>
@@ -134,19 +133,6 @@ export default {
       const dom = this.drag.target
       dom.parentNode.removeChild(dom)
       event.target.appendChild(dom)
-    },
-    handleFloatView (type, event) {
-      const triggerEvent = event.target
-      const { info } = event.detail
-      const layerRect = this.$refs[type].$el.getBoundingClientRect()
-      const targetRect = triggerEvent.getBoundingClientRect()
-      const htmlTemplate =
-        `
-          <div>${info.startAirport}</div>
-          <div>${info.workType}</div>
-          <div>${info.endAirport}</div>
-        `
-      this.$FloatView({ layerRect, targetRect, htmlTemplate, triggerEvent })
     }
   }
 }

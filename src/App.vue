@@ -3,25 +3,26 @@
     :gantt-data="GanttData"
     :gantt-current-time="GanttCurrentTime"
     :time-section="GanttTime"
-    @rightClick.native="handleDrag"
+    @rightClick.native="handleRightClick"
+    @handleFloatView.native.capture="handleFloatView"
   >
     <template #side-box="{item}">
-      <Xxx :da="item" />
+      <SideComponent :side-info="item" />
     </template>
     <template #container-box="{item}">
-      <Yyy :da="item" />
+      <ContentComponent :content-info="item" />
     </template>
   </GanttChart>
 </template>
 <script>
 
 import GanttChart from '@/components/GanttChart'
-import Xxx from '@/components/xxx'
-import Yyy from '@/components/yyy'
+import SideComponent from '@/components/SideComponent'
+import ContentComponent from '@/components/ContentComponent'
 import { mockData } from '@/lib/mock'
 import dayjs from 'dayjs'
 export default {
-  components: { Yyy, Xxx, GanttChart },
+  components: { ContentComponent, SideComponent, GanttChart },
   data () {
     return {
       GanttTime: {
@@ -35,16 +36,28 @@ export default {
     }
   },
   mounted () {
-    // this.marker = setInterval(() => {
-    //   this.GanttCurrentTime += 100000
-    // }, 1000)
+    this.marker = setInterval(() => {
+      this.GanttCurrentTime += 10000
+    }, 1000)
   },
   beforeDestroy () {
     clearInterval(this.marker)
   },
   methods: {
-    handleDrag (event) {
+    handleRightClick (event) {
       console.log('event', event)
+    },
+    handleFloatView (event) {
+      const triggerEvent = event.target
+      const { info } = event.detail
+      const layerRect = document.getElementById('gantt-container').getBoundingClientRect()
+      const htmlTmpl =
+        `
+          <div>${info.startAirport}</div>
+          <div>${info.workType}</div>
+          <div>${info.endAirport}</div>
+        `
+      this.$FloatView({ layerRect, triggerEvent, htmlTmpl })
     }
   }
 }
