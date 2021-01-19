@@ -1,5 +1,9 @@
 <template>
-  <div class="floatView" :style="viewStyle">
+  <div
+    v-show="floatState"
+    class="floatView"
+    :style="viewStyle"
+  >
     <div v-html="htmlTemplate" />
   </div>
 </template>
@@ -9,18 +13,29 @@ export default {
   name: 'FloatView',
   data () {
     return {
+      //
+      floatState: true,
+      //
       htmlTemplate: '',
       layerRect: null,
       targetRect: null,
-      viewStyle: {},
-      callback: null
+      triggerEvent: null,
+      viewStyle: {}
     }
   },
   methods: {
     show (callback) {
-      this.callback = callback
+      callback()
+      const floatFn = () => { this.floatState = !this.floatState }
+      this.triggerEvent.addEventListener('mousedown', floatFn)
+      this.triggerEvent.addEventListener('mouseup', floatFn)
+      this.triggerEvent.addEventListener('mouseleave', () => {
+        document.body.removeChild(this.$el)
+        this.triggerEvent.removeEventListener('mousedown', floatFn)
+        this.triggerEvent.removeEventListener('mouseup', floatFn)
+        this.$destroy()
+      }, { once: true })
       this.$nextTick(() => {
-        if (!this.layerRect || !this.targetRect) return {}
         const viewRect = this.$el.getBoundingClientRect()
         let viewLeft
         if (this.targetRect.right + viewRect.width > this.layerRect.right) { // 左侧
@@ -40,11 +55,6 @@ export default {
         }
         this.viewStyle = { left: `${viewLeft}px`, top: `${viewTop}px` }
       })
-    },
-    hide () {
-      this.callback()
-      document.body.removeChild(this.$el)
-      this.$destroy()
     }
   }
 }

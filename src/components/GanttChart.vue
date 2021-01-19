@@ -1,5 +1,5 @@
 <template>
-  <div class="gantt__layout" @contextmenu.prevent>
+  <div class="gantt__layout" :style="{width:`${ganttWidth}px`}" @contextmenu.prevent>
     <!--头部组件：可选配置-->
     <chart-header
       v-show="showHeader"
@@ -29,8 +29,7 @@
         :time-section-day-js="timeSectionDayJs"
         @dragstart.native.capture="moveStart"
         @drop.capture.native="moveEnd"
-        @openFloatView.native.capture="handleOpenFloatView('container',$event)"
-        @closeFloatView.native.capture="handleCloseFloatView"
+        @handleFloatView.native.capture="handleFloatView('container',$event)"
       >
         <slot name="container-box" :item="item" />
       </chart-container>
@@ -76,6 +75,10 @@ export default {
     ganttData: { // 甘特图数据
       type: Array,
       required: true
+    },
+    ganttWidth: { // 甘特图数据
+      type: Number,
+      default: 1000
     }
   },
   data () {
@@ -84,9 +87,7 @@ export default {
       baseHour: 50,
       baseBlock: 40,
       // Drag
-      drag: null,
-      // View
-      view: null
+      drag: null
     }
   },
   computed: {
@@ -134,20 +135,18 @@ export default {
       dom.parentNode.removeChild(dom)
       event.target.appendChild(dom)
     },
-    handleOpenFloatView (type, event) {
+    handleFloatView (type, event) {
+      const triggerEvent = event.target
       const { info } = event.detail
       const layerRect = this.$refs[type].$el.getBoundingClientRect()
-      const targetRect = event.detail.coordinate
+      const targetRect = triggerEvent.getBoundingClientRect()
       const htmlTemplate =
         `
           <div>${info.startAirport}</div>
           <div>${info.workType}</div>
           <div>${info.endAirport}</div>
         `
-      this.view = this.$FloatView({ layerRect, targetRect, htmlTemplate })
-    },
-    handleCloseFloatView () {
-      this.view.hide()
+      this.$FloatView({ layerRect, targetRect, htmlTemplate, triggerEvent })
     }
   }
 }
@@ -158,8 +157,6 @@ export default {
   .gantt__layout{
     margin: 0;
     padding: 0;
-    width: 1000px;
-    height: 600px;
   }
 
   .gantt__area{

@@ -6,8 +6,7 @@
         :style="occupy(item)"
         :draggable="checkDrag(item)"
         class="bar"
-        @mouseenter.capture="openFloatView(item,$event)"
-        @mouseleave.capture="closeFloatView"
+        @mouseenter.capture="handleFloatView(item,$event)"
         @contextmenu.prevent="rightClick(item,$event)"
       >
         <slot :item="item" />
@@ -60,20 +59,10 @@ export default {
         detail: data
       }))
     },
-    openFloatView (data, event) {
-      const el = event.target.getBoundingClientRect()
-      event.target.dispatchEvent(new CustomEvent('openFloatView', {
+    handleFloatView (data, event) {
+      event.target.dispatchEvent(new CustomEvent('handleFloatView', {
         bubbles: true,
-        detail: {
-          info: data,
-          coordinate: el
-        }
-      }))
-    },
-    closeFloatView (event) {
-      event.target.dispatchEvent(new CustomEvent('closeFloatView', {
-        bubbles: true,
-        detail: ''
+        detail: { info: data }
       }))
     }
   }
