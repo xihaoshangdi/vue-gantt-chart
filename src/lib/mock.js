@@ -37,6 +37,9 @@ export const mockData = (count) => {
       })()
     })
   }
+  mocks[0].currentAirport = '未分配'
+  mocks[0].number = ''
+  mocks[0].model = ''
   return mocks
 }
 

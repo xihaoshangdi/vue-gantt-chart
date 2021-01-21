@@ -43,6 +43,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@function xxxx() {
+  @return random()*random();
+}
   .side{
     overflow: hidden;
     //&::-webkit-scrollbar {
@@ -58,14 +61,20 @@ export default {
         top: 8px;
         border-radius: 7px 0 0 7px;
         content: "";
-        background-color: rgba(241, 206, 99, 1);
+        background-color: xxxx();
         display: block;
+      };
+      &:nth-child(1n+0)::before{
+        background-color: rgba(floor(random()*250),floor(random()*250),floor(random()*250),0.8);
       }
-      &:first-child > div{
-        background-color:#f3de9c;
+      &:nth-child(1n+1)::before{
+        background-color: rgba(floor(random()*255),floor(random()*255),floor(random()*255),0.8);
       }
       &:nth-child(n+2) > div{
         background-color: rgba(180, 209, 125, 0.3);
+      }
+      &:first-child > div{
+        background-color:#f3de9c;
       }
     }
   }

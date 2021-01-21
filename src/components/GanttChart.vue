@@ -1,5 +1,5 @@
 <template>
-  <div class="gantt__layout" :style="{width:`${ganttWidth}px`}" @contextmenu.prevent>
+  <div class="gantt__layout" :style="{width:ganttWidth}" @contextmenu.prevent>
     <!--头部组件：可选配置-->
     <chart-header
       v-show="showHeader"
@@ -76,8 +76,8 @@ export default {
       required: true
     },
     ganttWidth: { // 甘特图数据
-      type: Number,
-      default: 1000
+      type: String,
+      default: '80vw'
     }
   },
   data () {

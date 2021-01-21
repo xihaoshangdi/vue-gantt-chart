@@ -38,9 +38,6 @@ export default {
       default: () => {}
     }
   },
-  created () {
-
-  },
   methods: {
     occupy (bar) {
       const during = dayjs(bar.end).diff(dayjs(bar.start), 'minute')
