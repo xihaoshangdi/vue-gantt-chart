@@ -78,7 +78,7 @@ $header-border-color: rgb(186, 202, 229);
 
 .header {
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 250px 1fr;
   .header__side > div {
     display: grid;
     grid-template-columns: 10px 1fr;

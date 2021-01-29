@@ -144,10 +144,9 @@ export default {
     margin: 0;
     padding: 0;
   }
-
   .gantt__area{
     height: 520px;//TODO
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 250px 1fr;
   }
 </style>

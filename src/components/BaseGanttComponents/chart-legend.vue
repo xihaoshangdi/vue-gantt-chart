@@ -59,7 +59,7 @@ export default {
     background-color: white;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    z-index: 1000;
+    z-index: 200;
   }
   .bar{
     display: flex;

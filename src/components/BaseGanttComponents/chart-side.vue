@@ -31,6 +31,16 @@ export default {
       return { lineHeight: `${this.baseBlock}px` }
     }
   },
+  mounted () {
+    const items = document.querySelectorAll('.side > div')
+    items.forEach(item => {
+      const r = Math.round(Math.random() * 127) + 80
+      const g = Math.round(Math.random() * 127) + 80
+      const b = Math.round(Math.random() * 127) + 80
+      item.style.color = `rgb(${r},${g},${b})`
+      item.firstChild.style.backgroundColor = `rgba(${r + 47},${g + 47},${b + 47},${Math.random() + 0.3})`
+    })
+  },
   methods: {
     rightClick (data, event) {
       event.target.dispatchEvent(new CustomEvent('rightClick', {
@@ -43,9 +53,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@function xxxx() {
-  @return random()*random();
-}
   .side{
     overflow: hidden;
     //&::-webkit-scrollbar {
@@ -57,25 +64,14 @@ export default {
       display: grid;
       grid-template-columns: 10px 1fr;
       &::before {
+        color: inherit;
         width: 10px;
         top: 8px;
         border-radius: 7px 0 0 7px;
         content: "";
-        background-color: xxxx();
+        background-color: currentColor;
         display: block;
       };
-      &:nth-child(1n+0)::before{
-        background-color: rgba(floor(random()*250),floor(random()*250),floor(random()*250),0.8);
-      }
-      &:nth-child(1n+1)::before{
-        background-color: rgba(floor(random()*255),floor(random()*255),floor(random()*255),0.8);
-      }
-      &:nth-child(n+2) > div{
-        background-color: rgba(180, 209, 125, 0.3);
-      }
-      &:first-child > div{
-        background-color:#f3de9c;
-      }
     }
   }
   .sticky{

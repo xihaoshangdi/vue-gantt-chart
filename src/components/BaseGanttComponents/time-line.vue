@@ -51,7 +51,7 @@ export default {
 
 <style lang="scss" scoped>
   .line-box{
-    z-index: 800;
+    z-index: 110;
     position: sticky;
     top: 0;
   }

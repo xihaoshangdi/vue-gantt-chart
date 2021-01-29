@@ -26,8 +26,8 @@ export default {
   data () {
     return {
       GanttTime: {
-        start: dayjs(new Date()).format('YYYY/MM/DD HH:mm:ss'),
-        end: dayjs(new Date()).add(3, 'day').format('YYYY/MM/DD HH:mm:ss')
+        start: dayjs(new Date()).format('YYYY/MM/DD'),
+        end: dayjs(new Date()).add(3, 'day').format('YYYY/MM/DD')
       },
       GanttData: mockData(15),
       GanttCurrentTime: new Date().getTime(),
@@ -37,7 +37,7 @@ export default {
   },
   mounted () {
     this.marker = setInterval(() => {
-      this.GanttCurrentTime += 10000
+      this.GanttCurrentTime += 100000
     }, 1000)
   },
   beforeDestroy () {
@@ -50,14 +50,9 @@ export default {
     handleFloatView (event) {
       const triggerEvent = event.target
       const { info } = event.detail
-      const layerRect = document.getElementById('gantt-container').getBoundingClientRect()
-      const htmlTmpl =
-        `
-          <div>${info.startAirport}</div>
-          <div>${info.workType}</div>
-          <div>${info.endAirport}</div>
-        `
-      this.$FloatView({ layerRect, triggerEvent, htmlTmpl })
+      const layerEvent = document.getElementById('gantt-container')
+      const htmlTmpl = `<div>${info.startAirport}</div><div>${info.workType}</div><div>${info.endAirport}</div>`
+      this.$FloatView({ layerEvent, triggerEvent, htmlTmpl })
     }
   }
 }

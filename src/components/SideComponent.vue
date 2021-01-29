@@ -21,11 +21,12 @@ export default {
 <style scoped>
   .sideInfo{
     display: flex;
+    justify-content: space-around;
+    color: black;
+    overflow:hidden;
+    font-size: 0.5em;
     flex-direction: row;
     white-space:nowrap;
     text-overflow:ellipsis;
-    overflow:hidden;
-    text-align: center;
-    font-size: 10px;
   }
 </style>

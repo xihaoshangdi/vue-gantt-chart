@@ -17,7 +17,7 @@ export default {
       floatState: true,
       //
       htmlTmpl: '',
-      layerRect: null,
+      layerEvent: null,
       triggerEvent: null,
       viewStyle: {}
     }
@@ -35,10 +35,11 @@ export default {
         this.$destroy()
       }, { once: true })
       this.$nextTick(() => {
+        const layerRect = this.layerEvent.getBoundingClientRect()
         const targetRect = this.triggerEvent.getBoundingClientRect()
         const viewRect = this.$el.getBoundingClientRect()
         let viewLeft
-        if (targetRect.right + viewRect.width > this.layerRect.right) { // 左侧
+        if (targetRect.right + viewRect.width > layerRect.right) { // 左侧
           viewLeft = targetRect.left - viewRect.width - 10
         } else { // 右侧
           viewLeft = targetRect.right + 10
@@ -46,9 +47,9 @@ export default {
         let viewTop
         const beyondHeight = (viewRect.height - targetRect.height) / 2
 
-        if (this.layerRect.bottom - targetRect.bottom < beyondHeight) {
+        if (layerRect.bottom - targetRect.bottom < beyondHeight) {
           viewTop = targetRect.top - viewRect.height
-        } else if (targetRect.top - this.layerRect.top < beyondHeight) {
+        } else if (targetRect.top - layerRect.top < beyondHeight) {
           viewTop = targetRect.bottom
         } else {
           viewTop = targetRect.top - beyondHeight
@@ -62,23 +63,23 @@ export default {
 
 <style scoped lang="scss">
 .floatView{
-    box-sizing: content-box;
-    position: absolute;
-    z-index: 150;
-    min-width: 200px;
-    background-color: #FFF;
-    //
-    cursor: pointer;
-    //
-    color: #606266;
-    font-size: 14px;
-    line-height: 1.4;
-    text-align:justify;
-    word-break:break-all;
-    //
-    border: 1px solid #EBEEF5;
-    border-radius: 5px;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  box-sizing: content-box;
+  position: absolute;
+  z-index: 120;
+  min-width: 200px;
+  background-color: #FFF;
+  //
+  cursor: pointer;
+  //
+  color: #606266;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align:justify;
+  word-break:break-all;
+  //
+  border: 1px solid #EBEEF5;
+  border-radius: 5px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
   & > *{
     padding: 0.5rem;
   }

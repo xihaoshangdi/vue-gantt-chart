@@ -20,16 +20,13 @@ export default {
 <style lang="scss" scoped>
   .contentInfo{
     display: flex;
-    justify-content: center;
     align-items: center;
-    cursor: pointer;
-    width: 100%;
     height: 100%;
-    font-size: 13px;
+    cursor: pointer;
     white-space:nowrap;
     text-overflow:ellipsis;
     overflow:hidden;
-    text-align: center;
+    font-size: 10px;
     // 用于防止被处理
     pointer-events: none;
   }
