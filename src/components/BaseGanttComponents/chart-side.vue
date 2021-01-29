@@ -33,12 +33,22 @@ export default {
   },
   mounted () {
     const items = document.querySelectorAll('.side > div')
-    items.forEach(item => {
-      const r = Math.round(Math.random() * 127) + 80
-      const g = Math.round(Math.random() * 127) + 80
-      const b = Math.round(Math.random() * 127) + 80
-      item.style.color = `rgb(${r},${g},${b})`
-      item.firstChild.style.backgroundColor = `rgba(${r + 47},${g + 47},${b + 47},${Math.random() + 0.3})`
+    const xxxx = Array.from(items).map(item => {
+      const h = Math.round(Math.random() * 190) + 10
+      const s = Math.round(Math.random() * 50) + 50
+      const l = Math.round(Math.random() * 20) + 65
+      return [h, s, l]
+    })
+    xxxx.sort((a, b) => { return a[0] - b[0] })
+    for (let i = 0; i < xxxx.length; i++) {
+      if (i % 2 !== 0) { // 最小
+        xxxx.splice(i, 0, xxxx.pop())
+      }
+    }
+    items.forEach((item, index) => {
+      const [h, s, l] = xxxx[index]
+      item.style.color = `hsl(${h}deg ${s}% ${l - 25}%)`
+      item.firstChild.style.backgroundColor = `hsl(${h}deg ${s}% ${l}%)`
     })
   },
   methods: {
