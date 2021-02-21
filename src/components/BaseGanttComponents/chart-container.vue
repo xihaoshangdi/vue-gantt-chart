@@ -1,14 +1,15 @@
 <template>
   <div class="container">
     <!--时间轴-->
-    <time-line />
+    <time-line :spend-time="spendTime" />
     <!--灰色遮罩-->
-    <time-mask />
+    <time-mask :spend-time="spendTime" />
     <div :style="blockStyle">
       <template v-for="(block,index) in ganttData">
         <chart-block
           :key="index"
           v-slot="{item}"
+          :spend-time="spendTime"
           :class="{sticky:firstLineStick&&index===0}"
           :style="blockSelected(index)"
           :block="block"
@@ -29,11 +30,19 @@ import TimeMask from '@/components/BaseGanttComponents/time-mask'
 export default {
   name: 'ChartContainer',
   components: { TimeMask, TimeLine, ChartBlock },
-  inject: ['firstLineStick', 'baseHour', 'spendTime', 'timeSectionDayJs'],
+  inject: ['baseHour', 'timeSectionDayJs'],
   props: {
     ganttData: {
       type: Array,
       default: () => []
+    },
+    spendTime: {
+      type: Number,
+      required: true
+    },
+    firstLineStick: { // 首行粘性
+      type: Boolean,
+      default: true
     }
   },
   data () {

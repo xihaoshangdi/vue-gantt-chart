@@ -21,18 +21,22 @@
 import dayjs from 'dayjs'
 export default {
   name: 'ChartBlock',
-  inject: ['spendTime', 'baseHour', 'timeSectionDayJs'],
+  inject: ['baseHour', 'timeSectionDayJs'],
   props: {
     block: {
       type: Object,
       default: () => {}
+    },
+    spendTime: {
+      type: Number,
+      required: true
     }
   },
   methods: {
     occupy (bar) {
       const during = dayjs(bar.end).diff(dayjs(bar.start), 'minute')
       const spendMinute = dayjs(dayjs(bar.start)).diff(this.timeSectionDayJs.start, 'minute')
-      const color = this.spendTime / 60 > spendMinute ? '#F56C6C' : '#909399'
+      const color = this.spendTime / 60 > spendMinute ? '#F56C6C' : '#67C23A'
       return {
         width: this.baseHour * during / 60 + 'px',
         left: spendMinute / 60 * this.baseHour + 'px',
@@ -71,8 +75,8 @@ export default {
     overflow: hidden;
   }
   .bar{
+    color: #303133;
     position: absolute;
-    background-color: #7BB9FE;
     height: 26px;
     user-select: none;
   }

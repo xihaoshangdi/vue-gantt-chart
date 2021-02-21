@@ -16,6 +16,7 @@
         <chart-side
           v-slot="{item}"
           :gantt-data="chartData"
+          :first-line-stick="firstLineStick"
         >
           <slot name="side-box" :item="item" />
         </chart-side>
@@ -25,6 +26,7 @@
           v-slot="{item}"
           :spend-time="spendTime"
           :gantt-data="chartData"
+          :first-line-stick="firstLineStick"
           @dragstart.native.capture="moveStart"
           @drop.capture.native="moveEnd"
         >
@@ -52,10 +54,8 @@ export default {
   provide () {
     return {
       timeSectionDayJs: this.timeSectionDayJs,
-      firstLineStick: this.firstLineStick,
       baseHour: this.baseHour,
-      baseBlock: this.baseBlock,
-      spendTime: this.spendTime
+      baseBlock: this.baseBlock
     }
   },
   props: {

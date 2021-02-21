@@ -16,11 +16,15 @@
 <script>
 export default {
   name: 'ChartSide',
-  inject: ['baseBlock', 'firstLineStick'],
+  inject: ['baseBlock'],
   props: {
     ganttData: {
       type: Array,
       default: () => []
+    },
+    firstLineStick: { // 首行粘性
+      type: Boolean,
+      default: true
     }
   },
   computed: {
