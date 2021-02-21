@@ -24,13 +24,15 @@ export const mockData = (count) => {
       childArrary: ((length = Math.floor(Math.random() * 15)) => {
         const childs = []
         for (let j = 0; j < length; j++) {
+          const start = dayjs(new Date()).add(Math.floor(Math.random() * 65), 'hour').format('YYYY/MM/DD HH:mm')
+          const end = dayjs(start).add(Math.random() * 15, 'hour').format('YYYY/MM/DD HH:mm')
           childs.push({
             id: j,
             startAirport: Airport[Math.floor(Math.random() * Airport.length)],
             endAirport: Airport[Math.floor(Math.random() * Airport.length)],
             workType: workType[Math.floor(Math.random() * workType.length)],
-            start: dayjs(new Date()).add(Math.floor(Math.random() * 65), 'hour').format('YYYY/MM/DD HH:mm:ss'),
-            end: dayjs(new Date()).add(Math.floor(Math.random() * 5), 'hour').format('YYYY/MM/DD HH:mm:ss')
+            start: start,
+            end: end
           })
         }
         return childs

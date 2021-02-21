@@ -3,6 +3,7 @@
     <GanttChart
       :gantt-data="GanttData"
       :gantt-current-time="GanttCurrentTime"
+      :first-line-stick="true"
       :time-section="GanttTime"
       :float-view-render-fn="floatRender"
       @rightClick.native="handleRightClick"
@@ -26,7 +27,7 @@ export default {
   components: { ContentComponent, SideComponent, GanttChart },
   data () {
     return {
-      GanttTime: ['2021/02/21', '2021/02/25'],
+      GanttTime: ['2021/02/21', '2021/02/24'],
       GanttData: mockData(25),
       GanttCurrentTime: new Date().getTime(),
       floatRender: (info) => `<div class="xxx">${info.startAirport}</div><div>${info.workType}</div><div>${info.endAirport}</div>`,

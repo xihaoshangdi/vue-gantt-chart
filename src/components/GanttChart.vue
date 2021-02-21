@@ -15,7 +15,7 @@
         <!--甘特图Side数据组件-->
         <chart-side
           v-slot="{item}"
-          :gantt-data="ganttData"
+          :gantt-data="chartData"
         >
           <slot name="side-box" :item="item" />
         </chart-side>
@@ -24,7 +24,7 @@
           id="gantt-container"
           v-slot="{item}"
           :spend-time="spendTime"
-          :gantt-data="ganttData"
+          :gantt-data="chartData"
           @dragstart.native.capture="moveStart"
           @drop.capture.native="moveEnd"
         >
@@ -127,6 +127,12 @@ export default {
         time = 0
       }
       return time
+    },
+    chartData () {
+      return this.ganttData.map(item => {
+        item.childArrary = item.childArrary.filter(task => dayjs(task.end).isBefore(this.timeSectionDayJs.end.add(1, 'day')))
+        return item
+      })
     }
   },
   mounted () { // 滚动同步

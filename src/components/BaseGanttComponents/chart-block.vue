@@ -33,7 +33,11 @@ export default {
       const during = dayjs(bar.end).diff(dayjs(bar.start), 'minute')
       const spendMinute = dayjs(dayjs(bar.start)).diff(this.timeSectionDayJs.start, 'minute')
       const color = this.spendTime / 60 > spendMinute ? '#F56C6C' : '#909399'
-      return { width: this.baseHour * during / 60 + 'px', left: spendMinute / 60 * this.baseHour + 'px', backgroundColor: color }
+      return {
+        width: this.baseHour * during / 60 + 'px',
+        left: spendMinute / 60 * this.baseHour + 'px',
+        backgroundColor: color
+      }
     },
     checkDrag (bar) {
       return dayjs(dayjs(bar.start)).diff(this.timeSectionDayJs.start, 'hour') - this.spendTime / 3600 > 0

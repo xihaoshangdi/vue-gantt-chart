@@ -48,10 +48,7 @@ export default {
   computed: {
     blockStyle () {
       const { start, end } = this.timeSectionDayJs
-      return {
-        width: `${this.baseHour * handleDaySet(start, end).length * 24}px`,
-        overflow: 'hidden'
-      }
+      return { width: `${this.baseHour * handleDaySet(start, end).length * 24}px` }
     }
   },
   methods: {
