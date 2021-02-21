@@ -21,19 +21,8 @@
 import dayjs from 'dayjs'
 export default {
   name: 'ChartBlock',
+  inject: ['spendTime', 'baseHour', 'timeSectionDayJs'],
   props: {
-    baseHour: {
-      type: Number,
-      default: 50
-    },
-    timeSectionDayJs: {
-      type: Object,
-      default: () => {}
-    },
-    spendTime: {
-      type: Number,
-      default: 0
-    },
     block: {
       type: Object,
       default: () => {}
@@ -50,7 +39,7 @@ export default {
       return dayjs(dayjs(bar.start)).diff(this.timeSectionDayJs.start, 'hour') - this.spendTime / 3600 > 0
     },
     dragOver (event) {
-      if (event.target.className === 'block') event.preventDefault()
+      if (event.target.className === 'block' || event.target.className === 'block sticky') event.preventDefault()
     },
     rightClick (data, event) {
       event.target.dispatchEvent(new CustomEvent('rightClick', {

@@ -1,17 +1,16 @@
 <template>
   <div class="container">
     <!--时间轴-->
-    <time-line :base-hour="baseHour" :spend-time="spendTime" />
+    <time-line />
     <!--灰色遮罩-->
-    <time-mask :spend-time="spendTime" />
+    <time-mask />
     <div :style="blockStyle">
       <template v-for="(block,index) in ganttData">
         <chart-block
           :key="index"
           v-slot="{item}"
+          :class="{sticky:firstLineStick&&index===0}"
           :style="blockSelected(index)"
-          :time-section-day-js="timeSectionDayJs"
-          :spend-time="spendTime"
           :block="block"
           @click.native="handleHighlight(index)"
         >
@@ -30,22 +29,11 @@ import TimeMask from '@/components/BaseGanttComponents/time-mask'
 export default {
   name: 'ChartContainer',
   components: { TimeMask, TimeLine, ChartBlock },
+  inject: ['firstLineStick', 'baseHour', 'spendTime', 'timeSectionDayJs'],
   props: {
-    baseHour: {
-      type: Number,
-      default: 50
-    },
-    spendTime: {
-      type: Number,
-      default: 0
-    },
     ganttData: {
       type: Array,
       default: () => []
-    },
-    timeSectionDayJs: {
-      type: Object,
-      default: () => {}
     }
   },
   data () {
@@ -61,7 +49,8 @@ export default {
     blockStyle () {
       const { start, end } = this.timeSectionDayJs
       return {
-        width: `${this.baseHour * handleDaySet(start, end).length * 24}px`
+        width: `${this.baseHour * handleDaySet(start, end).length * 24}px`,
+        overflow: 'hidden'
       }
     }
   },
@@ -70,16 +59,7 @@ export default {
       this.activeIndex = index
     },
     blockSelected (index) {
-      let style = {}
-      if (index === 0) {
-        style = {
-          position: 'sticky',
-          top: 0,
-          zIndex: 105,
-          backgroundColor: 'white'
-        }
-      }
-      return index === this.activeIndex ? { backgroundColor: `rgba(0,0,0,0.1)` } : style
+      return index === this.activeIndex ? { backgroundColor: `rgba(0,0,0,0.1)` } : {}
     }
   }
 }
@@ -117,5 +97,10 @@ export default {
     -webkit-border-radius: 4px;
   }
 }
-
+.sticky{
+  position: sticky;
+  top: 0;
+  z-index: 105;
+  background-color: white;
+}
 </style>

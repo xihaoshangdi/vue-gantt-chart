@@ -13,16 +13,7 @@
 <script>
 export default {
   name: 'TimeLine',
-  props: {
-    baseHour: {
-      type: Number,
-      default: 50
-    },
-    spendTime: {
-      type: Number,
-      default: 0
-    }
-  },
+  inject: ['spendTime', 'baseHour'],
   data () {
     return {
       lineHeight: 0

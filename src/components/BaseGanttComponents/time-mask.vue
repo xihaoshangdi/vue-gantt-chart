@@ -7,16 +7,7 @@
 <script>
 export default {
   name: 'TimeMask',
-  props: {
-    baseHour: {
-      type: Number,
-      default: 50
-    },
-    spendTime: {
-      type: Number,
-      default: 0
-    }
-  },
+  inject: ['spendTime', 'baseHour'],
   data () {
     return {
       maskHeight: 0

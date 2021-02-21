@@ -3,7 +3,7 @@
     <template v-for="(item,index) in ganttData">
       <div
         :key="index"
-        :class="{sticky:index===0}"
+        :class="{sticky:firstLineStick&&index===0}"
         :style="sideHeight"
         @contextmenu.prevent="rightClick(item,$event)"
       >
@@ -16,11 +16,8 @@
 <script>
 export default {
   name: 'ChartSide',
+  inject: ['baseBlock', 'firstLineStick'],
   props: {
-    baseBlock: {
-      type: Number,
-      default: 40
-    },
     ganttData: {
       type: Array,
       default: () => []
@@ -64,10 +61,10 @@ export default {
 
 <style scoped lang="scss">
   .side{
-    overflow: hidden;
-    //&::-webkit-scrollbar {
-    //  display: none;
-    //}
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     cursor: pointer;
     user-select: none;
     & > div{

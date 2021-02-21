@@ -1,38 +1,41 @@
 <template>
-  <div class="gantt__layout" :style="{width:ganttWidth}" @contextmenu.prevent>
+  <div class="gantt__layout" @contextmenu.prevent>
     <!--头部组件：可选配置-->
     <chart-header
       v-show="showHeader"
       :header-data="headerData"
-      :base-hour="baseHour"
-      :base-block="baseBlock"
-      :time-section-day-js="timeSectionDayJs"
     />
     <!--甘特图区域组件：必选-->
-    <div class="gantt__area">
-      <!--甘特图Side数据组件-->
-      <chart-side
-        id="gantt-side"
-        v-slot="{item}"
-        :base-block="baseBlock"
-        :gantt-data="ganttData"
+    <template v-if="ganttData.length">
+      <div
+        class="gantt__area"
+        :style="areaStyleObj"
+        @handleFloatView="handleFloatView"
       >
-        <slot name="side-box" :item="item" />
-      </chart-side>
-      <!--甘特图中心数据组件 -->
-      <chart-container
-        id="gantt-container"
-        v-slot="{item}"
-        :base-hour="baseHour"
-        :spend-time="spendTime"
-        :gantt-data="ganttData"
-        :time-section-day-js="timeSectionDayJs"
-        @dragstart.native.capture="moveStart"
-        @drop.capture.native="moveEnd"
-      >
-        <slot name="container-box" :item="item" />
-      </chart-container>
-    </div>
+        <!--甘特图Side数据组件-->
+        <chart-side
+          v-slot="{item}"
+          :gantt-data="ganttData"
+        >
+          <slot name="side-box" :item="item" />
+        </chart-side>
+        <!--甘特图中心数据组件 -->
+        <chart-container
+          id="gantt-container"
+          v-slot="{item}"
+          :spend-time="spendTime"
+          :gantt-data="ganttData"
+          @dragstart.native.capture="moveStart"
+          @drop.capture.native="moveEnd"
+        >
+          <slot name="container-box" :item="item" />
+        </chart-container>
+      </div>
+    </template>
+    <!-- 无数据区域-->
+    <template v-else>
+      <div class="gantt__area--error">暂无数据</div>
+    </template>
   </div>
 </template>
 
@@ -46,6 +49,15 @@ dayjs.extend(isBetween)
 export default {
   name: 'GanttChart',
   components: { ChartHeader, ChartSide, ChartContainer },
+  provide () {
+    return {
+      timeSectionDayJs: this.timeSectionDayJs,
+      firstLineStick: this.firstLineStick,
+      baseHour: this.baseHour,
+      baseBlock: this.baseBlock,
+      spendTime: this.spendTime
+    }
+  },
   props: {
     // 甘特图表头配置
     showHeader: { // 甘特图表头显示
@@ -56,16 +68,18 @@ export default {
       type: Array,
       default: () => ['日期', '时间']
     },
-    // 甘特图时间区间
-    timeSection: {
-      type: Object,
-      default: () => {
-        return { start: dayjs(new Date()), end: dayjs(new Date()).add(3, 'day') }
-      }
+    timeSection: { // 甘特图时间区间
+      type: Array,
+      required: true
     },
-    chartHeight: { // 中心甘特图高度
+    // 甘特图内容配置
+    firstLineStick: { // 首行粘性
+      type: Boolean,
+      default: true
+    },
+    chartMaxHeight: { // 甘特图内容最大高度
       type: Number,
-      default: 400
+      default: 500
     },
     ganttCurrentTime: { // 甘特图时间轴时间
       type: Number,
@@ -75,27 +89,38 @@ export default {
       type: Array,
       required: true
     },
-    ganttWidth: { // 甘特图数据
-      type: String,
-      default: '80vw'
+    // 额外配置
+    floatViewRenderFn: { // renderTemplate
+      type: Function,
+      default: () => { return (info) => info }
     }
   },
   data () {
     return {
       //
-      baseHour: 50,
-      baseBlock: 40,
+      baseHour: 50, // 基准小时
+      baseBlock: 40, // 基准高度
       // Drag
       drag: null
     }
   },
   computed: {
-    timeSectionDayJs () { // 传入的甘特图时间区间转化为DayJs
-      return { start: dayjs(this.timeSection.start), end: dayjs(this.timeSection.end) }
+    areaStyleObj () { // 自适应高度限制
+      const realHeight = this.ganttData.length * this.baseBlock
+      return { height: `${realHeight > this.chartMaxHeight ? this.chartMaxHeight : realHeight}px` }
+    },
+    timeSectionDayJs () { // 传入的甘特图时间区间转化为DayJs区间
+      const [start, end] = this.timeSection.map(item => dayjs(item))
+      if (start.isValid() && end.isValid()) {
+        return { start, end }
+      } else {
+        console.log(`传入的时间区间${this.timeSection}不是合法的`)
+        return {}
+      }
     },
     spendTime () { // 计算当前时间与甘特图起始时间的差值
       let time
-      if (dayjs(this.ganttCurrentTime).isBetween(this.timeSectionDayJs.start, this.timeSectionDayJs.end, null, '[')) {
+      if (dayjs(this.ganttCurrentTime).isBetween(this.timeSectionDayJs.start, this.timeSectionDayJs.end, null, '[]')) {
         time = dayjs(dayjs(this.ganttCurrentTime)).diff(this.timeSectionDayJs.start, 'second') // 差值时间
       } else {
         console.error('错误的时间')
@@ -116,9 +141,9 @@ export default {
       if (className.includes('side')) flag = 'side'
     }, true)
     area.addEventListener('scroll', (event) => {
-      if (flag === 'container') {
+      if (flag === 'container' && event.target.className === 'container') {
         side.scrollTop = event.target.scrollTop
-        if (event.target.className === 'container') header.scrollLeft = event.target.scrollLeft
+        header.scrollLeft = event.target.scrollLeft
       }
       if (flag === 'side') container.scrollTop = event.target.scrollTop
     }, true)
@@ -133,6 +158,13 @@ export default {
       const dom = this.drag.target
       dom.parentNode.removeChild(dom)
       event.target.appendChild(dom)
+    },
+    handleFloatView (event) {
+      const triggerEvent = event.target
+      const { info } = event.detail
+      const layerEvent = document.getElementById('gantt-container')
+      const htmlTmpl = this.floatViewRenderFn(info)
+      this.$FloatView({ layerEvent, triggerEvent, htmlTmpl })
     }
   }
 }
@@ -143,10 +175,14 @@ export default {
   .gantt__layout{
     margin: 0;
     padding: 0;
+    overflow: hidden;
   }
   .gantt__area{
-    height: 520px;//TODO
     display: grid;
     grid-template-columns: 250px 1fr;
+  }
+  .gantt__area--error{
+    font-size: 3em;
+    text-align: center;
   }
 </style>

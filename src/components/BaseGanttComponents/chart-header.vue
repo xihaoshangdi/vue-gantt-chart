@@ -28,23 +28,12 @@
 import { handleDaySet, handleHourSet } from '@/lib/GanttUnit'
 export default {
   name: 'ChartHeader',
+  inject: ['baseHour', 'baseBlock', 'timeSectionDayJs'],
   props: {
     headerData: {
       type: Array,
       require: true,
       default: () => ['日期', '时间']
-    },
-    baseHour: {
-      type: Number,
-      default: 50
-    },
-    baseBlock: {
-      type: Number,
-      default: 40
-    },
-    timeSectionDayJs: {
-      type: Object,
-      default: () => {}
     }
   },
   computed: {
