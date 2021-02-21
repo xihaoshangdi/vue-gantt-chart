@@ -1,17 +1,26 @@
-# Gantt
+# Gantt Chart  -Javascript - Vue
 
-基于Vue的轻量级甘特图插件
+## 一个特殊的业务轮子
 
-## 阶段
+### Demo
+[预览](https://xihaoshangdi.github.io/Vue-gantt/)
 
-- [x] 初始化项目
-  - [x] Element
-  - [x] Day.js
-  - [x] D3.js
-  - [x] standard
-- [ ] 初始化UI
-  - [ ] HTML
-  - [ ] CSS
-  - [ ] JavaScript
-- [ ] 文档
-  - [ ] VuePress
+### Feature
+- 宽高可变自适应
+- 拖拽功能
+- 右击自定义事件
+- 首行粘性
+
+### Screenshot
+![Demo](./Screenshot/demo.gif)
+![Demo2](./Screenshot/demo2.gif)
+### Install
+
+
+### Use
+
+
+### API
+
+### 开源协议
+MIT

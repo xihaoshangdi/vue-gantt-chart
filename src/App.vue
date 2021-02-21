@@ -36,7 +36,7 @@ export default {
   data () {
     return {
       GanttTime: ['2021/02/21', '2021/02/24'],
-      GanttData: mockData(25),
+      GanttData: mockData(100),
       GanttCurrentTime: new Date().getTime(),
       floatRender: (info) => `<div>${info.startAirport}</div><div>${info.workType}</div><div>${info.endAirport}</div>`,
       // 定时器
