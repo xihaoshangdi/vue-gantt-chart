@@ -1,0 +1,15 @@
+# 忽略目录
+examples/
+packages/
+public/
+tests/
+Screenshot/
+.idea/
+# 忽略指定文件
+.gitignore
+deploy.sh
+vue.config.js
+babel.config.js
+.eslintrc.js
+.editorconfig
+*.map

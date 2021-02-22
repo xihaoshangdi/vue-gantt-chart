@@ -1,24 +1,26 @@
-# vue-gantt-chart
+# Gantt Chart  -Javascript - Vue
 
-## Project setup
-```
-yarn install
-```
+## 一个特殊的业务轮子
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+### Demo
+[预览](https://xihaoshangdi.github.io/Vue-gantt/)
 
-### Compiles and minifies for production
-```
-yarn build
-```
+### Feature
+- 宽高可变自适应
+- 拖拽功能
+- 右击自定义事件
+- 首行粘性
 
-### Lints and fixes files
-```
-yarn lint
-```
+### Screenshot
+![Demo](./Screenshot/demo.gif)
+![Demo2](./Screenshot/demo2.gif)
+### Install
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Use
+
+
+### API
+
+### 开源协议
+MIT
