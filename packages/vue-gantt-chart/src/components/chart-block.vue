@@ -1,6 +1,6 @@
 <template>
   <div class="block" @dragover="dragOver">
-    <template v-for="(item,index) in block.childArrary">
+    <template v-for="(item,index) in block.childArray">
       <div
         :id="item.id"
         :key="index"

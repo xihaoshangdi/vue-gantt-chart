@@ -84,7 +84,7 @@ export default {
     },
     ganttCurrentTime: { // 甘特图时间轴时间
       type: Number,
-      default: 0
+      default: new Date().getTime()
     },
     ganttData: { // 甘特图数据
       type: Array,
@@ -131,7 +131,7 @@ export default {
     },
     chartData () {
       return this.ganttData.map(item => {
-        item.childArrary = item.childArrary.filter(task => dayjs(task.end).isBefore(this.timeSectionDayJs.end.add(1, 'day')))
+        item.childArray = item.childArray.filter(task => dayjs(task.end).isBefore(this.timeSectionDayJs.end.add(1, 'day')))
         return item
       })
     }

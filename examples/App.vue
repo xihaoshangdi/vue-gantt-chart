@@ -50,6 +50,7 @@ export default {
     this.marker = setInterval(() => {
       this.GanttCurrentTime += 100000
     }, 1000)
+    console.log(JSON.stringify(mockData(1)))
   },
   beforeDestroy () {
     clearInterval(this.marker)
