@@ -3,7 +3,7 @@
 ## 一个特殊的业务轮子
 
 ### Demo
-[预览](https://xihaoshangdi.github.io/Vue-gantt/)
+[预览](https://xihaoshangdi.github.io/vue-gantt-chart/)
 
 ### Feature
 - 宽高可变自适应
