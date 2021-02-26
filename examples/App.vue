@@ -19,7 +19,9 @@
       </GanttChart>
     </div>
     <div class="operate__area">
-      <div id="buffer__area" class="drag-wrapper" />
+      <div id="buffer__area" class="drag-wrapper">
+        <span>可拖拽区域:</span>
+      </div>
       <div class="operate">
         <div>首行是否粘性:<el-switch v-model="firstLineStick" active-color="#13ce66" inactive-color="#ff4949" /></div>
         <div>调节甘特图宽度:<el-slider v-model="ChartWidth" /></div>
@@ -63,18 +65,19 @@ export default {
     }
     const nodeHash = {}
     const observer = new MutationObserver(function (mutationList) {
-      const mutation = mutationList[0]
-      if (mutation.addedNodes.length) { // 添加节点
-        const obj = mutation.addedNodes[0]
-        nodeHash[obj.id] = obj.style.left
-        obj.style.position = 'relative'
-        obj.style.left = '0px'
-      }
-      if (mutation.removedNodes.length) { // 移除节点
-        const obj = mutation.removedNodes[0]
-        obj.style.left = nodeHash[obj.id]
-        obj.style.position = 'absolute'
-      }
+      mutationList.forEach(mutation => {
+        if (mutation.addedNodes.length) { // 添加节点
+          const obj = mutation.addedNodes[0]
+          nodeHash[obj.id] = obj.style.left
+          obj.style.position = 'relative'
+          obj.style.left = '5px'
+        }
+        if (mutation.removedNodes.length) { // 移除节点
+          const obj = mutation.removedNodes[0]
+          obj.style.left = nodeHash[obj.id]
+          obj.style.position = 'absolute'
+        }
+      })
     })
     observer.observe($testEle, observerOptions)
   },
@@ -110,6 +113,9 @@ export default {
   left: 50%;
   bottom: 1em;
   transform: translate(-50%,0);
+  border: 1px solid #EBEEF5;
+  border-radius: 5px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
   display: grid;
   grid-template-columns: 1fr 1fr;
   .operate > div{
@@ -118,7 +124,8 @@ export default {
 }
 #buffer__area{
   display: flex;
+  margin: 5px;
   flex-direction: column;
-  border: 1px solid salmon;
+  border: 3px dashed salmon;
 }
 </style>
