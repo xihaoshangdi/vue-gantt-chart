@@ -91,5 +91,19 @@ Vue.use(GanttChart)
 | param      | describe                                                                       |
 |------------|----------|
 |rightClick|甘特块右击会触发事件，抛出自定义事件对象，甘特块的数据被包含在`event.detail`中|
+#### Scoped Slot
+```vue
+<template #side-box="{item}">
+  <SideComponent :side-info="item" />
+</template>
+<template #container-box="{item}">
+  <ContentComponent :content-info="item" />
+</template>
+```
+
+| name      | describe                                                                       |
+|------------|----------|
+|#side-box|具名插槽，传递自定义数据项的内容，参数为 { item }|
+|#container-box|具名插槽，传递自定义数据项的内容，参数为 { item }|
 ### 开源协议
 MIT
