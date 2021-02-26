@@ -1,6 +1,6 @@
 {
   "name": "vue-gantt-chart",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "private": false,
   "scripts": {
     "docs:dev": "npx vuepress dev docs",

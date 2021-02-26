@@ -4,6 +4,7 @@ packages/
 public/
 tests/
 Screenshot/
+dist/
 .idea/
 # 忽略指定文件
 .gitignore

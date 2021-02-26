@@ -27,8 +27,6 @@
           :spend-time="spendTime"
           :gantt-data="chartData"
           :first-line-stick="firstLineStick"
-          @dragstart.native.capture="moveStart"
-          @drop.capture.native="moveEnd"
         >
           <slot name="container-box" :item="item" />
         </chart-container>
@@ -46,6 +44,7 @@ import ChartHeader from './components/chart-header'
 import ChartContainer from './components/chart-container'
 import ChartSide from './components/chart-side'
 import FloatView from './lib/FloatView'
+import Drag from './unit/drag'
 import isBetween from 'dayjs/plugin/isBetween'
 import dayjs from 'dayjs'
 dayjs.extend(isBetween)
@@ -101,8 +100,11 @@ export default {
       //
       baseHour: 50, // 基准小时
       baseBlock: 40, // 基准高度
+      //
+      floatState: true,
       // Drag
-      drag: null
+      dragged: null,
+      dragClone: null
     }
   },
   computed: {
@@ -154,24 +156,59 @@ export default {
       }
       if (flag === 'side') container.scrollTop = event.target.scrollTop
     }, true)
+    // float
+    area.addEventListener('mousemove', (event) => {
+      this.floatState = event.buttons === 0
+    })
+    new Drag(container)
   },
   methods: {
     moveStart (event) {
-      console.log('DragStart', event)
-      this.drag = event
+      this.dragClone = event.target.cloneNode(true)
+      const img = new Image()
+      img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' %3E%3Cpath /%3E%3C/svg%3E"
+      event.dataTransfer.setDragImage(img, 0, 0)
+      this.dragClone.style
+      this.dragClone.style = 'position:absolute;left:0;top:0;background:red;pointer-events:none;transform:translate3d( ' + event.clientX + 'px ,' + event.clientY + 'px,0);'
+      document.body.appendChild(this.dragClone)
+      this.dragged = event.target
+    },
+    dragMove (event) {
+      if (this.dragClone) {
+        this.dragClone.style.transform = 'translate3d( ' + event.clientX + 'px ,' + event.clientY + 'px,0)'
+        this.dragged.style.display = 'none'
+      }
+    },
+    dragOver (event) {
+      const { path } = event
+      const wrapper = Array.from(path).find(item => item.classList && Array.from(item.classList).includes('drag-wrapper'))
+      if (wrapper) event.preventDefault()
+    },
+    dragdrop (event) {
+      // 将拖动的元素到所选择的放置目标节点中
+      const { path } = event
+      const wrapper = Array.from(path).find(item => item.classList && Array.from(item.classList).includes('drag-wrapper'))
+      if (wrapper) {
+        this.dragged.parentNode.removeChild(this.dragged)
+        wrapper.appendChild(this.dragged)
+      }
     },
     moveEnd (event) {
-      console.log('DragEnd', event)
-      const dom = this.drag.target
-      dom.parentNode.removeChild(dom)
-      event.target.appendChild(dom)
+      if (this.dragClone) {
+        document.body.removeChild(this.dragClone)
+        this.dragClone = null
+      }
+      this.dragged.style.display = 'block'
+      this.floatState = true
     },
     handleFloatView (event) {
-      const triggerEvent = event.target
-      const { info } = event.detail
-      const layerEvent = document.getElementById('gantt-container')
-      const htmlTmpl = this.floatViewRenderFn(info)
-      FloatView({ layerEvent, triggerEvent, htmlTmpl })
+      if (this.floatState) {
+        const triggerEvent = event.target
+        const { info } = event.detail
+        const layerEvent = document.getElementById('gantt-container')
+        const htmlTmpl = this.floatViewRenderFn(info)
+        FloatView({ layerEvent, triggerEvent, htmlTmpl })
+      }
     }
   }
 }

@@ -18,15 +18,19 @@
         </template>
       </GanttChart>
     </div>
-    <div class="operate">
-      <div>首行是否粘性:<el-switch v-model="firstLineStick" active-color="#13ce66" inactive-color="#ff4949" /></div>
-      <div>调节甘特图宽度:<el-slider v-model="ChartWidth" /></div>
-      <div>调节甘特图内容高度:<el-slider v-model="ChartHeight" :min="0" :max="600" /></div>
+    <div class="operate__area">
+      <div id="buffer__area" class="drag-wrapper" />
+      <div class="operate">
+        <div>首行是否粘性:<el-switch v-model="firstLineStick" active-color="#13ce66" inactive-color="#ff4949" /></div>
+        <div>调节甘特图宽度:<el-slider v-model="ChartWidth" /></div>
+        <div>调节甘特图内容高度:<el-slider v-model="ChartHeight" :min="0" :max="600" /></div>
+      </div>
     </div>
   </div>
 </template>
 <script>
-
+import dayjs from 'dayjs'
+import Drag from '../packages/vue-gantt-chart/src/unit/drag'
 import SideComponent from './components/SideComponent'
 import ContentComponent from './components/ContentComponent'
 import { mockData } from './lib/mock'
@@ -34,8 +38,8 @@ export default {
   components: { ContentComponent, SideComponent },
   data () {
     return {
-      GanttTime: ['2021/02/21', '2021/02/24'],
-      GanttData: mockData(60),
+      GanttTime: [dayjs().format('YYYY/MM/DD'), dayjs().add(3, 'day').format('YYYY/MM/DD')],
+      GanttData: mockData(50),
       GanttCurrentTime: new Date().getTime(),
       floatRender: (info) => `<div>${info.startAirport}</div><div>${info.workType}</div><div>${info.endAirport}</div>`,
       // 定时器
@@ -50,7 +54,29 @@ export default {
     this.marker = setInterval(() => {
       this.GanttCurrentTime += 100000
     }, 1000)
-    console.log(JSON.stringify(mockData(1)))
+    new Drag(document, true)
+    const $testEle = document.querySelector('#buffer__area')
+    const observerOptions = {
+      childList: true,	// 观察目标子节点变换
+      attributes: false,	// 观察属性变动
+      subtree: true		// 观察后代节点
+    }
+    const nodeHash = {}
+    const observer = new MutationObserver(function (mutationList) {
+      const mutation = mutationList[0]
+      if (mutation.addedNodes.length) { // 添加节点
+        const obj = mutation.addedNodes[0]
+        nodeHash[obj.id] = obj.style.left
+        obj.style.position = 'relative'
+        obj.style.left = '0px'
+      }
+      if (mutation.removedNodes.length) { // 移除节点
+        const obj = mutation.removedNodes[0]
+        obj.style.left = nodeHash[obj.id]
+        obj.style.position = 'absolute'
+      }
+    })
+    observer.observe($testEle, observerOptions)
   },
   beforeDestroy () {
     clearInterval(this.marker)
@@ -78,17 +104,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.operate{
+.operate__area{
+  width: 90vw;
   position: absolute;
-  bottom: 30px;
-  margin-top: 5vh;
-  border: 1px solid #EBEEF5;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  left: 50%;
+  bottom: 1em;
+  transform: translate(-50%,0);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  .operate > div{
+    margin: 1em;
+  }
+}
+#buffer__area{
   display: flex;
   flex-direction: column;
-  width: 800px;
-  & > div{
-    margin: 10px 15px;
-  }
+  border: 1px solid salmon;
 }
 </style>

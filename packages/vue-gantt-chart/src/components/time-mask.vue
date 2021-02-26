@@ -32,6 +32,7 @@ export default {
 
 <style scoped lang="scss">
   .mask-box{
+    pointer-events: none;
     z-index: 110;
     position: sticky;
     top: 0;

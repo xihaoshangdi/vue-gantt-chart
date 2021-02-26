@@ -1,5 +1,5 @@
 <template>
-  <div class="block" @dragover="dragOver">
+  <div class="block drag-wrapper">
     <template v-for="(item,index) in block.childArray">
       <div
         :id="item.id"
@@ -45,9 +45,6 @@ export default {
     },
     checkDrag (bar) {
       return dayjs(dayjs(bar.start)).diff(this.timeSectionDayJs.start, 'hour') - this.spendTime / 3600 > 0
-    },
-    dragOver (event) {
-      if (event.target.className === 'block' || event.target.className === 'block sticky') event.preventDefault()
     },
     rightClick (data, event) {
       event.target.dispatchEvent(new CustomEvent('rightClick', {
