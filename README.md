@@ -105,5 +105,18 @@ Vue.use(GanttChart)
 |------------|----------|
 |#side-box|具名插槽，传递自定义数据项的内容，参数为 { item }|
 |#container-box|具名插槽，传递自定义数据项的内容，参数为 { item }|
+
+### 反馈缺陷 Bug
+```javascript
+- **Version**: 
+- **Mini Showcase Repository**:
+- **Error Message**:
+```
+
+### 提交新需求 Feature Request
+#### 背景
+- 描述你希望解决的问题的现状
+- 你希望获得的功能的设计和实现
+
 ### 开源协议
 MIT
